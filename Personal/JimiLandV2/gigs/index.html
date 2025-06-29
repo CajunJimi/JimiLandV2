@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigs - JimiLand</title>
+    <meta name="description" content="Upcoming live performances and past gigs. Find out where to catch Jimi live!">
+    <meta name="keywords" content="gigs, live music, concerts, performances, events">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jimi.land/gigs/">
+    <meta property="og:title" content="Gigs - JimiLand">
+    <meta property="og:description" content="Upcoming live performances and past gigs">
+    <meta property="og:image" content="https://jimi.land/assets/images/og-image.jpg">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/gigs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">JimiLand</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/gigs/" class="nav-link active">Gigs</a>
+                <a href="/archive/" class="nav-link">Archive</a>
+                <a href="/portfolio/" class="nav-link">Portfolio</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Gigs Section -->
+        <section class="latest-posts">
+            <div class="container">
+                <h2 class="section-title">Gigs</h2>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-tab" data-filter="past">Past Shows</button>
+                    <button class="filter-tab" data-filter="all">All Gigs</button>
+                </div>
+                
+                <div class="view-tabs">
+                    <button class="view-tab active" data-view="list">List View</button>
+                    <button class="view-tab" data-view="calendar">Calendar View</button>
+                </div>
+                <!-- List View -->
+                <div class="posts-grid" id="gigs-grid">
+                    <!-- Gigs will be loaded dynamically -->
+                </div>
+                
+                <!-- Calendar View -->
+                <div class="calendar-container hidden" id="calendar-container">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prev-month">&lt;</button>
+                        <h3 class="calendar-title" id="calendar-title">January 2025</h3>
+                        <button class="calendar-nav" id="next-month">&gt;</button>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Calendar will be generated dynamically -->
+                    </div>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot upcoming"></div>
+                            <span>Upcoming Gigs</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot past"></div>
+                            <span>Past Gigs</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gigs without dates -->
+                <div class="undated-gigs" id="undated-gigs">
+                    <h3>Gigs Without Dates</h3>
+                    <div class="undated-gigs-list" id="undated-gigs-list">
+                        <!-- Undated gigs will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- No Gigs Message -->
+                <div class="no-gigs hidden" id="no-gigs">
+                    <h3>No gigs found</h3>
+                    <p>Check back soon for upcoming performances!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>JimiLand</h3>
+                    <p>Music, gigs, and life adventures. Thanks for reading!</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/gigs/">Gigs</a></li>
+                        <li><a href="/calendar/">Calendar</a></li>
+                        <li><a href="/about/">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 JimiLand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/gigs-loader.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive - JimiLand</title>
+    <meta name="description" content="Complete archive of all updates, posts, and gigs on JimiLand">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/archive.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="/">JimiLand</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/gigs/" class="nav-link">Gigs</a>
+                <a href="/archive/" class="nav-link active">Archive</a>
+                <a href="/portfolio/" class="nav-link">Portfolio</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <section class="archive-header">
+            <div class="container">
+                <h1>Archive</h1>
+                <p>Complete history of all updates, posts, and gigs - newest to oldest</p>
+            </div>
+        </section>
+
+        <!-- Filter Controls -->
+        <section class="archive-filters">
+            <div class="container">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Updates</button>
+                    <button class="filter-tab" data-filter="posts">Posts</button>
+                    <button class="filter-tab" data-filter="gigs">Gigs</button>
+                    <button class="filter-tab" data-filter="site">Site Updates</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Archive Timeline -->
+        <section class="archive-timeline">
+            <div class="container">
+                <div class="timeline" id="timeline">
+                    <!-- Timeline items will be loaded here by JavaScript -->
+                </div>
+                
+                <!-- No items message -->
+                <div class="no-items hidden" id="no-items">
+                    <i class="fas fa-archive"></i>
+                    <h3>No items found</h3>
+                    <p>No archive items match the current filter.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/gigs/">Gigs</a></li>
+                        <li><a href="/archive/">Archive</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 JimiLand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/archive.js"></script>
+</body>
+</html>
