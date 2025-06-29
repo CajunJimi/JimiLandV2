@@ -180,7 +180,7 @@ a:hover {
 .bar {
   width: 25px;
   height: 3px;
-  background-color: var(--gray-700);
+  background-color: var(--border-color);
   margin: 3px 0;
   transition: var(--transition-fast);
 }
@@ -247,7 +247,7 @@ a:hover {
 /* ===== FEATURED SECTION ===== */
 .featured {
   padding: var(--space-2xl) 0;
-  background-color: var(--gray-50);
+  background-color: var(--bg-primary);
 }
 
 .featured-grid {
@@ -336,7 +336,7 @@ a:hover {
 
 .post-image {
   height: 200px;
-  background-color: var(--gray-200);
+  background-color: var(--border-color);
   background-size: cover;
   background-position: center;
 }
@@ -375,7 +375,7 @@ a:hover {
 }
 
 .tag {
-  background-color: var(--gray-100);
+  background-color: var(--bg-primary);
   color: var(--gray-700);
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
@@ -429,7 +429,7 @@ a:hover {
 .social-links a {
   width: 40px;
   height: 40px;
-  background-color: var(--gray-800);
+  background-color: var(--bg-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
