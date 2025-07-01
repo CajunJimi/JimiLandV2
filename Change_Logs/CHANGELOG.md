@@ -24,6 +24,25 @@ Post pages had inconsistent navigation structure that prevented proper black the
 
 ---
 
+## 2025-01-27 15:45:00 - Fix HTML Validation Errors in DSO 2024 Post
+
+### Description
+Fixed HTML structure validation errors by properly wrapping list items in unordered list tags.
+
+### Files Affected
+- `posts/dso-2024/index.html` - Fixed list structure for setlists
+
+### Changes Made
+- **HTML Structure**: Wrapped all `<li>` elements in proper `<ul>` tags
+- **Setlist Organization**: Added proper list containers for Set 1, Set 2, and Encore sections
+- **Validation Compliance**: Resolved 40+ HTML lint warnings about orphaned list items
+- **Semantic Improvement**: Enhanced document structure for better accessibility
+
+### Reason for Change
+HTML validation errors were causing lint warnings and potentially affecting SEO and accessibility. Proper list structure improves semantic meaning and compliance with web standards.
+
+---
+
 ## 2025-07-01 19:13:00 - Add CajunTools to Portfolio
 
 ### Description
