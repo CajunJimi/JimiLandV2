@@ -1,5 +1,25 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 18:49:00 - Fix Gigs: Remove Notion Links & White Backgrounds
+
+### Description
+Fixed critical UX issues with gigs page - removed Notion redirects and eliminated white background boxes for clean minimal design.
+
+### Files Affected
+- `assets/js/gigs-loader.js` - Removed Notion URL click handlers
+- `assets/css/main.css` - Added gig-card specific styling to prevent white backgrounds
+
+### Changes Made
+- **Notion Links Removed**: Gig cards no longer redirect to Notion when clicked
+- **White Background Fix**: Added CSS rules to ensure gig cards have black backgrounds only
+- **Clean UI**: Eliminated gray/white placeholder boxes from gig cards
+- **Improved UX**: Users stay on site instead of being redirected to Notion
+
+### Reason for Change
+User reported that clicking gigs redirected to Notion (unwanted) and white background boxes were breaking the minimal black theme.
+
+---
+
 ## 2025-07-01 18:26:00 - Gigs Data Update & Footer Removal
 
 ### Description
