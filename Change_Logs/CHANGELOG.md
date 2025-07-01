@@ -1,5 +1,29 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 19:05:00 - Fix Navbar Scroll Effect: Eliminate White Background
+
+### Description
+Fixed critical navbar scroll behavior that was changing the navigation to white backgrounds when scrolling, breaking the minimal black theme.
+
+### Files Affected
+- `assets/js/main.js` - Modified navbar scroll effect function
+
+### Changes Made
+- **Black Background on Scroll**: Changed navbar scroll effect from white to black backgrounds
+- **Consistent Theme**: Navigation now maintains black theme when scrolling
+- **Red Shadow Effect**: Added subtle red shadow when scrolled for visual depth
+- **Smooth Transition**: Preserved smooth scroll transition behavior
+
+### Technical Details
+- Changed `rgba(255, 255, 255, 0.98)` to `rgba(0, 0, 0, 0.98)`
+- Updated box-shadow to use red accent: `rgba(255, 0, 0, 0.1)`
+- Maintains transparency for modern glass effect
+
+### Reason for Change
+User reported that the menu was moving and becoming compacted with white backgrounds when scrolling, which broke the site's minimal black aesthetic.
+
+---
+
 ## 2025-07-01 18:49:00 - Fix Gigs: Remove Notion Links & White Backgrounds
 
 ### Description
