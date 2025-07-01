@@ -1,5 +1,25 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 18:26:00 - Gigs Data Update & Footer Removal
+
+### Description
+Synced latest gigs data from Notion table and removed all footers from site for cleaner minimal design.
+
+### Files Affected
+- `data/gigs.json` - Updated with 34 gigs from Notion
+- `data/posts.json` - Refreshed posts data
+- All HTML files - Removed footer sections
+
+### Changes Made
+- **Gigs Data**: Synced 34 gigs including Billy Strings, Bob Weir & Wolf Bros, Dark Star Orchestra
+- **Footer Removal**: Eliminated 225 lines of footer code across 11 files for ultra-clean design
+- **Auto-deployment**: Confirmed GitHub Pages auto-deployment working
+
+### Reason for Change
+User updated gigs table in Notion and requested footer removal for cleaner minimal aesthetic.
+
+---
+
 ## 2025-06-28 19:16:00 - Final Documentation & Site Completion
 
 ### Description
