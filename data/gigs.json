@@ -26,6 +26,19 @@
     "last_edited": "2025-06-28T18:15:00.000Z"
   },
   {
+    "id": "16ccb99e-b16c-8018-b344-eac5c3d59f62",
+    "title": "Untitled Gig",
+    "artist": "The Warlocks",
+    "date": "2024-10-08",
+    "venue": "Glasgow",
+    "location": "",
+    "status": "Draft",
+    "type": "Gig",
+    "slug": "untitled-gig",
+    "notion_url": "https://www.notion.so/15-16ccb99eb16c8018b344eac5c3d59f62",
+    "last_edited": "2025-07-01T17:30:00.000Z"
+  },
+  {
     "id": "16fcb99e-b16c-803c-bd56-fe66a7b4444b",
     "title": "Untitled Gig",
     "artist": "Dark Start Orchestra",
@@ -426,19 +439,6 @@
     "type": "Gig",
     "slug": "untitled-gig",
     "notion_url": "https://www.notion.so/25-16ccb99eb16c80a09c5fdfa1c7761522",
-    "last_edited": "2025-07-01T17:25:00.000Z"
-  },
-  {
-    "id": "16ccb99e-b16c-8018-b344-eac5c3d59f62",
-    "title": "Untitled Gig",
-    "artist": "The Warlocks",
-    "date": "2025-07-01",
-    "venue": "Glasgow",
-    "location": "",
-    "status": "Draft",
-    "type": "Gig",
-    "slug": "untitled-gig",
-    "notion_url": "https://www.notion.so/15-16ccb99eb16c8018b344eac5c3d59f62",
     "last_edited": "2025-07-01T17:25:00.000Z"
   }
 ]
