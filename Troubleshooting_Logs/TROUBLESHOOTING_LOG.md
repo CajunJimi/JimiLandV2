@@ -1,5 +1,61 @@
 # JimiLand Site Troubleshooting Log
 
+## 2025-01-27 19:35:00 - Portfolio Compactness and Article Content Positioning Issues
+
+### Issue Description
+Two user experience issues were identified:
+1. Portfolio page required scrolling to see the CajunTools project, making it less user-friendly
+2. Article content on post pages was being hidden behind the fixed navigation bar
+
+### Symptoms Observed
+- CajunTools project card not visible without scrolling on portfolio page
+- Article titles and content partially obscured by fixed navbar
+- Poor mobile experience with content positioning
+- Inconsistent spacing across different screen sizes
+
+### Root Cause Analysis
+1. **Portfolio Layout**: Hero section was too large, pushing content below the fold
+2. **Article Positioning**: No padding-top compensation for fixed navbar height
+3. **CSS Variables**: Missing navbar-height variable for consistent calculations
+4. **Container Classes**: Some post pages had incorrect nav-container instead of container
+
+### Resolution Steps
+1. **Portfolio Compactness**:
+   - Created `.portfolio-header` class with reduced padding
+   - Replaced large hero section with compact header
+   - Added responsive mobile styles for better spacing
+
+2. **Article Content Positioning**:
+   - Added `.article-content` class to all post pages
+   - Implemented `padding-top: calc(var(--navbar-height) + var(--space-lg))`
+   - Added `--navbar-height: 70px` CSS variable
+   - Fixed container class names in post pages
+
+3. **Files Modified**:
+   - `portfolio/index.html` - Updated structure
+   - `assets/css/main.css` - Added positioning styles
+   - All 5 post pages - Added article-content class
+
+### Testing and Verification
+- Tested portfolio page shows CajunTools without scrolling
+- Verified article content starts below navbar on all post pages
+- Confirmed responsive behavior on mobile devices
+- Validated consistent spacing across all pages
+
+### Outcome
+✅ **RESOLVED** - Both issues fixed:
+- Portfolio now shows all projects without scrolling
+- Article content properly positioned below fixed navigation
+- Improved mobile responsiveness and user experience
+- Consistent layout across all pages
+
+### Prevention Measures
+- Document navbar height variable for future layout calculations
+- Include positioning tests in UI review process
+- Ensure consistent class naming conventions
+
+---
+
 ## 2025-01-27 15:45:00 - Navigation Consistency Issue on Post Pages
 
 ### Issue Description

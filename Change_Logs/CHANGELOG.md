@@ -1,5 +1,27 @@
 # JimiLand Site Changelog
 
+## 2025-01-27 19:35:00 - Fix Portfolio Compactness and Article Content Positioning
+
+### Description
+Improved user experience by making portfolio more compact and fixing article content positioning issues.
+
+### Files Affected
+- `portfolio/index.html` - Updated hero section structure
+- `assets/css/main.css` - Added compact portfolio styles and article positioning fixes
+- All post pages - Added article-content class for proper positioning
+
+### Changes Made
+- **Portfolio Compactness**: Reduced hero section height to show CajunTools without scrolling
+- **Article Positioning**: Fixed navbar overlap issue where content was hidden behind fixed navigation
+- **CSS Variables**: Added `--navbar-height: 70px` for consistent spacing calculations
+- **Responsive Design**: Improved mobile spacing and layout
+- **Container Classes**: Fixed incorrect nav-container references in post pages
+
+### Reason for Change
+User feedback indicated that CajunTools project required scrolling to see on portfolio page, and article content was being hidden behind the fixed navigation bar, creating poor user experience.
+
+---
+
 ## 2025-01-27 15:30:00 - Fix Navigation Consistency Across Post Pages
 
 ### Description
