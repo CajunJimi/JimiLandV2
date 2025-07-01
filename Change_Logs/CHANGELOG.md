@@ -1,5 +1,36 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 20:45:00 - Fix Theme Toggle Implementation
+
+### Description
+Fixed theme toggle implementation to ensure all elements properly change colors when switching themes. Previously, some page elements remained black in light/blue themes due to hardcoded color values.
+
+### Files Affected
+- `assets/css/main.css` - Updated all hardcoded colors to use CSS variables with !important declarations
+- `assets/css/post.css` - Updated all hardcoded colors to use theme variables
+- `posts/hst-letter/index.html` - Added theme toggle button
+- `posts/billy-and-the-kids/index.html` - Added theme toggle button
+- `posts/drones/index.html` - Added theme toggle button
+- `posts/dso-2024/index.html` - Added theme toggle button
+- `posts/jam-band-new-year-2024/index.html` - Added theme toggle button
+
+### Issues Fixed
+- Fixed hardcoded black backgrounds in navbar, hero, post-cards, footer, main-content, latest-posts sections
+- Fixed hardcoded white text colors in buttons, nav-links, section-titles, post-titles
+- Fixed hardcoded border colors in buttons, filter-tabs, view-tabs, calendar-nav
+- Added missing theme toggle button to all post pages
+- Added additional theme variables for card backgrounds and hover states
+
+### Technical Implementation
+- Added `!important` declarations to ensure theme variables override existing styles
+- Added `--card-bg` and `--hover-bg` variables for better card theming
+- Extended theme variable usage to post.css for consistent styling
+- Ensured all text, backgrounds, and borders use theme variables
+
+---
+
+# JimiLand Site Changelog
+
 ## 2025-07-01 20:00:00 - Add 3-Way Theme Toggle
 
 ### Description
