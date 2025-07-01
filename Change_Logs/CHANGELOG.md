@@ -1,5 +1,50 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 20:00:00 - Add 3-Way Theme Toggle
+
+### Description
+Implemented a 3-way theme toggle button in the top right of the navigation, allowing users to switch between Dark, Light, and Blue themes.
+
+### Files Affected
+- `index.html` - Added theme toggle button to navigation
+- `archive/index.html` - Added theme toggle button
+- `portfolio/index.html` - Added theme toggle button  
+- `gigs/index.html` - Added theme toggle button
+- `assets/css/main.css` - Added theme styles and CSS variables
+- `assets/js/main.js` - Added 3-way toggle functionality
+
+### Features Added
+- **3 Theme Options**:
+  - **Dark Theme** (default): White text on black background with red accents
+  - **Light Theme**: Black text on white background with dark red accents
+  - **Blue Theme**: Dark blue text on off-white background (middle brightness)
+- **Theme Toggle Button**: Located in top right with dynamic icons
+  - 🌙 for Dark theme
+  - ☀️ for Light theme  
+  - 🌊 for Blue theme
+- **Theme Persistence**: User's theme choice saved in localStorage
+- **Smooth Transitions**: 0.3s ease transitions between themes
+- **Mobile Responsive**: Optimized button size for mobile devices
+- **Comprehensive Styling**: All elements themed consistently
+
+### Technical Implementation
+- CSS variables system for consistent theming across all elements
+- JavaScript cycle through themes: Dark → Light → Blue → Dark
+- Theme state management with localStorage persistence
+- Dynamic icon and tooltip updates
+- Applied to main navigation pages (Home, Archive, Portfolio, Gigs)
+
+### User Experience
+- Click the theme button in top right to cycle through themes
+- Theme preference remembered across browser sessions
+- Smooth visual transitions when switching themes
+- Accessible with descriptive tooltips
+
+### Reason for Change
+User requested a 3-way toggle for different brightness levels to provide viewing options for different lighting conditions and personal preferences.
+
+---
+
 ## 2025-07-01 19:50:00 - Remove Browser Tab Tooltip
 
 ### Description

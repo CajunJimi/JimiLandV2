@@ -1133,12 +1133,15 @@ button:active,
 
 /* ===== THEME VARIATIONS ===== */
 /* Dark Theme (Default) */
-:root {
+:root,
+[data-theme="dark"] {
   --bg-color: #000000;
   --text-color: #ffffff;
   --text-secondary: #cccccc;
   --border-color: #333333;
   --accent-color: #ff0000;
+  --card-bg: #111111;
+  --hover-bg: #222222;
 }
 
 /* Light Theme */
@@ -1148,6 +1151,8 @@ button:active,
   --text-secondary: #666666;
   --border-color: #dddddd;
   --accent-color: #cc0000;
+  --card-bg: #f9f9f9;
+  --hover-bg: #f0f0f0;
 }
 
 /* Blue Theme (Middle brightness) */
@@ -1157,46 +1162,67 @@ button:active,
   --text-secondary: #4a5568;
   --border-color: #cbd5e0;
   --accent-color: #2b6cb0;
+  --card-bg: #ffffff;
+  --hover-bg: #e2e8f0;
 }
 
 /* Update existing color references to use CSS variables */
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
 }
 
 .navbar {
-  background-color: var(--bg-color);
+  background-color: var(--bg-color) !important;
   border-bottom: 1px solid var(--border-color);
 }
 
 .nav-link {
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--accent-color);
+  color: var(--accent-color) !important;
 }
 
-.article-card {
-  border-color: var(--border-color);
+/* Main content areas */
+.main-content,
+.hero,
+.section {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
 }
 
-.article-card:hover {
-  border-color: var(--accent-color);
+/* Post cards and content cards */
+.post-card,
+.article-card,
+.card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-color) !important;
 }
 
-.article-title a {
-  color: var(--text-color);
+.post-card:hover,
+.article-card:hover,
+.card:hover {
+  background-color: var(--hover-bg) !important;
+  border-color: var(--accent-color) !important;
 }
 
-.article-title a:hover {
-  color: var(--accent-color);
+.article-title a,
+.post-title a {
+  color: var(--text-color) !important;
 }
 
-.article-date {
-  color: var(--text-secondary);
+.article-title a:hover,
+.post-title a:hover {
+  color: var(--accent-color) !important;
+}
+
+.article-date,
+.post-date {
+  color: var(--text-secondary) !important;
 }
 
 /* Additional theme-aware elements */
@@ -1204,52 +1230,66 @@ body {
 .hero h2,
 .section-title,
 h1, h2, h3, h4, h5, h6 {
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 .hero p,
 .section-subtitle,
 p {
-  color: var(--text-secondary);
+  color: var(--text-secondary) !important;
 }
 
 .btn-primary {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
+  background-color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+  color: var(--bg-color) !important;
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-color);
+  background-color: var(--accent-color) !important;
   opacity: 0.9;
 }
 
-.card,
-.post-card,
 .project-card {
-  background-color: var(--bg-color);
-  border-color: var(--border-color);
-  color: var(--text-color);
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-color) !important;
 }
 
-.card:hover,
-.post-card:hover,
 .project-card:hover {
-  border-color: var(--accent-color);
+  background-color: var(--hover-bg) !important;
+  border-color: var(--accent-color) !important;
 }
 
 .archive-header,
 .portfolio-header {
-  background-color: var(--bg-color);
+  background-color: var(--bg-color) !important;
 }
 
 .archive-header h1,
 .portfolio-header h1 {
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 .archive-header p,
 .portfolio-header p {
-  color: var(--text-secondary);
+  color: var(--text-secondary) !important;
+}
+
+/* Ensure all containers use theme colors */
+.container,
+.nav-container {
+  background-color: transparent !important;
+}
+
+/* Links */
+a {
+  color: var(--accent-color) !important;
+}
+
+a:hover {
+  color: var(--accent-color) !important;
+  opacity: 0.8;
 }
 
 /* Theme transition for smooth switching */
