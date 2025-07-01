@@ -1,5 +1,29 @@
 # JimiLand Site Changelog
 
+## 2025-01-27 15:30:00 - Fix Navigation Consistency Across Post Pages
+
+### Description
+Fixed navigation structure inconsistencies on all article/post pages to match the main site's black theme and mobile functionality.
+
+### Files Affected
+- `posts/hst-letter/index.html` - Updated navigation structure and removed footer
+- `posts/billy-and-the-kids/index.html` - Updated navigation structure and removed footer
+- `posts/drones/index.html` - Updated navigation structure and removed footer
+- `posts/dso-2024/index.html` - Updated navigation structure and removed footer
+- `posts/jam-band-new-year-2024/index.html` - Updated navigation structure and removed footer
+
+### Changes Made
+- **Navigation Structure**: Changed from `container`/`nav-brand` to `nav-container`/`nav-logo` to match main site
+- **Mobile Menu**: Added `nav-toggle` elements with hamburger bars for mobile functionality
+- **Menu IDs**: Added proper `id="nav-menu"` and `id="nav-toggle"` for JavaScript functionality
+- **Footer Removal**: Removed all footer elements from post pages to maintain site-wide consistency
+- **Theme Consistency**: Ensures black theme and navbar scroll effects work properly on article pages
+
+### Reason for Change
+Post pages had inconsistent navigation structure that prevented proper black theme styling and mobile menu functionality. This fix ensures UI consistency across the entire site.
+
+---
+
 ## 2025-07-01 19:13:00 - Add CajunTools to Portfolio
 
 ### Description
