@@ -8,7 +8,6 @@
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/archive.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -40,34 +39,73 @@
         <section class="archive-header">
             <div class="container">
                 <h1>Archive</h1>
-                <p>Complete history of all updates, posts, and gigs - newest to oldest</p>
+                <p>All articles chronologically - newest to oldest</p>
             </div>
         </section>
 
-        <!-- Filter Controls -->
-        <section class="archive-filters">
+        <!-- Articles List -->
+        <section class="articles-list">
             <div class="container">
-                <div class="filter-tabs">
-                    <button class="filter-tab active" data-filter="all">All Updates</button>
-                    <button class="filter-tab" data-filter="posts">Posts</button>
-                    <button class="filter-tab" data-filter="gigs">Gigs</button>
-                    <button class="filter-tab" data-filter="site">Site Updates</button>
-                </div>
-            </div>
-        </section>
+                <div class="articles-grid">
+                    <!-- January 1, 2025 -->
+                    <article class="article-card">
+                        <div class="article-content">
+                            <div class="article-header">
+                                <h3 class="article-title">
+                                    <a href="/posts/jam-band-new-year-2024/">Jam Band new year 2024</a>
+                                </h3>
+                                <time class="article-date">January 1, 2025</time>
+                            </div>
+                        </div>
+                    </article>
 
-        <!-- Archive Timeline -->
-        <section class="archive-timeline">
-            <div class="container">
-                <div class="timeline" id="timeline">
-                    <!-- Timeline items will be loaded here by JavaScript -->
-                </div>
-                
-                <!-- No items message -->
-                <div class="no-items hidden" id="no-items">
-                    <i class="fas fa-archive"></i>
-                    <h3>No items found</h3>
-                    <p>No archive items match the current filter.</p>
+                    <!-- December 30, 2024 -->
+                    <article class="article-card">
+                        <div class="article-content">
+                            <div class="article-header">
+                                <h3 class="article-title">
+                                    <a href="/posts/billy-and-the-kids/">Billy and the kids</a>
+                                </h3>
+                                <time class="article-date">December 30, 2024</time>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- December 30, 2024 -->
+                    <article class="article-card">
+                        <div class="article-content">
+                            <div class="article-header">
+                                <h3 class="article-title">
+                                    <a href="/posts/drones/">Drones</a>
+                                </h3>
+                                <time class="article-date">December 30, 2024</time>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- November 9, 2024 -->
+                    <article class="article-card">
+                        <div class="article-content">
+                            <div class="article-header">
+                                <h3 class="article-title">
+                                    <a href="/posts/hst-letter/">HST - Letter</a>
+                                </h3>
+                                <time class="article-date">November 9, 2024</time>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- November 3, 2024 -->
+                    <article class="article-card">
+                        <div class="article-content">
+                            <div class="article-header">
+                                <h3 class="article-title">
+                                    <a href="/posts/dso-2024/">DSO - 2024</a>
+                                </h3>
+                                <time class="article-date">November 3, 2024</time>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -77,6 +115,5 @@
 
     <!-- Scripts -->
     <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/archive.js"></script>
 </body>
 </html>
