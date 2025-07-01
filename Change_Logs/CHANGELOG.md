@@ -1,5 +1,32 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 19:10:00 - Fix Archive Page: Ensure Black Theme Consistency
+
+### Description
+Fixed archive page styling inconsistencies to match the site's minimal black theme by removing white timeline markers and enforcing black backgrounds.
+
+### Files Affected
+- `assets/css/archive.css` - Updated timeline markers and added theme enforcement
+
+### Changes Made
+- **Timeline Markers**: Changed white dots to black with colored borders
+- **Post Markers**: Black background with white border
+- **Gig Markers**: Red background with red border (maintained for visibility)
+- **Site Markers**: Black background with green border
+- **Theme Enforcement**: Added `!important` rules to prevent white backgrounds
+- **Filter Tabs**: Reinforced transparent backgrounds
+
+### Visual Impact
+- ⚫ **Consistent black theme** across entire archive page
+- 🔴 **Red accent** maintained for gig markers
+- ⚪ **White borders** for post markers (subtle contrast)
+- 🚫 **No white backgrounds** anywhere on the page
+
+### Reason for Change
+User reported that the archive page had white elements that were inconsistent with the site's minimal black aesthetic.
+
+---
+
 ## 2025-07-01 19:05:00 - Fix Navbar Scroll Effect: Eliminate White Background
 
 ### Description
