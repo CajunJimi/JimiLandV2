@@ -334,19 +334,47 @@ a:hover {
   box-shadow: var(--shadow-lg);
 }
 
-/* Gig-specific styling */
+/* Gig-specific styling - Force black backgrounds */
 .gig-card {
   background-color: var(--bg-primary) !important;
   border: 1px solid var(--border-color);
 }
 
-.gig-card * {
+.gig-card *,
+.gig-card *::before,
+.gig-card *::after {
   background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
 }
 
 .gig-card::before,
 .gig-card::after {
   display: none !important;
+  content: none !important;
+}
+
+/* Remove any white backgrounds from all elements */
+.gig-card div,
+.gig-card h3,
+.gig-card time,
+.gig-card span {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Navigation fixes - remove white highlights */
+.nav-link {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link:active {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .post-image {
@@ -550,7 +578,30 @@ a:hover {
 
 .filter-tab.active {
   border-color: #ffffff;
-  background: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force all buttons and interactive elements to have black/transparent backgrounds */
+button,
+.button,
+.btn,
+input[type="button"],
+input[type="submit"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+button:hover,
+button:focus,
+button:active,
+.button:hover,
+.button:focus,
+.button:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 /* ===== NO ITEMS MESSAGE ===== */
