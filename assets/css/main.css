@@ -334,11 +334,31 @@ a:hover {
   box-shadow: var(--shadow-lg);
 }
 
+/* Gig-specific styling */
+.gig-card {
+  background-color: var(--bg-primary) !important;
+  border: 1px solid var(--border-color);
+}
+
+.gig-card * {
+  background-color: transparent !important;
+}
+
+.gig-card::before,
+.gig-card::after {
+  display: none !important;
+}
+
 .post-image {
   height: 200px;
-  background-color: var(--border-color);
+  background-color: var(--bg-primary);
   background-size: cover;
   background-position: center;
+}
+
+/* Hide post-image in gig cards */
+.gig-card .post-image {
+  display: none !important;
 }
 
 .post-content {
