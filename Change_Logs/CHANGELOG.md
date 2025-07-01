@@ -1,5 +1,39 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 19:13:00 - Add CajunTools to Portfolio
+
+### Description
+Added CajunTools.site to the portfolio page with proper styling and external link functionality.
+
+### Files Affected
+- `portfolio/index.html` - Updated from placeholder to full portfolio with CajunTools project
+- `assets/css/main.css` - Added portfolio-specific styling
+
+### Changes Made
+- **Portfolio Structure**: Replaced "Coming soon" with proper portfolio grid
+- **CajunTools Card**: Added project card with:
+  - External link to https://cajuntools.site/
+  - Description as "browser-side redactor tool for log files"
+  - Tags: JavaScript, Privacy, Logs
+  - External link icon
+- **Portfolio Styling**: Added CSS for:
+  - Portfolio card hover effects (red border, lift animation)
+  - External link styling with icon
+  - Tag system with hover effects
+  - Consistent black theme enforcement
+
+### Visual Features
+- 🔗 **External Link**: Opens CajunTools in new tab
+- 🏷️ **Tags**: JavaScript, Privacy, Logs with hover effects
+- ⚫ **Black Theme**: Consistent with site aesthetic
+- 🔴 **Red Accents**: Hover effects and link colors
+- ✨ **Animations**: Subtle lift effect on hover
+
+### Reason for Change
+User requested to add CajunTools.site to portfolio as a browser-side redactor tool for log files.
+
+---
+
 ## 2025-07-01 19:10:00 - Fix Archive Page: Ensure Black Theme Consistency
 
 ### Description
