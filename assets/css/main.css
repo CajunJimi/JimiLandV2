@@ -883,3 +883,56 @@ button:active,
     padding: var(--space-md);
   }
 }
+
+/* ===== PORTFOLIO STYLES ===== */
+.portfolio-card {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 1px solid #333333;
+  transition: all 0.3s ease;
+}
+
+.portfolio-card:hover {
+  border-color: #ff0000;
+  transform: translateY(-2px);
+}
+
+.portfolio-card .post-title a {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.portfolio-card .post-title a:hover {
+  color: #ff0000;
+}
+
+.portfolio-card .post-title a .fa-external-link-alt {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tag {
+  background: transparent;
+  border: 1px solid #333333;
+  color: #cccccc;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  border-color: #ff0000;
+  color: #ff0000;
+}
