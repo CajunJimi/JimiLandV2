@@ -68,9 +68,24 @@
 }
 
 .filter-tab.active {
-    background: transparent;
+    background: transparent !important;
+    background-color: transparent !important;
     border-color: #ffffff;
     color: #ffffff;
+}
+
+/* ===== FORCE BLACK THEME CONSISTENCY ===== */
+.archive-timeline *,
+.timeline *,
+.timeline-item *,
+.timeline-content * {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+.timeline-content {
+    background: transparent !important;
+    background-color: transparent !important;
 }
 
 /* ===== TIMELINE ===== */
@@ -125,22 +140,25 @@
     top: 0.5rem;
     width: 12px;
     height: 12px;
-    background: #ffffff;
-    border: 2px solid #000000;
+    background: #000000;
+    border: 2px solid #333333;
     border-radius: 50%;
     z-index: 2;
 }
 
 .timeline-marker.post {
-    background: #ffffff;
+    background: #000000;
+    border-color: #ffffff;
 }
 
 .timeline-marker.gig {
     background: #ff0000;
+    border-color: #ff0000;
 }
 
 .timeline-marker.site {
-    background: #00ff00;
+    background: #000000;
+    border-color: #00ff00;
 }
 
 .timeline-content {
