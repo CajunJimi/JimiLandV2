@@ -1,5 +1,24 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 19:50:00 - Remove Browser Tab Tooltip
+
+### Description
+Removed the "Music, Gigs & Life" subtitle from the browser tab tooltip, simplifying it to just "JimiLand".
+
+### Files Affected
+- `index.html` - Updated page title and meta tags
+
+### Changes Made
+- **Page Title**: Changed from "JimiLand - Music, Gigs & Life" to "JimiLand"
+- **Open Graph Meta**: Updated og:title to match simplified title
+- **Twitter Meta**: Updated twitter:title for consistency
+- **Browser Experience**: Removed unwanted tooltip text when hovering over tab
+
+### Reason for Change
+User requested removal of the popup tooltip that appeared when hovering over the website tab in the browser.
+
+---
+
 ## 2025-07-01 19:45:00 - Simplify Archive to Chronological Article List
 
 ### Description
