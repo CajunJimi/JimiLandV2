@@ -1,5 +1,35 @@
 # JimiLand Site Changelog
 
+## 2025-07-01 19:45:00 - Simplify Archive to Chronological Article List
+
+### Description
+Simplified the archive page to show only articles in chronological order (newest to oldest), removing complex filtering and JavaScript dependencies.
+
+### Files Affected
+- `archive/index.html` - Complete restructure to simple article list
+- `assets/css/main.css` - Added new archive styling
+
+### Changes Made
+- **Content Filtering**: Removed gigs, site updates, and portfolio updates from archive
+- **Layout Simplification**: Replaced complex timeline with clean article cards
+- **JavaScript Removal**: Eliminated archive.js dependency and filtering system
+- **CSS Optimization**: Removed archive.css, added styles to main.css
+- **Chronological Order**: Articles listed newest to oldest by date
+- **Mobile Responsive**: Improved mobile layout with stacked cards
+- **Hover Effects**: Added subtle animations and red accent on hover
+
+### Article Order (Newest to Oldest)
+1. Jam Band new year 2024 (January 1, 2025)
+2. Billy and the kids (December 30, 2024)
+3. Drones (December 30, 2024)
+4. HST - Letter (November 9, 2024)
+5. DSO - 2024 (November 3, 2024)
+
+### Reason for Change
+User requested simplified archive showing only articles chronologically, excluding gigs, site updates, and portfolio updates for better focus and usability.
+
+---
+
 ## 2025-01-27 19:35:00 - Fix Portfolio Compactness and Article Content Positioning
 
 ### Description
