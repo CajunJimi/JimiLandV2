@@ -1,6 +1,6 @@
 # JimiLand Site Changelog
 
-## 2025-07-02 19:05:00 - Ensure Post Pages Use Dark Theme
+## 2025-07-02 20:45:00 - Ensure Post Pages Use Dark Theme
 
 ### Description
 Ensured all post pages use the dark theme (black background with white text) as standard, regardless of theme toggle settings on the main site.
@@ -11,7 +11,8 @@ Ensured all post pages use the dark theme (black background with white text) as 
 - `posts/drones/index.html` - Added data-theme="dark" attribute
 - `posts/dso-2024/index.html` - Added data-theme="dark" attribute
 - `posts/jam-band-new-year-2024/index.html` - Added data-theme="dark" attribute
-- `assets/css/post.css` - Added fallback colors for dark theme
+- `assets/css/post.css` - Added comprehensive dark theme overrides
+- `assets/js/main.js` - Modified theme toggle initialization to force dark theme on post pages
 
 ### Issues Fixed
 - Ensured post pages always display with black background and white text
@@ -21,7 +22,9 @@ Ensured all post pages use the dark theme (black background with white text) as 
 
 ### Technical Implementation
 - Added `data-theme="dark"` to HTML tag in all post pages
-- Added fallback colors with `!important` declarations in post.css
+- Added comprehensive CSS variable overrides for all themes in post.css
+- Modified JavaScript to detect post pages and force dark theme regardless of localStorage settings
+- Added direct element overrides with `!important` declarations for critical UI elements
 - Ensured consistent styling for navigation, content, and buttons
 
 ---

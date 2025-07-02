@@ -3,7 +3,21 @@
  * Minimal black and white theme for individual blog posts
  */
 
-/* Fallback colors for dark theme */
+/* Force black theme for post pages - override any theme variables */
+html[data-theme], 
+html[data-theme="light"], 
+html[data-theme="blue"], 
+html[data-theme="dark"] {
+    --bg-color: #000000 !important;
+    --text-color: #ffffff !important;
+    --text-secondary: #cccccc !important;
+    --border-color: #333333 !important;
+    --accent-color: #ff0000 !important;
+    --card-bg: #111111 !important;
+    --hover-bg: #222222 !important;
+}
+
+/* Direct element overrides */
 body {
     background-color: #000000 !important;
     color: #ffffff !important;

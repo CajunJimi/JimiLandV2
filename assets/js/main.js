@@ -255,6 +255,15 @@ function initializeThemeToggle() {
     const themeIcon = document.querySelector('.theme-icon');
     if (!themeToggle || !themeIcon) return;
 
+    // Check if this is a post page (URL contains /posts/)
+    const isPostPage = window.location.pathname.includes('/posts/');
+    
+    // If it's a post page, always use dark theme and exit
+    if (isPostPage) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        return;
+    }
+
     // Theme configuration
     const themes = {
         dark: { name: 'dark', icon: '🌙', next: 'light' },
