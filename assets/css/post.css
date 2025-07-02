@@ -3,6 +3,46 @@
  * Minimal black and white theme for individual blog posts
  */
 
+/* Fallback colors for dark theme */
+body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.navbar {
+    background-color: #000000 !important;
+}
+
+.nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: #ff0000 !important;
+}
+
+.nav-logo a {
+    color: #ffffff !important;
+}
+
+.post-content a {
+    color: #ff0000 !important;
+}
+
+.post-content a:hover {
+    text-decoration: underline;
+}
+
+.post-nav .btn {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+.post-nav .btn:hover {
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
+}
+
 .post {
     max-width: 800px;
     margin: 0 auto;
