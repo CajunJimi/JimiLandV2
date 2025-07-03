@@ -11,15 +11,21 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
+        <div class="nav-container">
+            <div class="nav-logo">
                 <a href="/">JimiLand</a>
             </div>
-            <div class="nav-menu">
+            <div class="nav-menu" id="nav-menu">
                 <a href="/" class="nav-link">Home</a>
                 <a href="/gigs/" class="nav-link">Gigs</a>
                 <a href="/archive/" class="nav-link">Archive</a>
                 <a href="/portfolio/" class="nav-link">Portfolio</a>
+
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
     </nav>
@@ -27,7 +33,7 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <article class="post">
+            <article class="post article-content">
                 <header class="post-header">
                     <h1 class="post-title">Drones</h1>
                     <div class="post-meta">
@@ -96,15 +102,6 @@
             </nav>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2025 JimiLand. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <script src="/assets/js/main.js"></script>
 </body>

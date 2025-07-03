@@ -189,13 +189,7 @@ class GigsLoader {
         if (showVenue) article.appendChild(venue);
         if (gig.location) article.appendChild(location);
         
-        // Add click handler if needed
-        if (gig.notion_url) {
-            article.style.cursor = 'pointer';
-            article.addEventListener('click', () => {
-                window.open(gig.notion_url, '_blank');
-            });
-        }
+        // No click handlers - keep gigs on site only
         
         return article;
     }

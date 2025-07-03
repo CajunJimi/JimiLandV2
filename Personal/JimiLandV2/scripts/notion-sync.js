@@ -261,6 +261,22 @@ function generateSlug(title) {
 }
 
 /**
+ * Generate sample content for posts without content
+ */
+function generateSampleContent(title, date) {
+    const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    return `<p>Welcome to my post about <strong>${title}</strong>, published on ${formattedDate}.</p>
+<p>This is where the main content of your blog post will appear. You can write about your experiences, thoughts, and insights here.</p>
+<h2>What's Next?</h2>
+<p>To add your own content, simply edit this post in your Notion database and run the sync script again.</p>`;
+}
+
+/**
  * Save posts to JSON file
  */
 async function savePosts(posts) {

@@ -37,14 +37,14 @@ function initializeNavigation() {
         });
     }
 
-    // Navbar scroll effect
+    // Navbar scroll effect - maintain black theme
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
-            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(255, 0, 0, 0.1)';
         } else {
-            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
             navbar.style.boxShadow = 'none';
         }
     });
@@ -248,23 +248,7 @@ function displaySearchResults(results) {
     searchResults.style.display = 'block';
 }
 
-// ===== THEME TOGGLE (Optional) =====
-function initializeThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
-
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-    });
-}
+// Theme toggle functionality removed
 
 // ===== SMOOTH SCROLLING FOR ANCHOR LINKS =====
 document.addEventListener('click', function(e) {

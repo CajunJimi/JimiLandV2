@@ -25,68 +25,61 @@
                 <a href="/archive/" class="nav-link">Archive</a>
                 <a href="/portfolio/" class="nav-link active">Portfolio</a>
             </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="nav-controls">
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Portfolio Section -->
-        <section class="latest-posts">
+        <!-- Portfolio Header -->
+        <section class="portfolio-header">
             <div class="container">
-                <h2 class="section-title">Portfolio</h2>
+                <h1>Portfolio</h1>
+                <p>Creative projects, tools, and digital works</p>
+            </div>
+        </section>
+
+        <!-- Portfolio Grid -->
+        <section class="portfolio-projects">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
                 <div class="posts-grid">
-                    <article class="post-card">
-                        <h3 class="post-title">Recordings</h3>
-                        <p class="post-date">Studio recordings and live performances</p>
-                    </article>
-                    
-                    <article class="post-card">
-                        <h3 class="post-title">Original Songs</h3>
-                        <p class="post-date">Collection of original compositions</p>
-                    </article>
-                    
-                    <article class="post-card">
-                        <h3 class="post-title">Collaborations</h3>
-                        <p class="post-date">Musical collaborations with other artists</p>
+                    <!-- CajunTools Project -->
+                    <article class="post-card portfolio-card">
+                        <div class="post-content">
+                            <div class="post-header">
+                                <h3 class="post-title">
+                                    <a href="https://cajuntools.site/" target="_blank" rel="noopener noreferrer">
+                                        CajunTools
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </h3>
+                                <div class="post-meta">
+                                    <span class="post-category">Web Tool</span>
+                                    <time class="post-date">2025</time>
+                                </div>
+                            </div>
+                            <p class="post-excerpt">
+                                A browser-side redactor tool designed primarily for log files. 
+                                Clean and secure text processing without server uploads.
+                            </p>
+                            <div class="post-tags">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Privacy</span>
+                                <span class="tag">Logs</span>
+                            </div>
+                        </div>
                     </article>
                 </div>
             </div>
         </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/about/">About</a></li>
-                        <li><a href="/gigs/">Gigs</a></li>
-                        <li><a href="/archive/">Archive</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <div class="social-links">
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 JimiLand. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="/assets/js/main.js"></script>
