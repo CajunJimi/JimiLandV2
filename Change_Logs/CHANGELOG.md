@@ -1,5 +1,38 @@
 # JimiLand Site Changelog
 
+## 2025-07-03 18:30:00 - Remove Theme Toggle and Revert to Black Theme
+
+### Description
+Removed the theme toggle button from all pages and reverted the site back to its original black theme with fixed styling.
+
+### Files Affected
+- `index.html` - Removed theme toggle button from navigation
+- `archive/index.html` - Removed theme toggle button from navigation
+- `portfolio/index.html` - Removed theme toggle button from navigation
+- `gigs/index.html` - Removed theme toggle button from navigation
+- `assets/css/main.css` - Removed theme toggle styles and theme variations, keeping only black theme
+- `assets/js/main.js` - Removed theme toggle initialization function
+- `assets/css/post.css` - Simplified to use fixed black theme
+- All post pages - Removed data-theme attributes
+
+### Issues Fixed
+- Removed theme toggle button from all pages
+- Reverted site to original black theme with white text
+- Simplified CSS by removing theme variations
+- Removed JavaScript theme toggle functionality
+- Ensured consistent black styling across all pages
+
+### Technical Implementation
+- Removed theme toggle button HTML from all navigation bars
+- Removed theme-related CSS variables and kept only black theme variables
+- Removed theme toggle JavaScript functionality
+- Removed data-theme attributes from all HTML files
+- Simplified CSS to use fixed black theme styling
+
+---
+
+# JimiLand Site Changelog
+
 ## 2025-07-02 20:45:00 - Ensure Post Pages Use Dark Theme
 
 ### Description

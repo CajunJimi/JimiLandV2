@@ -3,18 +3,15 @@
  * Minimal black and white theme for individual blog posts
  */
 
-/* Force black theme for post pages - override any theme variables */
-html[data-theme], 
-html[data-theme="light"], 
-html[data-theme="blue"], 
-html[data-theme="dark"] {
-    --bg-color: #000000 !important;
-    --text-color: #ffffff !important;
-    --text-secondary: #cccccc !important;
-    --border-color: #333333 !important;
-    --accent-color: #ff0000 !important;
-    --card-bg: #111111 !important;
-    --hover-bg: #222222 !important;
+/* Black theme variables */
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --text-secondary: #cccccc;
+    --border-color: #333333;
+    --accent-color: #ff0000;
+    --card-bg: #111111;
+    --hover-bg: #222222;
 }
 
 /* Direct element overrides */

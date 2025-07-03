@@ -1103,38 +1103,8 @@ button:active,
   gap: var(--space-sm);
 }
 
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--text-secondary);
-  border-radius: var(--radius-sm);
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.theme-toggle:hover {
-  border-color: #ff0000;
-  transform: scale(1.05);
-}
-
-.theme-icon {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-}
-
-.theme-toggle:hover .theme-icon {
-  transform: rotate(20deg);
-}
-
-/* ===== THEME VARIATIONS ===== */
-/* Dark Theme (Default) */
-:root,
-[data-theme="dark"] {
+/* Black Theme Variables */
+:root {
   --bg-color: #000000;
   --text-color: #ffffff;
   --text-secondary: #cccccc;
@@ -1142,28 +1112,6 @@ button:active,
   --accent-color: #ff0000;
   --card-bg: #111111;
   --hover-bg: #222222;
-}
-
-/* Light Theme */
-[data-theme="light"] {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  --text-secondary: #666666;
-  --border-color: #dddddd;
-  --accent-color: #cc0000;
-  --card-bg: #f9f9f9;
-  --hover-bg: #f0f0f0;
-}
-
-/* Blue Theme (Middle brightness) */
-[data-theme="blue"] {
-  --bg-color: #f8f9fa;
-  --text-color: #1a365d;
-  --text-secondary: #4a5568;
-  --border-color: #cbd5e0;
-  --accent-color: #2b6cb0;
-  --card-bg: #ffffff;
-  --hover-bg: #e2e8f0;
 }
 
 /* Update existing color references to use CSS variables */
