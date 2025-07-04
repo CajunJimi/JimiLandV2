@@ -1,5 +1,52 @@
 # JimiLand Site Changelog
 
+## 2025-07-04 22:30:00 - Add Documentation Standards
+
+### Description
+Added .windsurfrules file to establish comprehensive documentation practices for the project, including changelog, feature logging, and troubleshooting standards.
+
+### Files Affected
+- `.windsurfrules` - New documentation standards file
+
+### Features Added
+- **Change Log Standards**: Defined structure for CHANGELOG.md entries including timestamp, description, files affected, and reason for change
+- **Feature Log Standards**: Established FEATURE_LOG.md documentation for new features and significant updates
+- **Troubleshooting Standards**: Set requirements for TROUBLESHOOTING_LOG.md to track issues and resolutions
+- **Chat History Archiving**: Guidelines for organizing conversation logs by date/topic
+- **Code Style Guidelines**: PEP 8 standards and documentation requirements
+
+### Reason for Change
+Establish consistent documentation practices to improve project maintainability, troubleshooting efficiency, and knowledge retention across development cycles.
+
+---
+
+## 2025-07-04 22:25:00 - Merge Production Improvements with Theme System
+
+### Description
+Completed merge of local production-ready improvements with remote 3-way theme toggle system, resolving conflicts and combining all recent enhancements.
+
+### Files Affected
+- All website files (merge resolution)
+- Various CSS, JS, and HTML files from both branches
+
+### Features Combined
+- **Archive Simplification**: Chronological article list without complex filtering
+- **UI Positioning Fixes**: Portfolio compactness and article content positioning
+- **Navigation Consistency**: Unified navbar structure across all post pages
+- **3-Way Theme Toggle**: Dark, Light, and Blue theme options with persistence
+- **Production Infrastructure**: Complete CMS integration and deployment setup
+
+### Technical Implementation
+- Resolved merge conflicts between diverged local and remote branches
+- Maintained functionality of all recent improvements
+- Ensured consistent styling and navigation across entire site
+- Preserved theme toggle functionality with all UI fixes
+
+### Reason for Change
+Combine all recent website improvements into a unified, production-ready state while maintaining the enhanced user experience features from both development branches.
+
+---
+
 ## 2025-07-01 20:00:00 - Add 3-Way Theme Toggle
 
 ### Description
