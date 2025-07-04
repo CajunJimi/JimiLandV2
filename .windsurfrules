@@ -1,0 +1,42 @@
+# .windsurfrules
+
+## Documentation Practices
+
+- **Change Logs**:
+  - For every code modification, update the `CHANGELOG.md` file located in the `Change_Logs` directory.
+  - Each entry should include:
+    - **Timestamp**: Date and time of the change.
+    - **Description**: A brief summary of the modification.
+    - **Files Affected**: List of altered files.
+    - **Reason for Change**: Explanation for the modification.
+
+- **Feature Logs**:
+  - Document new features or significant updates in the `FEATURE_LOG.md` file within the `Feature_Logs` directory.
+  - Each entry should contain:
+    - **Timestamp**: When the feature was implemented.
+    - **Feature Description**: Detailed explanation of the feature.
+    - **Implementation Details**: Technical specifics, including key functions or classes involved.
+    -Comprohensive monitoring logs for services used for projects so troubleshooting is easy
+
+- **Troubleshooting Logs**:
+  - Record issues and their resolutions in the `TROUBLESHOOTING_LOG.md` file found in the `Troubleshooting_Logs` directory.
+  - Each entry should include:
+    - **Timestamp**: When the issue was identified and resolved.
+    - **Issue Description**: Summary of the problem.
+    - **Resolution Steps**: Detailed steps taken to resolve the issue.
+    - **Outcome**: Result of the troubleshooting efforts.
+
+- **Chat Histories**:
+  - Archive relevant conversations in the `Chat_History` directory.
+  - Organize logs by date or topic for easy reference.
+
+## Coding Conventions
+
+- **Code Style**:
+  - Adhere to PEP 8 standards for Python code.
+  - Use meaningful variable names.
+  - Include comments for complex logic.
+
+- **Function and Class Documentation**:
+  - Provide docstrings for all functions and classes, detailing their purpose, parameters, and return values.
+
