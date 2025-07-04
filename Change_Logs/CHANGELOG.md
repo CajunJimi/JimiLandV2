@@ -1,5 +1,36 @@
 # JimiLand Site Changelog
 
+## 2025-07-04 22:35:00 - Remove 3-Way Theme Toggle, Revert to Standard Dark Theme
+
+### Description
+Removed the 3-way theme toggle functionality and reverted the site back to the standard minimal dark theme design.
+
+### Files Affected
+- `index.html` - Removed theme toggle button from navigation
+- `archive/index.html` - Removed theme toggle button from navigation
+- `portfolio/index.html` - Removed theme toggle button from navigation
+- `gigs/index.html` - Removed theme toggle button from navigation
+- `assets/css/main.css` - Removed theme variables, toggle styles, and multiple theme definitions
+- `assets/js/main.js` - Removed initializeThemeToggle() function and initialization call
+
+### Changes Made
+- **Navigation Cleanup**: Removed theme toggle buttons from all navigation areas
+- **CSS Simplification**: Eliminated theme variables, toggle styles, and light/blue theme definitions
+- **JavaScript Cleanup**: Removed theme toggle functionality and localStorage theme management
+- **Visual Consistency**: Restored uniform minimal black and white design across all pages
+- **Performance**: Reduced CSS and JavaScript file sizes by removing unused theme code
+
+### Technical Implementation
+- Removed `theme-toggle` buttons and associated styling from all HTML pages
+- Cleaned up CSS variables and theme-specific styling rules
+- Eliminated JavaScript theme switching logic and event handlers
+- Maintained existing dark theme as the standard site appearance
+
+### Reason for Change
+User requested removal of the 3-way theme toggle to simplify the site design and return to the standard dark theme as the primary visual experience.
+
+---
+
 ## 2025-07-04 22:30:00 - Add Documentation Standards
 
 ### Description
