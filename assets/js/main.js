@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeHeroScroll();
     loadRecentPosts();
     initializeAnimations();
-    initializeThemeToggle();
 });
 
 // ===== NAVIGATION =====
@@ -249,53 +248,7 @@ function displaySearchResults(results) {
     searchResults.style.display = 'block';
 }
 
-// ===== 3-WAY THEME TOGGLE =====
-function initializeThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.querySelector('.theme-icon');
-    if (!themeToggle || !themeIcon) return;
 
-    // Theme configuration
-    const themes = {
-        dark: { name: 'dark', icon: '🌙', next: 'light' },
-        light: { name: 'light', icon: '☀️', next: 'blue' },
-        blue: { name: 'blue', icon: '🌊', next: 'dark' }
-    };
-
-    // Check for saved theme preference or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-    
-    // Theme toggle click handler
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const nextTheme = themes[currentTheme].next;
-        setTheme(nextTheme);
-    });
-    
-    // Set theme function
-    function setTheme(themeName) {
-        const theme = themes[themeName];
-        if (!theme) return;
-        
-        // Update document theme
-        document.documentElement.setAttribute('data-theme', theme.name);
-        
-        // Update icon
-        themeIcon.textContent = theme.icon;
-        
-        // Save to localStorage
-        localStorage.setItem('theme', theme.name);
-        
-        // Update button title
-        const themeNames = {
-            dark: 'Dark Theme',
-            light: 'Light Theme', 
-            blue: 'Blue Theme'
-        };
-        themeToggle.title = `Current: ${themeNames[theme.name]} - Click to switch`;
-    }
-}
 
 // ===== SMOOTH SCROLLING FOR ANCHOR LINKS =====
 document.addEventListener('click', function(e) {
