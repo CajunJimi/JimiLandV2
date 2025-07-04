@@ -1,0 +1,29 @@
+# Environment variables (contains API keys)
+.env
+.env.local
+.env.production
+.env.*
+
+# Debug files (may contain sensitive info)
+debug-*.js
+debug-*.html
+*.debug.js
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
