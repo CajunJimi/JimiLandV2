@@ -108,25 +108,43 @@ class SongTracker {
         console.log('Total lines in CSV:', lines.length);
         console.log('First few lines:', lines.slice(0, 3));
         
-        // Skip header row if it exists
-        const startIndex = lines[0].toLowerCase().includes('song') ? 1 : 0;
-        console.log('Starting from line index:', startIndex);
-        
-        for (let i = startIndex; i < lines.length; i++) {
+        for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
             if (!line) continue;
             
-            // Parse CSV considering quoted values
-            const columns = this.parseCSVLine(line);
+            // Parse tab-separated data (3 columns: song, plays, details)
+            const columns = line.split('\t');
             console.log(`Line ${i}:`, columns);
             
-            if (columns.length >= 5) {
+            if (columns.length >= 3) {
+                const songName = columns[0] || 'Unknown';
+                const playCount = parseInt(columns[1]) || 0;
+                const detailsString = columns[2] || '';
+                
+                // Simple parsing: just show the first venue/artist for now
+                let when = 'Various dates';
+                let who = 'Various artists'; 
+                let where = 'Various venues';
+                
+                // Extract first entry from details string
+                if (detailsString) {
+                    const firstEntry = detailsString.split(' ; ')[0];
+                    if (firstEntry) {
+                        const parts = firstEntry.split(' – ');
+                        if (parts.length >= 3) {
+                            when = parts[0].trim();
+                            where = parts[1].trim();
+                            who = parts[2].trim();
+                        }
+                    }
+                }
+                
                 const song = {
-                    name: columns[this.sheetConfig.columns.song] || 'Unknown',
-                    plays: parseInt(columns[this.sheetConfig.columns.plays]) || 0,
-                    when: columns[this.sheetConfig.columns.when] || 'Unknown',
-                    who: columns[this.sheetConfig.columns.who] || 'Unknown',
-                    where: columns[this.sheetConfig.columns.where] || 'Unknown'
+                    name: songName,
+                    plays: playCount,
+                    when: when,
+                    who: who,
+                    where: where
                 };
                 
                 console.log('Parsed song:', song);
@@ -141,34 +159,7 @@ class SongTracker {
         this.filteredSongs = [...songs];
     }
     
-    /**
-     * Parse a single CSV line handling quoted values
-     * @param {string} line - CSV line to parse
-     * @returns {Array} Array of column values
-     */
-    parseCSVLine(line) {
-        const columns = [];
-        let current = '';
-        let inQuotes = false;
-        
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            
-            if (char === '"' && (i === 0 || line[i-1] === ',')) {
-                inQuotes = true;
-            } else if (char === '"' && inQuotes && (i === line.length - 1 || line[i+1] === ',')) {
-                inQuotes = false;
-            } else if (char === ',' && !inQuotes) {
-                columns.push(current.trim());
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        
-        columns.push(current.trim());
-        return columns;
-    }
+
     
     /**
      * Filter songs based on search term
