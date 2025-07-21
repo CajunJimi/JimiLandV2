@@ -9,10 +9,10 @@ class SongTracker {
         this.filteredSongs = [];
         this.isLoading = false;
         
-        // Google Sheets configuration
+        // Song data configuration
         this.sheetConfig = {
-            // CSV export URL for the user's Google Sheet
-            csvUrl: 'https://docs.google.com/spreadsheets/d/1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc/export?format=csv&gid=0',
+            // Local CSV file URL (much more reliable than Google Sheets API)
+            csvUrl: '/data/songs.csv',
             columns: {
                 song: 0,      // Column A: Song name
                 plays: 1,     // Column B: Number of plays
@@ -61,62 +61,28 @@ class SongTracker {
     }
     
     /**
-     * Load songs from Google Sheets
+     * Load songs from local CSV file
      */
     async loadSongs() {
         if (!this.sheetConfig.csvUrl) {
-            console.error('Google Sheets CSV URL not configured');
-            this.showError('Google Sheets URL not configured. Please check your setup.');
+            console.error('CSV URL not configured');
+            this.showError('CSV file not configured. Please check your setup.');
             return;
         }
         
         this.setLoading(true);
         
         try {
-            console.log('Attempting to load songs from:', this.sheetConfig.csvUrl);
+            console.log('Loading songs from local CSV:', this.sheetConfig.csvUrl);
             
-            // Try direct fetch first (will work if CORS is properly configured)
-            let response;
-            try {
-                response = await fetch(this.sheetConfig.csvUrl);
-                console.log('Direct fetch response:', response.status, response.statusText);
-            } catch (directFetchError) {
-                console.log('Direct fetch failed, trying with CORS proxy:', directFetchError.message);
-                
-                // Fallback to different CORS proxies
-                const corsProxies = [
-                    'https://api.allorigins.win/raw?url=',
-                    'https://corsproxy.io/?',
-                    'https://cors-anywhere.herokuapp.com/'
-                ];
-                
-                let proxyWorked = false;
-                for (const proxy of corsProxies) {
-                    try {
-                        console.log('Trying proxy:', proxy);
-                        response = await fetch(proxy + encodeURIComponent(this.sheetConfig.csvUrl));
-                        if (response.ok) {
-                            console.log('Proxy worked:', proxy);
-                            proxyWorked = true;
-                            break;
-                        }
-                    } catch (proxyError) {
-                        console.log('Proxy failed:', proxy, proxyError.message);
-                        continue;
-                    }
-                }
-                
-                if (!proxyWorked) {
-                    throw new Error('All CORS proxies failed. Please check Google Sheets permissions.');
-                }
-            }
+            const response = await fetch(this.sheetConfig.csvUrl);
             
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                throw new Error(`Failed to load CSV file: ${response.status} - ${response.statusText}`);
             }
             
             const csvData = await response.text();
-            console.log('CSV data received, length:', csvData.length);
+            console.log('CSV data loaded successfully, length:', csvData.length);
             console.log('First 200 chars:', csvData.substring(0, 200));
             
             this.parseCsvData(csvData);
@@ -124,17 +90,7 @@ class SongTracker {
             
         } catch (error) {
             console.error('Error loading songs:', error);
-            let errorMessage = 'Failed to load songs. ';
-            
-            if (error.message.includes('CORS')) {
-                errorMessage += 'Please make sure your Google Sheet is set to "Anyone with the link can view".';
-            } else if (error.message.includes('HTTP error')) {
-                errorMessage += 'Please check your Google Sheets URL and permissions.';
-            } else {
-                errorMessage += 'Please check your internet connection and try again.';
-            }
-            
-            this.showError(errorMessage);
+            this.showError('Failed to load song data. Please make sure the CSV file exists and is accessible.');
         } finally {
             this.setLoading(false);
         }
