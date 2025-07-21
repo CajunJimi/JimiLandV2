@@ -321,9 +321,8 @@ let songTracker;
 document.addEventListener('DOMContentLoaded', () => {
     songTracker = new SongTracker();
     
-    // Example of how to set up the Google Sheets URL
-    // User should replace this with their actual Google Sheets CSV export URL
-    // songTracker.setCsvUrl('https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=0');
+    // Expose the instance to global scope for gigs-loader integration
+    window.songTracker = songTracker;
 });
 
 // Export for use in other modules
