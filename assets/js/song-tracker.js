@@ -73,21 +73,68 @@ class SongTracker {
         this.setLoading(true);
         
         try {
-            // Use a CORS proxy to fetch the CSV data
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const response = await fetch(proxyUrl + this.sheetConfig.csvUrl);
+            console.log('Attempting to load songs from:', this.sheetConfig.csvUrl);
+            
+            // Try direct fetch first (will work if CORS is properly configured)
+            let response;
+            try {
+                response = await fetch(this.sheetConfig.csvUrl);
+                console.log('Direct fetch response:', response.status, response.statusText);
+            } catch (directFetchError) {
+                console.log('Direct fetch failed, trying with CORS proxy:', directFetchError.message);
+                
+                // Fallback to different CORS proxies
+                const corsProxies = [
+                    'https://api.allorigins.win/raw?url=',
+                    'https://corsproxy.io/?',
+                    'https://cors-anywhere.herokuapp.com/'
+                ];
+                
+                let proxyWorked = false;
+                for (const proxy of corsProxies) {
+                    try {
+                        console.log('Trying proxy:', proxy);
+                        response = await fetch(proxy + encodeURIComponent(this.sheetConfig.csvUrl));
+                        if (response.ok) {
+                            console.log('Proxy worked:', proxy);
+                            proxyWorked = true;
+                            break;
+                        }
+                    } catch (proxyError) {
+                        console.log('Proxy failed:', proxy, proxyError.message);
+                        continue;
+                    }
+                }
+                
+                if (!proxyWorked) {
+                    throw new Error('All CORS proxies failed. Please check Google Sheets permissions.');
+                }
+            }
             
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
             }
             
             const csvData = await response.text();
+            console.log('CSV data received, length:', csvData.length);
+            console.log('First 200 chars:', csvData.substring(0, 200));
+            
             this.parseCsvData(csvData);
             this.updateDisplay();
             
         } catch (error) {
             console.error('Error loading songs:', error);
-            this.showError('Failed to load songs. Please check your internet connection and try again.');
+            let errorMessage = 'Failed to load songs. ';
+            
+            if (error.message.includes('CORS')) {
+                errorMessage += 'Please make sure your Google Sheet is set to "Anyone with the link can view".';
+            } else if (error.message.includes('HTTP error')) {
+                errorMessage += 'Please check your Google Sheets URL and permissions.';
+            } else {
+                errorMessage += 'Please check your internet connection and try again.';
+            }
+            
+            this.showError(errorMessage);
         } finally {
             this.setLoading(false);
         }
@@ -98,11 +145,16 @@ class SongTracker {
      * @param {string} csvData - Raw CSV data
      */
     parseCsvData(csvData) {
+        console.log('Parsing CSV data...');
         const lines = csvData.trim().split('\n');
         const songs = [];
         
+        console.log('Total lines in CSV:', lines.length);
+        console.log('First few lines:', lines.slice(0, 3));
+        
         // Skip header row if it exists
         const startIndex = lines[0].toLowerCase().includes('song') ? 1 : 0;
+        console.log('Starting from line index:', startIndex);
         
         for (let i = startIndex; i < lines.length; i++) {
             const line = lines[i].trim();
@@ -110,6 +162,7 @@ class SongTracker {
             
             // Parse CSV considering quoted values
             const columns = this.parseCSVLine(line);
+            console.log(`Line ${i}:`, columns);
             
             if (columns.length >= 5) {
                 const song = {
@@ -120,10 +173,14 @@ class SongTracker {
                     where: columns[this.sheetConfig.columns.where] || 'Unknown'
                 };
                 
+                console.log('Parsed song:', song);
                 songs.push(song);
+            } else {
+                console.log(`Line ${i} skipped - insufficient columns:`, columns.length);
             }
         }
         
+        console.log('Total songs parsed:', songs.length);
         this.songs = songs;
         this.filteredSongs = [...songs];
     }
