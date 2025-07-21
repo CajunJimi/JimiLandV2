@@ -52,10 +52,20 @@ class GigsLoader {
      */
     setupDOM() {
         this.gigsContainer = document.querySelector('#gigs-grid');
+        this.calendarContainer = document.querySelector('#calendar-container');
+        this.undatedGigsContainer = document.querySelector('#undated-gigs');
+        
         if (!this.gigsContainer) {
             console.error('Gigs container not found');
             return;
         }
+        
+        // Log container initialization for debugging
+        console.log('DOM containers initialized:', {
+            gigsContainer: !!this.gigsContainer,
+            calendarContainer: !!this.calendarContainer,
+            undatedGigsContainer: !!this.undatedGigsContainer
+        });
     }
 
     /**
@@ -549,16 +559,21 @@ isUpcoming(dateString) {
  * Show song tracker and hide gigs content
  */
 showSongTracker() {
+    console.log('showSongTracker() called');
+    
     // Hide gigs-related elements
     this.hideGigsContent();
             
     // Show song tracker
     if (window.songTracker) {
+        console.log('songTracker found, showing...');
         window.songTracker.show();
         // Load songs if not already loaded
         if (window.songTracker.songs.length === 0) {
             window.songTracker.loadSongs();
         }
+    } else {
+        console.error('window.songTracker not found!');
     }
 }
 
@@ -579,6 +594,8 @@ hideSongTracker() {
  * Hide gigs-related content
  */
 hideGigsContent() {
+    console.log('hideGigsContent() called');
+    
     const elementsToHide = [
         this.gigsContainer,
         this.calendarContainer,
@@ -586,10 +603,15 @@ hideGigsContent() {
         document.getElementById('no-gigs'),
         document.querySelector('.view-tabs')
     ];
+    
+    console.log('Elements to hide:', elementsToHide.map(el => el ? el.id || el.className : 'null'));
             
-    elementsToHide.forEach(element => {
+    elementsToHide.forEach((element, index) => {
         if (element) {
             element.classList.add('hidden');
+            console.log(`Hidden element ${index}:`, element.id || element.className);
+        } else {
+            console.log(`Element ${index} is null, skipping`);
         }
     });
 }
