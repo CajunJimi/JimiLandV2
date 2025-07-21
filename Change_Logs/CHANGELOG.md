@@ -18,6 +18,8 @@ User requested to delete these specific articles completely from both homepage a
 - Homepage now shows 3 articles instead of 5 in Latest Posts
 - Archive chronological listing updated to exclude removed articles
 - Physical article files and directories permanently deleted
+- **IMPORTANT**: Removed "Drones" entry from `/data/posts.json` to fix dynamic loading issue
+- JavaScript `posts-loader.js` was re-adding "Drones" article after page refresh from JSON data
 - Site maintains clean structure with remaining articles: Billy and the kids, HST - Letter, DSO - 2024
 
 ## 2025-07-04 22:35:00 - Remove 3-Way Theme Toggle, Revert to Standard Dark Theme
