@@ -1,5 +1,34 @@
 # JimiLand Site Changelog
 
+## 2025-07-21 20:12:00 - Add Song Tracker Integration with Google Sheets
+
+### Description
+Added a new Song Tracker section to the gigs page that integrates with Google Sheets to display user's song listening data. The feature includes a searchable table, statistics, and real-time data fetching from Google Sheets.
+
+### Files Affected
+- `gigs/index.html` - Added Song Tracker tab and content section with search, stats, and table
+- `assets/css/gigs.css` - Added comprehensive CSS styles for song tracker UI components
+- `assets/js/song-tracker.js` - Created new JavaScript module for Google Sheets integration
+- `assets/js/gigs-loader.js` - Updated to handle song tracker tab switching and content visibility
+
+### Reason for Change
+User requested integration with their Google Sheets song tracking data to display song listen counts, when/who/where information on the website.
+
+### Changes Made
+- Added "Song Tracker" tab to existing gigs filter tabs
+- Created responsive table layout with search functionality
+- Implemented Google Sheets CSV parsing and display
+- Added statistics cards showing total songs and plays
+- Integrated with existing gigs page navigation system
+- Configured with user's specific Google Sheets URL (ID: 1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc)
+
+### Technical Implementation
+- Uses Google Sheets CSV export URL for data fetching
+- Implements CORS proxy for cross-origin requests
+- Parses CSV data handling quoted values and comma separation
+- Provides search/filter functionality across all song data fields
+- Mobile-responsive design with optimized table layout
+
 ## 2025-07-21 19:15:00 - Remove "Drones" and "Jam Band New Year" Articles
 
 ### Description

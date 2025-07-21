@@ -74,8 +74,14 @@ class GigsLoader {
                 // Set current filter
                 this.currentFilter = button.dataset.filter || 'all';
                 
-                // Re-render gigs
-                this.renderGigs();
+                // Handle song tracker filter
+                if (this.currentFilter === 'songs') {
+                    this.showSongTracker();
+                } else {
+                    this.hideSongTracker();
+                    // Re-render gigs for other filters
+                    this.renderGigs();
+                }
             });
         });
     }
@@ -420,21 +426,204 @@ class GigsLoader {
         `;
     }
 
-    /**
-     * Check if a gig date is upcoming (today or future)
-     */
-    isUpcoming(dateString) {
-        if (!dateString) return false;
-        const gigDate = new Date(dateString);
-        const today = new Date();
         
-        // Set both dates to midnight for date-only comparison
-        gigDate.setHours(0, 0, 0, 0);
-        today.setHours(0, 0, 0, 0);
-        
-        return gigDate >= today;
+/**
+ * Render undated gigs
+ */
+renderUndatedGigs() {
+    const undatedGigsList = document.getElementById('undated-gigs-list');
+    const undatedGigsSection = document.getElementById('undated-gigs');
+            
+    if (!undatedGigsList || !undatedGigsSection) return;
+            
+    // Get gigs without dates
+    const undatedGigs = this.gigs.filter(gig => !gig.date || gig.date === '');
+            
+    if (undatedGigs.length === 0) {
+        undatedGigsSection.style.display = 'none';
+        return;
     }
+            
+    undatedGigsSection.style.display = 'block';
+    undatedGigsList.innerHTML = '';
+            
+    undatedGigs.forEach(gig => {
+        const gigElement = document.createElement('div');
+        gigElement.className = 'undated-gig';
+                
+        gigElement.innerHTML = `
+            <h4>${gig.title || 'Untitled Gig'}</h4>
+            <p><strong>Venue:</strong> ${gig.venue || 'TBA'}</p>
+            ${gig.location ? `<p><strong>Location:</strong> ${gig.location}</p>` : ''}
+            <p><strong>Status:</strong> ${gig.status || 'TBA'}</p>
+        `;
+                
+        undatedGigsList.appendChild(gigElement);
+    });
+}
+        
+/**
+ * Setup view switching
+ */
+setupViewSwitching() {
+    const viewTabs = document.querySelectorAll('.view-tab');
+    const listView = document.getElementById('gigs-grid');
+    const calendarView = document.getElementById('calendar-container');
+            
+    viewTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const view = tab.dataset.view;
+                    
+            // Update active tab
+            viewTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+                    
+            // Switch views
+            if (view === 'calendar') {
+                listView?.classList.add('hidden');
+                calendarView?.classList.remove('hidden');
+                this.currentView = 'calendar';
+                this.generateCalendar();
+                this.renderUndatedGigs();
+            } else {
+                listView?.classList.remove('hidden');
+                calendarView?.classList.add('hidden');
+                this.currentView = 'list';
+            }
+        });
+    });
+            
+    // Setup calendar navigation
+    const prevButton = document.getElementById('prev-month');
+    const nextButton = document.getElementById('next-month');
+            
+    prevButton?.addEventListener('click', () => {
+        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+        this.generateCalendar();
+    });
+            
+    nextButton?.addEventListener('click', () => {
+        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+        this.generateCalendar();
+    });
+}
 
+/**
+ * Show error message
+ */
+showError() {
+    if (!this.gigsContainer) return;
+            
+    this.gigsContainer.innerHTML = `
+        <div class="error-message">
+            <p>Unable to load gigs. Please try again later.</p>
+        </div>
+    `;
+}
+
+/**
+ * Show no gigs message
+ */
+showNoGigs() {
+    const filterText = this.currentFilter === 'all' ? '' : ` ${this.currentFilter}`;
+    this.gigsContainer.innerHTML = `
+        <div class="no-gigs">
+            <p>No${filterText} gigs available.</p>
+        </div>
+    `;
+}
+
+/**
+ * Check if a gig date is upcoming (today or future)
+ */
+isUpcoming(dateString) {
+    if (!dateString) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const gigDate = new Date(dateString);
+    gigDate.setHours(0, 0, 0, 0);
+    return gigDate >= today;
+}
+
+/**
+ * Show song tracker and hide gigs content
+ */
+showSongTracker() {
+    // Hide gigs-related elements
+    this.hideGigsContent();
+            
+    // Show song tracker
+    if (window.songTracker) {
+        window.songTracker.show();
+        // Load songs if not already loaded
+        if (window.songTracker.songs.length === 0) {
+            window.songTracker.loadSongs();
+        }
+    }
+}
+
+/**
+ * Hide song tracker and show gigs content
+ */
+hideSongTracker() {
+    // Hide song tracker
+    if (window.songTracker) {
+        window.songTracker.hide();
+    }
+            
+    // Show gigs content
+    this.showGigsContent();
+}
+
+/**
+ * Hide gigs-related content
+ */
+hideGigsContent() {
+    const elementsToHide = [
+        this.gigsContainer,
+        this.calendarContainer,
+        this.undatedGigsContainer,
+        document.getElementById('no-gigs'),
+        document.querySelector('.view-tabs')
+    ];
+            
+    elementsToHide.forEach(element => {
+        if (element) {
+            element.classList.add('hidden');
+        }
+    });
+}
+
+/**
+ * Show gigs-related content
+ */
+showGigsContent() {
+    const elementsToShow = [
+        this.gigsContainer,
+        document.querySelector('.view-tabs')
+    ];
+            
+    elementsToShow.forEach(element => {
+        if (element) {
+            element.classList.remove('hidden');
+        }
+    });
+            
+    // Show calendar or undated gigs based on current view
+    if (this.currentView === 'calendar') {
+        if (this.calendarContainer) {
+            this.calendarContainer.classList.remove('hidden');
+        }
+    } else {
+        if (this.undatedGigsContainer) {
+            this.undatedGigsContainer.classList.remove('hidden');
+        }
+    }
+}
+
+/**
+ * Fallback sample gigs data
+ */
     /**
      * Fallback sample gigs data
      */
