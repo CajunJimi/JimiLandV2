@@ -1,5 +1,25 @@
 # JimiLand Site Changelog
 
+## 2025-07-21 19:15:00 - Remove "Drones" and "Jam Band New Year" Articles
+
+### Description
+Completely removed "Drones" and "Jam Band new year 2024" articles from the website as requested by the user.
+
+### Files Affected
+- `index.html` - Removed both articles from Latest Posts section
+- `archive/index.html` - Removed both articles from chronological archive listing
+- `posts/drones/` - Deleted entire directory and contents
+- `posts/jam-band-new-year-2024/` - Deleted entire directory and contents
+
+### Reason for Change
+User requested to delete these specific articles completely from both homepage and archive sections.
+
+### Changes Made
+- Homepage now shows 3 articles instead of 5 in Latest Posts
+- Archive chronological listing updated to exclude removed articles
+- Physical article files and directories permanently deleted
+- Site maintains clean structure with remaining articles: Billy and the kids, HST - Letter, DSO - 2024
+
 ## 2025-07-03 18:30:00 - Remove Theme Toggle and Revert to Black Theme
 
 ### Description
