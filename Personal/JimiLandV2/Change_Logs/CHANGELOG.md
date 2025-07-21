@@ -1,37 +1,15 @@
 # JimiLand Site Changelog
 
-## 2025-07-21 19:15:00 - Remove "Drones" and "Jam Band New Year" Articles
+## 2025-07-03 18:30:00 - Remove Theme Toggle and Revert to Black Theme
 
 ### Description
-Completely removed "Drones" and "Jam Band new year 2024" articles from the website as requested by the user.
-
-### Files Affected
-- `index.html` - Removed both articles from Latest Posts section
-- `archive/index.html` - Removed both articles from chronological archive listing
-- `posts/drones/` - Deleted entire directory and contents
-- `posts/jam-band-new-year-2024/` - Deleted entire directory and contents
-
-### Reason for Change
-User requested to delete these specific articles completely from both homepage and archive sections.
-
-### Changes Made
-- Homepage now shows 3 articles instead of 5 in Latest Posts
-- Archive chronological listing updated to exclude removed articles
-- Physical article files and directories permanently deleted
-- Site maintains clean structure with remaining articles: Billy and the kids, HST - Letter, DSO - 2024
-
-## 2025-07-04 22:35:00 - Remove 3-Way Theme Toggle, Revert to Standard Dark Theme
-
-### Description
-Removed the 3-way theme toggle functionality and reverted the site back to the standard minimal dark theme design.
->>>>>>> 2c741bd9879ffeebc68c8c5c12f00e4def9980b3
+Removed the theme toggle button from all pages and reverted the site back to its original black theme with fixed styling.
 
 ### Files Affected
 - `index.html` - Removed theme toggle button from navigation
 - `archive/index.html` - Removed theme toggle button from navigation
 - `portfolio/index.html` - Removed theme toggle button from navigation
 - `gigs/index.html` - Removed theme toggle button from navigation
-<<<<<<< HEAD
 - `assets/css/main.css` - Removed theme toggle styles and theme variations, keeping only black theme
 - `assets/js/main.js` - Removed theme toggle initialization function
 - `assets/css/post.css` - Simplified to use fixed black theme
@@ -110,72 +88,6 @@ Fixed theme toggle implementation to ensure all elements properly change colors 
 - Added `--card-bg` and `--hover-bg` variables for better card theming
 - Extended theme variable usage to post.css for consistent styling
 - Ensured all text, backgrounds, and borders use theme variables
-=======
-- `assets/css/main.css` - Removed theme variables, toggle styles, and multiple theme definitions
-- `assets/js/main.js` - Removed initializeThemeToggle() function and initialization call
-
-### Changes Made
-- **Navigation Cleanup**: Removed theme toggle buttons from all navigation areas
-- **CSS Simplification**: Eliminated theme variables, toggle styles, and light/blue theme definitions
-- **JavaScript Cleanup**: Removed theme toggle functionality and localStorage theme management
-- **Visual Consistency**: Restored uniform minimal black and white design across all pages
-- **Performance**: Reduced CSS and JavaScript file sizes by removing unused theme code
-
-### Technical Implementation
-- Removed `theme-toggle` buttons and associated styling from all HTML pages
-- Cleaned up CSS variables and theme-specific styling rules
-- Eliminated JavaScript theme switching logic and event handlers
-- Maintained existing dark theme as the standard site appearance
-
-### Reason for Change
-User requested removal of the 3-way theme toggle to simplify the site design and return to the standard dark theme as the primary visual experience.
-
----
-
-## 2025-07-04 22:30:00 - Add Documentation Standards
-
-### Description
-Added .windsurfrules file to establish comprehensive documentation practices for the project, including changelog, feature logging, and troubleshooting standards.
-
-### Files Affected
-- `.windsurfrules` - New documentation standards file
-
-### Features Added
-- **Change Log Standards**: Defined structure for CHANGELOG.md entries including timestamp, description, files affected, and reason for change
-- **Feature Log Standards**: Established FEATURE_LOG.md documentation for new features and significant updates
-- **Troubleshooting Standards**: Set requirements for TROUBLESHOOTING_LOG.md to track issues and resolutions
-- **Chat History Archiving**: Guidelines for organizing conversation logs by date/topic
-- **Code Style Guidelines**: PEP 8 standards and documentation requirements
-
-### Reason for Change
-Establish consistent documentation practices to improve project maintainability, troubleshooting efficiency, and knowledge retention across development cycles.
-
----
-
-## 2025-07-04 22:25:00 - Merge Production Improvements with Theme System
-
-### Description
-Completed merge of local production-ready improvements with remote 3-way theme toggle system, resolving conflicts and combining all recent enhancements.
-
-### Files Affected
-- All website files (merge resolution)
-- Various CSS, JS, and HTML files from both branches
-
-### Features Combined
-- **Archive Simplification**: Chronological article list without complex filtering
-- **UI Positioning Fixes**: Portfolio compactness and article content positioning
-- **Navigation Consistency**: Unified navbar structure across all post pages
-- **3-Way Theme Toggle**: Dark, Light, and Blue theme options with persistence
-- **Production Infrastructure**: Complete CMS integration and deployment setup
-
-### Technical Implementation
-- Resolved merge conflicts between diverged local and remote branches
-- Maintained functionality of all recent improvements
-- Ensured consistent styling and navigation across entire site
-- Preserved theme toggle functionality with all UI fixes
-
-### Reason for Change
-Combine all recent website improvements into a unified, production-ready state while maintaining the enhanced user experience features from both development branches.
 
 ---
 

@@ -1096,11 +1096,13 @@ button:active,
   }
 }
 
+/* ===== THEME TOGGLE STYLES ===== */
 .nav-controls {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
+
 /* Black Theme Variables */
 :root {
   --bg-color: #000000;
