@@ -1,5 +1,39 @@
 # JimiLand Site Changelog
 
+## 2025-07-26 14:30:00 - Song Tracker Expandable Rows Feature
+
+### Description
+Enhanced Song Tracker with expandable rows to display all venues, artists, and dates for each song while maintaining clean visual presentation.
+
+### Files Affected
+- `assets/js/song-tracker.js` - Updated parser and table rendering
+- `assets/css/gigs.css` - Added expandable row styles and animations
+- `README.md` - Updated with comprehensive Song Tracker documentation
+
+### Reason for Change
+User requested display of all concert venues/artists/dates per song instead of just the first entry, while keeping the interface visually appealing and scannable.
+
+### Changes Made
+1. **Enhanced Parser**: Now captures ALL concert entries per song (not just first one)
+2. **Smart Summaries**: Shows "4 venues" or "3 artists" in collapsed view
+3. **Expandable UI**: Click ▶ arrow to expand and see all concert details
+4. **Smooth Animations**: Added CSS transitions and hover effects
+5. **Mobile Responsive**: Optimized layout for small screens
+6. **Icon System**: ▶ for expandable songs, • for single-venue songs
+
+### Technical Implementation
+- Parser creates `concertEntries[]` array with date/venue/artist objects
+- Table renders main row + hidden details row for each song
+- Click handler toggles `isExpanded` state and re-renders
+- CSS animations handle smooth expand/collapse transitions
+- Responsive design ensures mobile compatibility
+
+### User Experience Impact
+- Users can now see complete concert history for each song
+- Table remains clean and scannable in collapsed state
+- Interactive exploration of venue/artist details
+- Better understanding of song frequency across different events
+
 ## 2025-07-21 20:12:00 - Add Song Tracker Integration with Google Sheets
 
 ### Description

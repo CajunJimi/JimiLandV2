@@ -1,6 +1,14 @@
 # JimiLand V2 - Personal Blog & Gig Site
 
-A minimal, static website for showcasing blog posts and gig listings, powered by Notion CMS and deployed on GitHub Pages.
+**Personal blog and music tracking website** for showcasing blog posts, gig listings, and concert song tracking. This is a **personal project** documenting musical experiences and thoughts, powered by Notion CMS and deployed on GitHub Pages.
+
+## 🎵 Key Features
+
+- **Blog Posts**: Personal thoughts and experiences
+- **Gig Listings**: Upcoming and past concert events 
+- **Song Tracker**: Interactive database of songs heard at concerts with expandable venue/artist details
+- **Responsive Design**: Works on desktop and mobile devices
+- **Dark Theme**: Consistent dark aesthetic throughout
 
 ## 🚀 Quick Start
 
@@ -77,6 +85,34 @@ node scripts/notion-sync.js
 - **Smart Titles**: Shows artist names when available, falls back to venue
 - **Date Sorting**: Newest first, proper date handling
 - **Interactive Calendar**: Month navigation with color-coded gig dots
+
+## 🚀 Deployment
+
+### GitHub Pages Setup
+This site is **automatically deployed** via GitHub Pages when changes are pushed to the `main` branch.
+
+**Live URL**: `https://jimi.land` (custom domain)
+**GitHub Pages URL**: `https://cajunjimi.github.io/JimiLandV2/`
+
+### Deployment Process
+1. **Make Changes**: Edit files locally or via IDE
+2. **Test Locally**: Run `python3 -m http.server 8000` to test
+3. **Commit**: `git add . && git commit -m "Description of changes"`
+4. **Push**: `git push origin main`
+5. **Live**: Changes appear on `https://jimi.land` in 1-3 minutes
+
+### Custom Domain Configuration
+- **CNAME file**: Contains `jimi.land` for custom domain
+- **DNS**: Points to GitHub Pages servers
+- **HTTPS**: Automatically enabled by GitHub Pages
+
+### Emergency Rollback
+```bash
+# Rollback to previous commit
+git log --oneline -5  # Find commit hash
+git reset --hard [commit-hash]
+git push origin main --force
+```
 
 ## 🛠 Development Commands
 
@@ -179,11 +215,48 @@ ls -la data/
 - **Archive**: `assets/js/archive.js`
 - **Notion Sync**: `scripts/notion-sync.js`
 
+## 🤖 AI Assistant & Maintainer Handoff
+
+### Before Making Changes
+**CRITICAL**: Always review these files first:
+1. **README.md** (this file) - Full project overview
+2. **Change_Logs/CHANGELOG.md** - All previous modifications
+3. **Feature_Logs/FEATURE_LOG.md** - Detailed feature implementations  
+4. **Troubleshooting_Logs/TROUBLESHOOTING_LOG.md** - Known issues and solutions
+5. **.windsurfrules** - Project-specific documentation requirements
+
+### Project Context
+- **Type**: Personal blog and music tracking website
+- **Owner**: Documents Grateful Dead concert experiences and personal thoughts
+- **Deployment**: GitHub Pages with custom domain (jimi.land)
+- **Tech Stack**: Static HTML/CSS/JS, no build process required
+- **CMS**: Notion integration for blog posts and gigs
+
+### Key Integration Points
+- **Song Tracker**: Tab-separated CSV data at `/data/songs.csv`
+- **Blog Posts**: Synced from Notion via `scripts/notion-sync.js`
+- **Gigs**: Calendar and list views with Notion integration
+- **Responsive**: Mobile-first design with dark theme
+
+### Development Workflow
+1. **Test Locally**: `python3 -m http.server 8000`
+2. **Make Changes**: Edit files as needed
+3. **Update Logs**: Follow .windsurfrules documentation practices
+4. **Commit**: `git add . && git commit -m "Clear description"`
+5. **Deploy**: `git push origin main` (auto-deploys to https://jimi.land)
+
+### Documentation Requirements
+- **Every change** must be logged in CHANGELOG.md
+- **New features** must be documented in FEATURE_LOG.md
+- **Issues/fixes** must be logged in TROUBLESHOOTING_LOG.md
+- **Include**: Timestamp, files affected, reason for change, technical details
+
 ## 📚 Documentation
 
 ### Logs Location
 - **Changes**: `Change_Logs/CHANGELOG.md`
 - **Features**: `Feature_Logs/FEATURE_LOG.md`
+- **Troubleshooting**: `Troubleshooting_Logs/TROUBLESHOOTING_LOG.md`
 - **Issues**: `Troubleshooting_Logs/TROUBLESHOOTING_LOG.md`
 
 ### Key Design Decisions
