@@ -397,6 +397,152 @@
     margin-bottom: var(--space-sm);
 }
 
+/* Expandable rows styling */
+.song-name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.expand-icon {
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    transition: transform 0.2s ease;
+}
+
+.expand-icon.expandable {
+    cursor: pointer;
+    color: var(--accent-color);
+}
+
+.expand-icon.expandable:hover {
+    color: #fff;
+}
+
+.song-row {
+    transition: background-color 0.2s ease;
+}
+
+.song-row.expandable:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.song-details-row {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.song-details-row.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.song-details-row.expanded {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.song-details-cell {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 !important;
+}
+
+.concert-entries {
+    padding: 15px 20px;
+}
+
+.concert-entry {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
+}
+
+.concert-entry:last-child {
+    border-bottom: none;
+}
+
+.concert-date {
+    min-width: 100px;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.concert-venue {
+    flex: 1;
+    color: #fff;
+}
+
+.concert-artist {
+    min-width: 150px;
+    color: #ccc;
+    font-style: italic;
+}
+
+/* Expanded state icon rotation */
+.song-row .expand-icon.expandable {
+    transform: rotate(0deg);
+}
+
+.song-row.expanded .expand-icon.expandable {
+    transform: rotate(90deg);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .song-tracker-container {
+        padding: 15px;
+    }
+    
+    .song-tracker-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .song-tracker-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .song-tracker-table {
+        font-size: 0.9rem;
+    }
+    
+    .song-tracker-table th,
+    .song-tracker-table td {
+        padding: 8px 6px;
+    }
+    
+    /* Hide some columns on mobile */
+    .song-tracker-table th:nth-child(4),
+    .song-tracker-table td:nth-child(4),
+    .song-tracker-table th:nth-child(5),
+    .song-tracker-table td:nth-child(5) {
+        display: none;
+    }
+    
+    /* Mobile concert entries layout */
+    .concert-entry {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        padding: 10px 0;
+    }
+    
+    .concert-date,
+    .concert-venue,
+    .concert-artist {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .song-tracker-header {

@@ -121,30 +121,46 @@ class SongTracker {
                 const playCount = parseInt(columns[1]) || 0;
                 const detailsString = columns[2] || '';
                 
-                // Simple parsing: just show the first venue/artist for now
-                let when = 'Various dates';
-                let who = 'Various artists'; 
-                let where = 'Various venues';
+                // Parse all concert entries from details string
+                const concertEntries = [];
+                let summaryWhen = 'Various dates';
+                let summaryWho = 'Various artists'; 
+                let summaryWhere = 'Various venues';
                 
-                // Extract first entry from details string
                 if (detailsString) {
-                    const firstEntry = detailsString.split(' ; ')[0];
-                    if (firstEntry) {
-                        const parts = firstEntry.split(' – ');
+                    const entries = detailsString.split(' ; ');
+                    
+                    entries.forEach(entry => {
+                        const parts = entry.split(' – ');
                         if (parts.length >= 3) {
-                            when = parts[0].trim();
-                            where = parts[1].trim();
-                            who = parts[2].trim();
+                            concertEntries.push({
+                                date: parts[0].trim(),
+                                venue: parts[1].trim(),
+                                artist: parts[2].trim()
+                            });
                         }
+                    });
+                    
+                    // Create summary for collapsed view
+                    if (concertEntries.length > 0) {
+                        const venues = [...new Set(concertEntries.map(e => e.venue))];
+                        const artists = [...new Set(concertEntries.map(e => e.artist))];
+                        const dates = [...new Set(concertEntries.map(e => e.date))].sort();
+                        
+                        summaryWhen = dates.length > 1 ? `${dates[0]} - ${dates[dates.length - 1]}` : dates[0] || 'Various dates';
+                        summaryWho = artists.length > 1 ? `${artists.length} artists` : artists[0] || 'Various artists';
+                        summaryWhere = venues.length > 1 ? `${venues.length} venues` : venues[0] || 'Various venues';
                     }
                 }
                 
                 const song = {
                     name: songName,
                     plays: playCount,
-                    when: when,
-                    who: who,
-                    where: where
+                    when: summaryWhen,
+                    who: summaryWho,
+                    where: summaryWhere,
+                    concertEntries: concertEntries,
+                    isExpanded: false
                 };
                 
                 console.log('Parsed song:', song);
@@ -215,29 +231,70 @@ class SongTracker {
      * Render the songs table
      */
     renderSongsTable() {
-        if (!this.songsTableBody) return;
+        if (!this.songsTableBody) {
+            console.error('Table body element not found');
+            return;
+        }
         
         this.songsTableBody.innerHTML = '';
         
-        // Sort songs by play count (descending) then by name
-        const sortedSongs = this.filteredSongs.sort((a, b) => {
-            if (b.plays !== a.plays) {
-                return b.plays - a.plays;
-            }
-            return a.name.localeCompare(b.name);
-        });
-        
-        sortedSongs.forEach(song => {
+        this.filteredSongs.forEach((song, index) => {
+            // Main row (always visible)
             const row = document.createElement('tr');
+            row.className = 'song-row';
             row.innerHTML = `
-                <td class="song-name">${this.escapeHtml(song.name)}</td>
-                <td class="song-plays">${song.plays}</td>
-                <td class="song-when">${this.escapeHtml(song.when)}</td>
-                <td class="song-who">${this.escapeHtml(song.who)}</td>
-                <td class="song-where">${this.escapeHtml(song.where)}</td>
+                <td class="song-name-cell">
+                    <div class="song-name-container">
+                        <span class="expand-icon ${song.concertEntries.length > 1 ? 'expandable' : ''}" data-song-index="${index}">
+                            ${song.concertEntries.length > 1 ? '▶' : '•'}
+                        </span>
+                        <span class="song-name">${this.escapeHtml(song.name)}</span>
+                    </div>
+                </td>
+                <td>${song.plays}</td>
+                <td>${this.escapeHtml(song.when)}</td>
+                <td>${this.escapeHtml(song.who)}</td>
+                <td>${this.escapeHtml(song.where)}</td>
             `;
+            
+            // Add click handler for expandable songs
+            if (song.concertEntries.length > 1) {
+                row.style.cursor = 'pointer';
+                row.addEventListener('click', () => this.toggleSongExpansion(index));
+            }
+            
             this.songsTableBody.appendChild(row);
+            
+            // Expanded details row (initially hidden)
+            if (song.concertEntries.length > 1) {
+                const detailsRow = document.createElement('tr');
+                detailsRow.className = `song-details-row ${song.isExpanded ? 'expanded' : 'collapsed'}`;
+                detailsRow.innerHTML = `
+                    <td colspan="5" class="song-details-cell">
+                        <div class="concert-entries">
+                            ${song.concertEntries.map(entry => `
+                                <div class="concert-entry">
+                                    <span class="concert-date">${this.escapeHtml(entry.date)}</span>
+                                    <span class="concert-venue">${this.escapeHtml(entry.venue)}</span>
+                                    <span class="concert-artist">${this.escapeHtml(entry.artist)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </td>
+                `;
+                this.songsTableBody.appendChild(detailsRow);
+            }
         });
+    }
+    
+    /**
+     * Toggle song expansion
+     * @param {number} index - Index of the song to toggle
+     */
+    toggleSongExpansion(index) {
+        const song = this.filteredSongs[index];
+        song.isExpanded = !song.isExpanded;
+        this.renderSongsTable();
     }
     
     /**
