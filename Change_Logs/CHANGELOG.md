@@ -1,5 +1,23 @@
 # JimiLand Site Changelog
 
+## 2025-08-11 17:10:00 - Update Gig Data from Notion
+
+### Description
+Synced latest gig data from Notion, adding a new gig entry for Grateful Dudes at Hebden Bridge Traders Club.
+
+### Files Affected
+- `data/gigs.json` - Updated with new gig entry
+
+### Reason for Change
+User added a new gig to the Notion database and requested a refresh of the local data.
+
+### Changes Made
+- Added new gig entry for "Grateful Dudes" at Hebden Bridge Traders Club on 2025-09-27
+- Ran Notion sync script to update local data
+- Deployed changes to GitHub
+
+---
+
 ## 2025-07-26 14:30:00 - Song Tracker Expandable Rows Feature
 
 ### Description
