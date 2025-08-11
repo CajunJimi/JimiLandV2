@@ -175,7 +175,15 @@ class GigsLoader {
         // Use artist name as title if available, otherwise venue name if gig title is generic
         let displayTitle = gig.title;
         if (gig.title === 'Untitled Gig' || !gig.title) {
-            displayTitle = gig.artist || gig.venue || 'TBA';
+            // Only use artist or venue if they're actually available
+            if (gig.artist) {
+                displayTitle = gig.artist;
+            } else if (gig.venue) {
+                displayTitle = gig.venue;
+            } else {
+                // Only show TBA if we have a valid date
+                displayTitle = gig.date ? 'TBA' : '';
+            }
         }
         title.textContent = displayTitle;
         
@@ -300,7 +308,15 @@ class GigsLoader {
                     // Use artist name as title if available, otherwise venue name if gig title is generic
                     let displayTitle = gig.title;
                     if (gig.title === 'Untitled Gig' || !gig.title) {
-                        displayTitle = gig.artist || gig.venue || 'TBA';
+                        // Only use artist or venue if they're actually available
+                        if (gig.artist) {
+                            displayTitle = gig.artist;
+                        } else if (gig.venue) {
+                            displayTitle = gig.venue;
+                        } else {
+                            // Only show TBA if we have a valid date
+                            displayTitle = gig.date ? 'TBA' : '';
+                        }
                     }
                     gigText.textContent = displayTitle;
                     

@@ -1,5 +1,26 @@
 # JimiLand Site Changelog
 
+## 2025-08-11 18:45:00 - Fix TBA Gigs Bug
+
+### Description
+Fixed issue causing unexpected "TBA" gig entries with today's date to appear after Notion sync.
+
+### Files Affected
+- `scripts/notion-sync.js` - Updated gig conversion logic
+- `assets/js/gigs-loader.js` - Fixed frontend display logic
+- `data/gigs.json` - Removed erroneous TBA entries
+
+### Reason for Change
+The Notion sync script was incorrectly assigning today's date to gigs without dates, and the frontend was displaying these as "TBA" entries.
+
+### Changes Made
+- Modified `convertNotionPageToGig` function to leave date empty instead of defaulting to today's date
+- Updated frontend display logic to only show "TBA" for gigs with valid dates
+- Added more robust checks for artist/venue information in display logic
+- Re-ran Notion sync script to update gigs.json without erroneous entries
+
+---
+
 ## 2025-08-11 17:10:00 - Update Gig Data from Notion
 
 ### Description

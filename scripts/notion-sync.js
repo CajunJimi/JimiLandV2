@@ -239,7 +239,7 @@ function convertNotionPageToGig(page) {
         id: page.id,
         title: properties.Title?.title?.[0]?.plain_text || properties.Name?.title?.[0]?.plain_text || 'Untitled Gig',
         artist: properties.Artist?.rich_text?.[0]?.plain_text || '',
-        date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
+        date: properties.Date?.date?.start || '', // Don't default to today's date
         venue: properties.Venue?.rich_text?.[0]?.plain_text || '',
         location: properties.Location?.rich_text?.[0]?.plain_text || '',
         status: properties.Status?.select?.name || 'Draft',
