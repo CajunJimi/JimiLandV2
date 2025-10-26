@@ -37,6 +37,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+  text-align: center;
 }
 
 /* Links */
@@ -67,6 +68,7 @@ a:hover {
   height: var(--navbar-height);
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .nav-logo a {
@@ -95,9 +97,22 @@ a:hover {
 .main-content {
   padding-top: calc(var(--navbar-height) + 20px);
   min-height: calc(100vh - var(--navbar-height));
+  text-align: center;
 }
 
 /* Simple archive styling */
+.archive {
+  margin: 40px auto;
+  text-align: center;
+  max-width: 600px;
+}
+
+.view-archive {
+  text-align: center;
+  margin: 30px auto;
+  width: 100%;
+}
+
 .archive-header {
   margin: 40px 0 20px;
 }
@@ -112,10 +127,12 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
 }
 
-.article-card {
-  margin-bottom: 10px;
+.article-item {
+  margin: 30px auto;
+  max-width: 500px;
 }
 
 .article-title {
@@ -133,6 +150,7 @@ a:hover {
 .post {
   max-width: 700px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .post-title {
@@ -299,10 +317,16 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .post-card {
-  margin-bottom: 10px;
+  margin: 20px auto;
+  padding: 15px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .post-title {
