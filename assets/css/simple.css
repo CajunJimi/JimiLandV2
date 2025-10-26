@@ -38,6 +38,10 @@ body {
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Links */
@@ -94,10 +98,24 @@ a:hover {
 }
 
 /* Main content */
+.center-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .main-content {
   padding-top: calc(var(--navbar-height) + 20px);
   min-height: calc(100vh - var(--navbar-height));
   text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Simple archive styling */
@@ -167,6 +185,18 @@ a:hover {
 
 .post-content {
   line-height: 1.8;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.article-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .post-content p {
@@ -305,6 +335,19 @@ a:hover {
 /* Latest posts on homepage */
 .latest-posts {
   margin: 40px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .section-title {
