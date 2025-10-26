@@ -26,7 +26,8 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-family);
-  line-height: 1.6;
+  line-height: 1.8;
+  font-size: 18px;
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -76,8 +77,9 @@ a:hover {
 }
 
 .nav-logo a {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .nav-menu {
@@ -86,7 +88,10 @@ a:hover {
 }
 
 .nav-link {
-  margin-right: 20px;
+  margin-right: 30px;
+  font-size: 1.4rem;
+  padding: 5px 10px;
+  transition: all 0.2s ease;
 }
 
 .nav-link:hover {
@@ -127,8 +132,20 @@ a:hover {
 
 .view-archive {
   text-align: center;
-  margin: 30px auto;
+  margin: 50px auto 70px;
   width: 100%;
+}
+
+.view-archive a {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  border: 1px solid var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.view-archive a:hover {
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .archive-header {
@@ -136,9 +153,10 @@ a:hover {
 }
 
 .archive-header h1 {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
 }
 
 .articles-grid {
@@ -149,19 +167,22 @@ a:hover {
 }
 
 .article-item {
-  margin: 30px auto;
-  max-width: 500px;
+  margin: 40px auto;
+  max-width: 600px;
+  padding: 20px;
 }
 
 .article-title {
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   font-weight: 400;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
 }
 
 .article-date {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: #999;
+  margin-bottom: 5px;
 }
 
 /* Post page styling */
@@ -171,10 +192,11 @@ a:hover {
   text-align: center;
 }
 
-.post-title {
-  font-size: 2rem;
+h1.post-title {
+  font-size: 3rem;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
 }
 
 .post-date {
@@ -351,9 +373,10 @@ section {
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin: 40px 0 30px;
+  letter-spacing: 1px;
 }
 
 .posts-grid {
@@ -366,21 +389,23 @@ section {
 }
 
 .post-card {
-  margin: 20px auto;
-  padding: 15px;
+  margin: 30px auto;
+  padding: 25px 15px;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
 }
 
 .post-title {
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   font-weight: 400;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
 }
 
 .post-date {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: #999;
+  margin-bottom: 5px;
 }
 
 /* Utility classes */
