@@ -1,5 +1,31 @@
 # JimiLand Site Changelog
 
+## 2025-11-01 09:35:00 - Removed Stonks Section and Renamed Ventures to Projects
+
+### Description
+Removed the Stonks section entirely from the website and renamed "Ventures" to "Projects" in all navigation and page titles.
+
+### Files Affected
+- `index.html` - Updated navigation, removed Stonks link, renamed Ventures to Projects
+- `archive/index.html` - Updated navigation, removed Stonks link, renamed Ventures to Projects
+- `gigs/index.html` - Updated navigation, removed Stonks link, renamed Ventures to Projects
+- `ai-slop/index.html` - Updated navigation, removed Stonks link, renamed Ventures to Projects
+- `failing-ventures/index.html` - Updated navigation and page title, renamed Ventures to Projects
+- `failing-ventures/journey/index.html` - Updated navigation and breadcrumbs, renamed Ventures to Projects
+- `failing-ventures/portfolio/index.html` - Updated navigation and breadcrumbs, renamed Ventures to Projects
+- `assets/css/sections.css` - Removed Stonks-related CSS styles
+
+### Reason for Change
+User requested to remove the Stonks section and rename the Ventures section to Projects for better clarity and focus.
+
+### Changes Made
+- **Removed Stonks Section**: Completely removed the Stonks link from all navigation menus
+- **Renamed Section**: Changed "Ventures" to "Projects" across all pages
+- **CSS Cleanup**: Removed Stonks-specific CSS while preserving shared styles
+- **Simplified Navigation**: Streamlined navigation with one fewer section
+
+---
+
 ## 2025-10-26 20:15:00 - Added New Content Sections
 
 ### Description

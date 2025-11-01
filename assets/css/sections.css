@@ -111,47 +111,13 @@
   font-size: 0.9rem;
 }
 
-/* Stonks table */
-.stonks-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.stonks-table-container {
-  overflow-x: auto;
-  margin: 30px 0;
-}
-
-.stonks-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.stonks-table th,
-.stonks-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.stonks-table th {
-  font-weight: 600;
-}
-
+/* Positive/negative colors for general use */
 .positive {
   color: #4caf50;
 }
 
 .negative {
   color: #f44336;
-}
-
-.stonks-update-item {
-  margin: 30px 0;
-  padding: 15px 0;
-  border-bottom: 1px solid var(--border-color);
 }
 
 .update-date {
