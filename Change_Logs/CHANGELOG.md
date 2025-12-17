@@ -1,5 +1,91 @@
 # JimiLand Site Changelog
 
+## 2025-12-17 15:20:00 - Complete Site Rebuild with Dynamic Content Loading
+
+### Description
+Complete rebuild of JimiLandV2 from scratch with focus on simplicity and dynamic content loading. Site now fully automated with Notion CMS integration - no more manual HTML editing required.
+
+### Files Affected
+- `index.html` - Rebuilt as minimal dynamic homepage
+- `archive/index.html` - Rebuilt as dynamic archive with year grouping
+- `gigs/index.html` - Rebuilt as gigs/song tracker page with tabs
+- `assets/css/style.css` - NEW: Clean minimal stylesheet replacing all old CSS
+- `assets/js/app.js` - NEW: Single JavaScript file handling all dynamic loading
+- `USAGE_GUIDE_SIMPLE.md` - NEW: Simple guide for Notion workflow
+- Removed: `assets/css/simple.css`, old JavaScript files, AI Slop section, Projects section
+
+### Reason for Change
+User requested fresh start to fix hardcoded content issues and simplify site to focus on three core features:
+1. Blog posts (from Notion)
+2. Music calendar (from Notion)
+3. Song tracker (from CSV file)
+
+### Technical Implementation
+
+#### Dynamic Content Loading
+- **Homepage**: Loads latest 5 posts from `posts.json` dynamically
+- **Archive**: Loads all posts grouped by year from `posts.json`
+- **Gigs**: Loads gigs from `gigs.json`, song tracker from `songs.csv`
+- **Zero hardcoded content**: All post/gig listings generated at runtime
+
+#### Simplified Navigation
+- Removed: AI Slop, Projects sections
+- Kept: Home, Archive, Gigs (only 3 pages)
+- Clean minimal black/white design with red accents
+
+#### Complete Notion Integration Workflow
+1. Write post in Notion → Check "Published" checkbox
+2. Run `node scripts/notion-sync.js` → Generates HTML pages + updates JSON
+3. Push to GitHub → Auto-deploys to https://jimi.land
+4. Post appears automatically on site (no HTML editing)
+
+#### Code Quality
+- Single CSS file (style.css) - 470 lines
+- Single JavaScript file (app.js) - handles all pages
+- Mobile responsive with hamburger menu
+- Safari compatibility fixes included
+- No inline styles, proper separation of concerns
+
+### User Impact
+**Before**: Adding a post required:
+- Running Notion sync
+- Manually editing index.html
+- Manually editing archive/index.html
+- Manually creating/editing post HTML
+- Committing 4+ files
+
+**After**: Adding a post requires:
+- Running Notion sync
+- Pushing to GitHub
+- Done! Post appears everywhere automatically
+
+### Files Kept from Previous Version
+- `scripts/notion-sync.js` - Working Notion sync script
+- `.env` - Notion API credentials
+- `data/posts.json` - Post data
+- `data/gigs.json` - Gigs data
+- `data/songs.csv` - Song tracker data
+- `CNAME` - Custom domain configuration
+
+### Result
+Clean, maintainable site with true Notion CMS integration. Content updates are now genuinely simple: write in Notion, sync, deploy. No technical knowledge needed for content management.
+
+---
+
+## 2025-11-10 13:40:00 - Updated Projects Section Structure
+
+### Description
+Renamed "The Journey" to "Ideas & Projects" and "Portfolio & Ideas" to "Portfolio". Removed the descriptive boxes below the navigation buttons in the Projects section to create a cleaner interface for future pinned projects.
+
+### Files Affected
+- `failing-ventures/index.html` - Updated navigation buttons and removed descriptive boxes
+- `failing-ventures/journey/index.html` - Renamed from "The Journey" to "Ideas & Projects"
+- `failing-ventures/portfolio/index.html` - Renamed from "Portfolio & Ideas" to "Portfolio"
+- `Change_Logs/CHANGELOG.md` - Updated with new changes
+
+### Reason for Change
+User requested simplification of the Projects section to focus on Ideas & Projects as the main content area, with Portfolio as a separate section. The removal of descriptive boxes creates space for pinned projects in the future.
+
 ## 2025-11-01 09:35:00 - Removed Stonks Section and Renamed Ventures to Projects
 
 ### Description

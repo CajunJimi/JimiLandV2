@@ -4,21 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gigs - JimiLand</title>
-    <meta name="description" content="Upcoming live performances and past gigs. Find out where to catch Jimi live!">
-    <meta name="keywords" content="gigs, live music, concerts, performances, events">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jimi.land/gigs/">
-    <meta property="og:title" content="Gigs - JimiLand">
-    <meta property="og:description" content="Upcoming live performances and past gigs">
-    <meta property="og:image" content="https://jimi.land/assets/images/og-image.jpg">
-
-    <link rel="stylesheet" href="/assets/css/simple.css">
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <meta name="description" content="Music calendar and song tracker">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -28,131 +17,51 @@
                 <a href="/" class="nav-link">Home</a>
                 <a href="/archive/" class="nav-link">Archive</a>
                 <a href="/gigs/" class="nav-link active">Gigs</a>
-                <a href="/ai-slop/" class="nav-link">AI&nbsp;Slop</a>
-                <a href="/failing-ventures/" class="nav-link">Projects</a>
             </div>
-            <div class="nav-controls">
-                <div class="nav-toggle" id="nav-toggle">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content center-content">
-        <!-- Gigs Section -->
-        <section class="latest-posts center-content">
-            <div class="container center-content">
-                <h2 class="section-title">Gigs</h2>
-                <div class="filter-tabs">
-                    <button class="filter-tab active" data-filter="upcoming">Upcoming</button>
-                    <button class="filter-tab" data-filter="past">Past Shows</button>
-                    <button class="filter-tab" data-filter="all">All Gigs</button>
-                    <button class="filter-tab" data-filter="songs">Song Tracker</button>
-                </div>
-                
-                <div class="view-tabs">
-                    <button class="view-tab active" data-view="list">List View</button>
-                    <button class="view-tab" data-view="calendar">Calendar View</button>
-                </div>
-                <!-- List View -->
-                <div class="posts-grid" id="gigs-grid">
-                    <!-- Gigs will be loaded dynamically -->
-                </div>
-                
-                <!-- Calendar View -->
-                <div class="calendar-container hidden" id="calendar-container">
-                    <div class="calendar-header">
-                        <button class="calendar-nav" id="prev-month">&lt;</button>
-                        <h3 class="calendar-title" id="calendar-title">January 2025</h3>
-                        <button class="calendar-nav" id="next-month">&gt;</button>
-                    </div>
-                    <div class="calendar-grid" id="calendar-grid">
-                        <!-- Calendar will be generated dynamically -->
-                    </div>
-                    <div class="calendar-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot upcoming"></div>
-                            <span>Upcoming Gigs</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot past"></div>
-                            <span>Past Gigs</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gigs without dates -->
-                <div class="undated-gigs" id="undated-gigs">
-                    <h3>Gigs Without Dates</h3>
-                    <div class="undated-gigs-list" id="undated-gigs-list">
-                        <!-- Undated gigs will be loaded here -->
-                    </div>
-                </div>
-                
-                <!-- Song Tracker Section -->
-                <div class="song-tracker-container hidden" id="song-tracker-container">
-                    <div class="song-tracker-header">
-                        <h3>Song Tracker</h3>
-                        <div class="tracker-controls">
-                            <input type="text" id="song-search" placeholder="Search songs..." class="search-input">
-                            <button id="refresh-songs" class="refresh-btn">🔄 Refresh</button>
-                        </div>
-                    </div>
-                    <div class="song-stats">
-                        <div class="stat-card">
-                            <span class="stat-number" id="total-songs">0</span>
-                            <span class="stat-label">Total Songs</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number" id="total-plays">0</span>
-                            <span class="stat-label">Total Plays</span>
-                        </div>
-                    </div>
-                    <div class="songs-table-container">
-                        <table class="songs-table" id="songs-table">
-                            <thead>
-                                <tr>
-                                    <th>Song</th>
-                                    <th>Plays</th>
-                                    <th>When</th>
-                                    <th>Who</th>
-                                    <th>Where</th>
-                                </tr>
-                            </thead>
-                            <tbody id="songs-tbody">
-                                <!-- Songs will be loaded here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="loading-songs hidden" id="loading-songs">
-                        <p>Loading songs...</p>
-                    </div>
-                    <div class="no-songs hidden" id="no-songs">
-                        <h3>No songs found</h3>
-                        <p>Check your Google Sheets connection or add some songs to your tracker!</p>
-                    </div>
-                </div>
+    <main>
+        <h1>Gigs & Songs</h1>
+        
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-tab="gigs">Gigs</div>
+            <div class="filter-tab" data-tab="songs">Song Tracker</div>
+        </div>
 
-                <!-- No Gigs Message -->
-                <div class="no-gigs hidden" id="no-gigs">
-                    <h3>No gigs found</h3>
-                    <p>Check back soon for upcoming performances!</p>
+        <!-- Gigs Content -->
+        <div id="gigs-content">
+            <div class="gig-list" id="gig-list">
+                <div class="loading">Loading gigs...</div>
+            </div>
+        </div>
+
+        <!-- Song Tracker Content -->
+        <div id="songs-content" class="hidden">
+            <div class="search-bar">
+                <input type="text" id="song-search" placeholder="Search songs...">
+            </div>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-songs">0</div>
+                    <div class="stat-label">Total Songs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-plays">0</div>
+                    <div class="stat-label">Total Plays</div>
                 </div>
             </div>
-        </section>
+            <div id="songs-table-container">
+                <div class="loading">Loading songs...</div>
+            </div>
+        </div>
     </main>
 
-
-
-
-
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/gigs-loader.js"></script>
-    <script src="/assets/js/song-tracker.js"></script>
-    <script src="/assets/js/theme-toggle.js"></script>
+    <script src="/assets/js/app.js"></script>
 </body>
 </html>

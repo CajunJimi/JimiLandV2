@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .error { background-color: #fee; border-color: #fcc; }
+        .success { background-color: #efe; border-color: #cfc; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Google Sheets Access Test</h1>
+    <button id="testBtn">Test Google Sheets Access</button>
+    <div id="results"></div>
+
+    <script>
+        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc/export?format=csv&gid=0';
+        
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="result">Testing...</div>';
+            
+            // Test 1: Direct access
+            try {
+                console.log('Testing direct access to:', SHEET_URL);
+                const response = await fetch(SHEET_URL);
+                const data = await response.text();
+                
+                resultsDiv.innerHTML += `
+                    <div class="result success">
+                        <h3>✅ Direct Access Successful</h3>
+                        <p>Status: ${response.status} ${response.statusText}</p>
+                        <p>Data length: ${data.length} characters</p>
+                        <h4>First 300 characters:</h4>
+                        <pre>${data.substring(0, 300)}</pre>
+                    </div>
+                `;
+                return; // Success, no need to try proxies
+                
+            } catch (error) {
+                console.log('Direct access failed:', error);
+                resultsDiv.innerHTML += `
+                    <div class="result error">
+                        <h3>❌ Direct Access Failed</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+            
+            // Test 2: Try proxies
+            const proxies = [
+                { name: 'AllOrigins', url: 'https://api.allorigins.win/raw?url=' },
+                { name: 'CorsProxy.io', url: 'https://corsproxy.io/?' },
+                { name: 'Cors Anywhere', url: 'https://cors-anywhere.herokuapp.com/' }
+            ];
+            
+            for (const proxy of proxies) {
+                try {
+                    console.log('Testing proxy:', proxy.name);
+                    const proxyUrl = proxy.url + encodeURIComponent(SHEET_URL);
+                    const response = await fetch(proxyUrl);
+                    
+                    if (response.ok) {
+                        const data = await response.text();
+                        resultsDiv.innerHTML += `
+                            <div class="result success">
+                                <h3>✅ ${proxy.name} Proxy Successful</h3>
+                                <p>Status: ${response.status} ${response.statusText}</p>
+                                <p>Data length: ${data.length} characters</p>
+                                <h4>First 300 characters:</h4>
+                                <pre>${data.substring(0, 300)}</pre>
+                            </div>
+                        `;
+                        return; // Success
+                    } else {
+                        throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+                    }
+                    
+                } catch (error) {
+                    console.log(`${proxy.name} proxy failed:`, error);
+                    resultsDiv.innerHTML += `
+                        <div class="result error">
+                            <h3>❌ ${proxy.name} Proxy Failed</h3>
+                            <p>Error: ${error.message}</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            // If all failed
+            resultsDiv.innerHTML += `
+                <div class="result error">
+                    <h3>❌ All Access Methods Failed</h3>
+                    <p>Please check:</p>
+                    <ul>
+                        <li>Google Sheet permissions are set to "Anyone with the link can view"</li>
+                        <li>Your internet connection</li>
+                        <li>The Google Sheets URL is correct</li>
+                    </ul>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

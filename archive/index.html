@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive - JimiLand</title>
-    <meta name="description" content="Complete archive of all updates, posts, and gigs on JimiLand">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/simple.css">
+    <meta name="description" content="Complete archive of all posts">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -20,49 +17,22 @@
                 <a href="/" class="nav-link">Home</a>
                 <a href="/archive/" class="nav-link active">Archive</a>
                 <a href="/gigs/" class="nav-link">Gigs</a>
-                <a href="/ai-slop/" class="nav-link">AI&nbsp;Slop</a>
-                <a href="/failing-ventures/" class="nav-link">Projects</a>
             </div>
-            <div class="nav-controls">
-                <div class="nav-toggle" id="nav-toggle">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content center-content">
-        <div class="container center-content">
-            <h1>Archive</h1>
-            
-            <div class="archive">
-                <h2>2024</h2>
-                
-                <div class="article-item">
-                    <div class="article-date">December 30, 2024</div>
-                    <h3><a href="/posts/billy-and-the-kids/">Billy and the kids</a></h3>
-                </div>
-                
-                <div class="article-item">
-                    <div class="article-date">November 9, 2024</div>
-                    <h3><a href="/posts/hst-letter/">HST - Letter</a></h3>
-                </div>
-                
-                <div class="article-item">
-                    <div class="article-date">November 3, 2024</div>
-                    <h3><a href="/posts/dso-2024/">DSO - 2024</a></h3>
-                </div>
-            </div>
+    <main>
+        <h1>Archive</h1>
+        <div id="archive-container">
+            <div class="loading">Loading archive...</div>
         </div>
     </main>
 
-
-
-    <!-- Scripts -->
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/theme-toggle.js"></script>
+    <script src="/assets/js/app.js"></script>
 </body>
 </html>
