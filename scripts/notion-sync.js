@@ -175,56 +175,43 @@ function createPostHTML(post, content) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${post.title} - JimiLand</title>
     <meta name="description" content="${post.excerpt}">
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/post.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
+        <div class="nav-container">
+            <div class="nav-logo">
                 <a href="/">JimiLand</a>
             </div>
-            <div class="nav-menu">
+            <div class="nav-menu" id="nav-menu">
                 <a href="/" class="nav-link">Home</a>
-                <a href="/gigs/" class="nav-link">Gigs</a>
                 <a href="/archive/" class="nav-link">Archive</a>
-                <a href="/portfolio/" class="nav-link">Portfolio</a>
+                <a href="/gigs/" class="nav-link">Gigs</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <article class="post">
-                <header class="post-header">
-                    <h1 class="post-title">${post.title}</h1>
-                    <div class="post-meta">
-                        <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-                        ${post.tags.length > 0 ? `<div class="post-tags">${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>` : ''}
-                    </div>
-                </header>
-                <div class="post-content">
-                    ${content}
-                </div>
-            </article>
+    <main>
+        <article>
+            <header class="post-header">
+                <h1>${post.title}</h1>
+                <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+            </header>
+            <div class="post-content">
+                ${content}
+            </div>
             <nav class="post-nav">
-                <a href="/" class="btn btn-secondary">← Back to Home</a>
+                <a href="/">← Back to Home</a>
             </nav>
-        </div>
+        </article>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2025 JimiLand. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/app.js"></script>
 </body>
 </html>`;
 }
