@@ -107,6 +107,8 @@ function renderArchive(posts) {
 let allGigs = [];
 let allSongs = [];
 
+let currentCalendarDate = new Date();
+
 async function initGigsPage() {
     // Tab switching
     const tabs = document.querySelectorAll('.filter-tab');
@@ -131,6 +133,46 @@ async function initGigsPage() {
             }
         });
     });
+    
+    // View toggle (List/Calendar)
+    const viewBtns = document.querySelectorAll('.view-btn');
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            viewBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const view = btn.getAttribute('data-view');
+            const listView = document.getElementById('gig-list');
+            const calendarView = document.getElementById('calendar-view');
+            
+            if (view === 'list') {
+                listView.classList.remove('hidden');
+                calendarView.classList.add('hidden');
+            } else if (view === 'calendar') {
+                listView.classList.add('hidden');
+                calendarView.classList.remove('hidden');
+                renderCalendar(currentCalendarDate, allGigs);
+            }
+        });
+    });
+    
+    // Calendar navigation
+    const prevBtn = document.getElementById('prev-month');
+    const nextBtn = document.getElementById('next-month');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+            renderCalendar(currentCalendarDate, allGigs);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+            renderCalendar(currentCalendarDate, allGigs);
+        });
+    }
     
     // Load gigs by default
     try {
@@ -171,6 +213,83 @@ function renderGigs(gigs) {
             <div class="gig-date">${formatDate(gig.date)}</div>
         </div>
     `).join('');
+}
+
+function renderCalendar(date, gigs) {
+    const monthEl = document.getElementById('calendar-month');
+    const gridEl = document.getElementById('calendar-grid');
+    
+    if (!monthEl || !gridEl) return;
+    
+    // Set month title
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    monthEl.textContent = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    
+    // Get calendar data
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    // Create gigs map by date
+    const gigsByDate = {};
+    gigs.forEach(gig => {
+        if (gig.date) {
+            const gigDate = new Date(gig.date);
+            const dateKey = `${gigDate.getFullYear()}-${gigDate.getMonth()}-${gigDate.getDate()}`;
+            if (!gigsByDate[dateKey]) {
+                gigsByDate[dateKey] = [];
+            }
+            gigsByDate[dateKey].push(gig);
+        }
+    });
+    
+    // Build calendar HTML
+    let html = '';
+    
+    // Day headers
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayNames.forEach(day => {
+        html += `<div class="calendar-day-header">${day}</div>`;
+    });
+    
+    // Empty cells before first day
+    for (let i = 0; i < startingDayOfWeek; i++) {
+        html += '<div class="calendar-day other-month"></div>';
+    }
+    
+    // Days of month
+    const today = new Date();
+    for (let day = 1; day <= daysInMonth; day++) {
+        const currentDate = new Date(year, month, day);
+        const dateKey = `${year}-${month}-${day}`;
+        const isToday = currentDate.toDateString() === today.toDateString();
+        const dayGigs = gigsByDate[dateKey] || [];
+        const hasGig = dayGigs.length > 0;
+        
+        let classes = 'calendar-day';
+        if (isToday) classes += ' today';
+        if (hasGig) classes += ' has-gig';
+        
+        html += `<div class="${classes}">`;
+        html += `<div class="calendar-day-number">${day}</div>`;
+        
+        if (hasGig) {
+            dayGigs.slice(0, 2).forEach(gig => {
+                html += `<div class="calendar-gig-title">${gig.artist || gig.title}</div>`;
+            });
+            if (dayGigs.length > 2) {
+                html += `<div class="calendar-gig-title">+${dayGigs.length - 2} more</div>`;
+            }
+        }
+        
+        html += '</div>';
+    }
+    
+    gridEl.innerHTML = html;
 }
 
 async function loadSongs() {
@@ -338,5 +457,6 @@ function showError(containerId) {
     }
 }
 
-// Make toggleSongDetails available globally
+// Make functions available globally
 window.toggleSongDetails = toggleSongDetails;
+window.renderCalendar = renderCalendar;

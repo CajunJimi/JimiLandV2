@@ -36,8 +36,26 @@
 
         <!-- Gigs Content -->
         <div id="gigs-content">
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="list">List</button>
+                <button class="view-btn" data-view="calendar">Calendar</button>
+            </div>
+            
+            <!-- List View -->
             <div class="gig-list" id="gig-list">
                 <div class="loading">Loading gigs...</div>
+            </div>
+            
+            <!-- Calendar View -->
+            <div class="calendar-view hidden" id="calendar-view">
+                <div class="calendar-controls">
+                    <button class="calendar-nav-btn" id="prev-month">‹</button>
+                    <h2 class="calendar-month" id="calendar-month">Loading...</h2>
+                    <button class="calendar-nav-btn" id="next-month">›</button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid">
+                    <!-- Calendar will be generated here -->
+                </div>
             </div>
         </div>
 
