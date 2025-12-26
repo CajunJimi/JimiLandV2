@@ -1,5 +1,49 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 17:11:00 - Add Projects & Ideas Section
+
+### Description
+Added new Projects & Ideas section with two-tab layout to track and showcase completed projects, works in progress, and future ideas. Fully integrated with Notion CMS for easy mobile posting.
+
+### Files Affected
+- `projects/index.html` - NEW: Projects page with two-tab layout (Projects/Ideas)
+- `assets/css/style.css` - Added project card and idea list styling
+- `assets/js/app.js` - Added project loading, rendering, and tab switching functionality
+- `scripts/notion-sync.js` - Added projects database sync support
+- `index.html`, `archive/index.html`, `gigs/index.html` - Added Projects link to navigation
+- `data/projects.json` - NEW: Projects data file
+- `.env` - Added NOTION_PROJECTS_DATABASE_ID configuration
+- `PROJECTS_SETUP.md` - NEW: Complete setup guide for Notion database
+
+### Reason for Change
+User wanted a dedicated section to track and share projects and ideas with short writeups. Needed to be mobile-friendly and use the same seamless Notion workflow as posts and gigs.
+
+### Technical Implementation
+
+#### Projects Page Structure
+- **Two-Tab Layout**: Projects tab (Live/In Progress) and Ideas tab
+- **Project Cards**: Display name, description, status, optional link, and year
+- **Idea List**: Simple bullet-point list with title and description
+- **Status-Based Filtering**: JavaScript filters by Status field (Live, In Progress, Idea)
+- **Responsive Design**: Mobile-optimized cards and layout
+
+#### Notion Integration
+- **Database Fields**: Name (Title), Description (Text), Status (Select), Link (URL), Date (Date), Published (Checkbox)
+- **Status Options**: Live, In Progress, Idea
+- **Sync Script**: Fetches projects, filters by Published checkbox, saves to JSON
+- **Same Workflow**: Add in Notion → Auto-sync → Appears on site
+
+#### Styling
+- **Project Cards**: Hover effects with red border, lift animation, shadow
+- **Status Badges**: Color-coded (red for Live, orange for In Progress)
+- **Idea Items**: Red bullet points, slide animation on hover
+- **Consistent Theme**: Matches minimal black/white/red aesthetic
+
+### Result
+Fully functional Projects section integrated with Notion. Users can add projects/ideas from phone or desktop, and they automatically sync to the live site. No backend interaction required.
+
+---
+
 ## 2025-12-23 10:51:00 - Restore Calendar View and Enhance Site Design
 
 ### Description
