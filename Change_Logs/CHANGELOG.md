@@ -1,5 +1,27 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 19:13:00 - Restore Google Sheets Integration for Song Tracker
+
+### Description
+Restored Google Sheets integration for song data. Song tracker now loads directly from user's Google Sheet instead of local CSV file.
+
+### Files Affected
+- `assets/js/app.js` - Updated `loadSongs()` function to fetch from Google Sheets CSV export
+
+### Reason for Change
+User wanted to update songs from phone via Google Sheets. Previous integration was accidentally removed during codebase cleanup.
+
+### Technical Implementation
+- **Google Sheet ID**: `1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc`
+- **Sheet GID**: `425773807`
+- **Export URL**: Direct CSV export from Google Sheets
+- **Format**: Tab-separated values (Song Name, Play Count, Concert Details)
+
+### Result
+Users can now update song data from phone by editing Google Sheet. Changes appear on site immediately after refresh. No git commits required for song updates.
+
+---
+
 ## 2025-12-26 19:09:00 - Codebase Cleanup
 
 ### Description

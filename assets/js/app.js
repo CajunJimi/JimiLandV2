@@ -301,8 +301,11 @@ async function loadSongs() {
     container.innerHTML = '<div class="loading">Loading songs...</div>';
     
     try {
-        const response = await fetch('/data/songs.csv');
-        if (!response.ok) throw new Error('Failed to load songs');
+        // Google Sheets CSV export URL (gid=425773807)
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc/export?format=csv&gid=425773807';
+        
+        const response = await fetch(sheetUrl);
+        if (!response.ok) throw new Error('Failed to load songs from Google Sheets');
         
         const csvText = await response.text();
         allSongs = parseSongsCsv(csvText);
