@@ -1,5 +1,14 @@
 [
   {
+    "id": "2d5cb99e-b16c-8025-9e57-cb3317b30e60",
+    "name": "Automated Type Writer Project",
+    "description": "Have a feeling, a more physical medium of communication will make a return. ",
+    "status": "In Progress",
+    "link": null,
+    "date": "2025-12-01",
+    "published": true
+  },
+  {
     "id": "2d5cb99e-b16c-80b1-8a28-e91133dd1c5f",
     "name": "Polymarket Bot",
     "description": "Polymarket Ai slop bot, but it works",
@@ -27,6 +36,15 @@
     "published": true
   },
   {
+    "id": "2d5cb99e-b16c-80a3-b956-f7d6b5243ffa",
+    "name": "Automated SBAR Generator ",
+    "description": "ingested data, anything really. Spits out a formatted SBAR. Also had ability to strip PII before ingestion into AI model. ",
+    "status": "Live",
+    "link": null,
+    "date": "2025-04-02",
+    "published": true
+  },
+  {
     "id": "2d5cb99e-b16c-8016-8e79-f78b3daa8dd0",
     "name": "YourAIVoiceJournal",
     "description": "Biggest miss - didn't market it at all, should have, was good enough to make cash. Web app that allows user to have a conversation with AI, document the conversation, create action item etc that would emailed to X email. Use-case really came down to, i have shit to do at work this morning, how can i take 15 minutes of my drive and save a few hours at work via discussing priorities/ideas/action plan etc with AI. The back and forth of the conversation was actually solid for early 2025. Will do more detailed post on backend etc. ",
@@ -36,30 +54,12 @@
     "published": true
   },
   {
-    "id": "2d5cb99e-b16c-80a3-b956-f7d6b5243ffa",
-    "name": "Automated SBAR Generator ",
-    "description": "ingested data, anything really. Spits out a formatted SBAR. Also had ability to strip PII before ingestion into AI model. ",
-    "status": "Live",
-    "link": null,
-    "date": null,
-    "published": true
-  },
-  {
-    "id": "2d5cb99e-b16c-8025-9e57-cb3317b30e60",
-    "name": "Automated Type Writer Project",
-    "description": "Have a feeling, a more physical medium of communication will make a return. ",
-    "status": "In Progress",
-    "link": null,
-    "date": null,
-    "published": true
-  },
-  {
     "id": "2d5cb99e-b16c-80b3-8900-fbdbcb4472b2",
     "name": "MSSPJobs",
     "description": "Same as SOCobs, but wider market with just MSSP jobs. Reckon there is still a good market there, however it is a boring idea. ",
     "status": "Idea",
     "link": null,
-    "date": null,
+    "date": "2024-03-06",
     "published": true
   },
   {
@@ -68,7 +68,7 @@
     "description": "one of first small side projects, job board for SOC jobs in UK. Meh. ",
     "status": "Dead",
     "link": null,
-    "date": null,
+    "date": "2024-02-28",
     "published": true
   }
 ]
