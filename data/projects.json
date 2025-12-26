@@ -7,5 +7,14 @@
     "link": null,
     "date": "2025-11-01",
     "published": true
+  },
+  {
+    "id": "2d5cb99e-b16c-804f-875a-d1b59e0da5f0",
+    "name": "Orange Dealer",
+    "description": "App that shows you all places that sell freshly squeezed orange juice. Not horrible bottled stuff. User submitted spots, ratings, prices etc",
+    "status": "Idea",
+    "link": null,
+    "date": "2025-08-01",
+    "published": true
   }
 ]
