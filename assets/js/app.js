@@ -510,7 +510,7 @@ function renderProjects(projects) {
     
     // Filter for projects (not ideas)
     const projectItems = projects.filter(p => 
-        p.status === 'Live' || p.status === 'In Progress'
+        p.status === 'Live' || p.status === 'In Progress' || p.status === 'In Progres'
     );
     
     if (projectItems.length === 0) {
