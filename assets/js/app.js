@@ -302,9 +302,11 @@ async function loadSongs() {
     
     try {
         // Google Sheets CSV export URL (gid=425773807)
+        // Using CORS proxy to bypass browser restrictions
         const sheetUrl = 'https://docs.google.com/spreadsheets/d/1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc/export?format=csv&gid=425773807';
+        const corsProxy = 'https://api.allorigins.win/raw?url=';
         
-        const response = await fetch(sheetUrl);
+        const response = await fetch(corsProxy + encodeURIComponent(sheetUrl));
         if (!response.ok) throw new Error('Failed to load songs from Google Sheets');
         
         const csvText = await response.text();
@@ -335,6 +337,28 @@ function populatePerformerFilter(songs) {
     });
 }
 
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        
+        if (char === '"') {
+            inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+            result.push(current);
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+    result.push(current);
+    
+    return result;
+}
+
 function parseSongsCsv(csvText) {
     const lines = csvText.trim().split('\n');
     const songs = [];
@@ -343,8 +367,8 @@ function parseSongsCsv(csvText) {
         const line = lines[i].trim();
         if (!line) continue;
         
-        // Split by tab (TSV format)
-        const parts = line.split('\t');
+        // Parse CSV with proper handling of quoted fields
+        const parts = parseCSVLine(line);
         if (parts.length >= 2) {
             const songName = parts[0] ? parts[0].trim() : '';
             const playCount = parseInt(parts[1]) || 0;

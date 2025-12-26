@@ -1,5 +1,26 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 19:37:00 - Fix Google Sheets CORS Issue
+
+### Description
+Fixed song tracker not loading by implementing CORS proxy and proper CSV parsing for comma-separated format.
+
+### Files Affected
+- `assets/js/app.js` - Added CORS proxy (allorigins.win), implemented CSV parser for quoted fields
+
+### Reason for Change
+Google Sheets blocks direct browser access due to CORS policy. Songs were not loading despite sheet being public.
+
+### Technical Implementation
+- **CORS Proxy**: Using `api.allorigins.win` to bypass browser restrictions
+- **CSV Parser**: Added `parseCSVLine()` function to handle comma-separated values with quoted fields
+- **Format Change**: Google Sheets exports as CSV (comma-separated), not TSV (tab-separated)
+
+### Result
+Song tracker now loads successfully from Google Sheets. Users can see all songs with writer/performer info and filter by performer.
+
+---
+
 ## 2025-12-26 19:29:00 - Add Song Tracker Columns and Performer Filter
 
 ### Description
