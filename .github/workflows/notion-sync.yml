@@ -15,6 +15,9 @@ on:
     paths:
       - '.github/workflows/notion-sync.yml'
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest

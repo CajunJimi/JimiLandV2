@@ -1,5 +1,26 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 22:23:00 - Fix GitHub Actions Auto-Sync Permissions
+
+### Description
+Fixed automated Notion sync failing with 403 permission error by adding write permissions to GitHub Actions workflow.
+
+### Files Affected
+- `.github/workflows/notion-sync.yml` - Added `permissions: contents: write`
+
+### Reason for Change
+GitHub Actions was unable to push automated sync changes due to missing write permissions on GITHUB_TOKEN.
+
+### Technical Implementation
+- Added `permissions` block with `contents: write` to workflow
+- Allows GitHub Actions bot to commit and push changes
+- Automated hourly sync now works correctly
+
+### Result
+Automated Notion sync (posts, gigs, projects) now runs every hour and pushes changes automatically. Manual trigger also works from GitHub Actions tab.
+
+---
+
 ## 2025-12-26 19:37:00 - Fix Google Sheets CORS Issue
 
 ### Description
