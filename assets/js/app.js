@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initArchivePage();
     } else if (currentPage.includes('/gigs/')) {
         initGigsPage();
+    } else if (currentPage.includes('/projects/')) {
+        initProjectsPage();
     }
 });
 
@@ -455,6 +457,106 @@ function showError(containerId) {
     if (container) {
         container.innerHTML = '<div class="error">Failed to load content. Please try again later.</div>';
     }
+}
+
+// =====================
+// PROJECTS PAGE
+// =====================
+let allProjects = [];
+
+async function initProjectsPage() {
+    // Tab switching
+    const tabs = document.querySelectorAll('.filter-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            const tabType = tab.getAttribute('data-tab');
+            const projectsContent = document.getElementById('projects-content');
+            const ideasContent = document.getElementById('ideas-content');
+            
+            if (tabType === 'projects') {
+                projectsContent.classList.remove('hidden');
+                ideasContent.classList.add('hidden');
+            } else if (tabType === 'ideas') {
+                projectsContent.classList.add('hidden');
+                ideasContent.classList.remove('hidden');
+            }
+        });
+    });
+    
+    // Load projects
+    try {
+        allProjects = await loadProjects();
+        renderProjects(allProjects);
+        renderIdeas(allProjects);
+    } catch (error) {
+        console.error('Failed to load projects:', error);
+        showError('projects-list');
+        showError('ideas-list');
+    }
+}
+
+async function loadProjects() {
+    const response = await fetch('/data/projects.json');
+    if (!response.ok) throw new Error('Failed to load projects');
+    return await response.json();
+}
+
+function renderProjects(projects) {
+    const container = document.getElementById('projects-list');
+    if (!container) return;
+    
+    // Filter for projects (not ideas)
+    const projectItems = projects.filter(p => 
+        p.status === 'Live' || p.status === 'In Progress'
+    );
+    
+    if (projectItems.length === 0) {
+        container.innerHTML = '<div class="no-results">No projects yet. Check back soon!</div>';
+        return;
+    }
+    
+    container.innerHTML = projectItems.map(project => {
+        const statusClass = project.status.toLowerCase().replace(' ', '-');
+        return `
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h2 class="project-title">${project.name}</h2>
+                    </div>
+                    <span class="project-status ${statusClass}">${project.status}</span>
+                </div>
+                <div class="project-divider"></div>
+                <p class="project-description">${project.description}</p>
+                <div class="project-footer">
+                    ${project.link ? `<a href="${project.link}" class="project-link" target="_blank" rel="noopener">View Project →</a>` : '<span></span>'}
+                    ${project.date ? `<span class="project-date">${new Date(project.date).getFullYear()}</span>` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderIdeas(projects) {
+    const container = document.getElementById('ideas-list');
+    if (!container) return;
+    
+    // Filter for ideas only
+    const ideaItems = projects.filter(p => p.status === 'Idea');
+    
+    if (ideaItems.length === 0) {
+        container.innerHTML = '<div class="no-results">No ideas yet. Check back soon!</div>';
+        return;
+    }
+    
+    container.innerHTML = ideaItems.map(idea => `
+        <div class="idea-item">
+            <h3 class="idea-title">${idea.name}</h3>
+            <p class="idea-description">${idea.description}</p>
+        </div>
+    `).join('');
 }
 
 // Make functions available globally

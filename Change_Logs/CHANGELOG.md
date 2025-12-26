@@ -1,5 +1,40 @@
 # JimiLand Site Changelog
 
+## 2025-12-23 10:51:00 - Restore Calendar View and Enhance Site Design
+
+### Description
+Restored calendar view to gigs page with list/calendar toggle functionality and enhanced overall site design with smooth animations and hover effects while maintaining minimal black/white/red aesthetic.
+
+### Files Affected
+- `gigs/index.html` - Added calendar view container and list/calendar toggle buttons
+- `assets/css/style.css` - Added calendar grid styles, view toggle buttons, enhanced hover effects throughout
+- `assets/js/app.js` - Implemented calendar rendering, month navigation, view switching functionality
+
+### Reason for Change
+User noticed calendar view was missing from gigs page after rebuild. Also requested site improvements to make it look "cooler and slicker" while keeping the same minimal appearance.
+
+### Technical Implementation
+
+#### Calendar View Restoration
+- **View Toggle**: List/Calendar buttons with active state styling
+- **Calendar Grid**: 7-column grid (Sun-Sat) with day headers
+- **Month Navigation**: Previous/next buttons to browse months
+- **Gig Indicators**: Red-highlighted dates with gig titles, shows up to 2 gigs per day
+- **Today Highlighting**: Subtle red background for current date
+- **Responsive Design**: Calendar adapts to mobile screens
+
+#### Design Enhancements
+- **Navigation**: Animated underline on hover, logo glow effect, smooth transitions
+- **Post Cards**: Slide animation (5px right), border color change to red on hover
+- **Gig Items**: Lift effect (2px up), subtle red shadow, border highlight
+- **Buttons**: Professional styling with hover states and smooth transitions
+- **All Animations**: 0.3s ease transitions for polished feel
+
+### Result
+Fully functional calendar view restored with professional design enhancements. Site maintains minimal aesthetic while feeling more polished and interactive.
+
+---
+
 ## 2025-12-17 15:20:00 - Complete Site Rebuild with Dynamic Content Loading
 
 ### Description

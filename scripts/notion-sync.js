@@ -13,15 +13,16 @@ const path = require('path');
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const NOTION_POSTS_DATABASE_ID = process.env.NOTION_POSTS_DATABASE_ID;
 const NOTION_GIGS_DATABASE_ID = process.env.NOTION_GIGS_DATABASE_ID;
+const NOTION_PROJECTS_DATABASE_ID = process.env.NOTION_PROJECTS_DATABASE_ID;
 
 if (!NOTION_API_KEY) {
     console.error('❌ Missing required environment variable: NOTION_API_KEY');
     process.exit(1);
 }
 
-if (!NOTION_POSTS_DATABASE_ID && !NOTION_GIGS_DATABASE_ID) {
+if (!NOTION_POSTS_DATABASE_ID && !NOTION_GIGS_DATABASE_ID && !NOTION_PROJECTS_DATABASE_ID) {
     console.error('❌ At least one database ID must be provided:');
-    console.error('   NOTION_POSTS_DATABASE_ID or NOTION_GIGS_DATABASE_ID');
+    console.error('   NOTION_POSTS_DATABASE_ID, NOTION_GIGS_DATABASE_ID, or NOTION_PROJECTS_DATABASE_ID');
     process.exit(1);
 }
 
@@ -217,6 +218,23 @@ function createPostHTML(post, content) {
 }
 
 /**
+ * Convert Notion page to simplified project object
+ */
+function convertNotionPageToProject(page) {
+    const properties = page.properties;
+    
+    return {
+        id: page.id,
+        name: properties.Name?.title?.[0]?.plain_text || 'Untitled',
+        description: properties.Description?.rich_text?.[0]?.plain_text || '',
+        status: properties.Status?.select?.name || 'Idea',
+        link: properties.Link?.url || null,
+        date: properties.Date?.date?.start || null,
+        published: properties.Published?.checkbox || false
+    };
+}
+
+/**
  * Convert Notion page to simplified gig object
  */
 function convertNotionPageToGig(page) {
@@ -283,16 +301,18 @@ async function savePosts(posts) {
  * Save gigs to JSON file
  */
 async function saveGigs(gigs) {
-    const outputDir = path.join(__dirname, '../data');
-    const outputFile = path.join(outputDir, 'gigs.json');
-    
-    // Ensure data directory exists
-    await fs.mkdir(outputDir, { recursive: true });
-    
-    // Save gigs data
-    await fs.writeFile(outputFile, JSON.stringify(gigs, null, 2));
-    
-    console.log(`✅ Saved ${gigs.length} gigs to ${outputFile}`);
+    const gigsJsonPath = path.join(__dirname, '..', 'data', 'gigs.json');
+    await fs.writeFile(gigsJsonPath, JSON.stringify(gigs, null, 2));
+    console.log(`✅ Saved ${gigs.length} gigs to ${gigsJsonPath}`);
+}
+
+/**
+ * Save projects to JSON file
+ */
+async function saveProjects(projects) {
+    const projectsJsonPath = path.join(__dirname, '..', 'data', 'projects.json');
+    await fs.writeFile(projectsJsonPath, JSON.stringify(projects, null, 2));
+    console.log(`✅ Saved ${projects.length} projects to ${projectsJsonPath}`);
 }
 
 /**
@@ -304,6 +324,7 @@ async function syncNotionContent() {
         
         let allPosts = [];
         let allGigs = [];
+        let allProjects = [];
         
         // Sync Posts if database ID is provided
         if (NOTION_POSTS_DATABASE_ID) {
@@ -394,9 +415,25 @@ async function syncNotionContent() {
             }
         }
         
+        // Sync Projects if database ID is provided
+        if (NOTION_PROJECTS_DATABASE_ID) {
+            try {
+                console.log('💡 Fetching projects...');
+                const projectPages = await fetchNotionPages(NOTION_PROJECTS_DATABASE_ID, 'Date');
+                const projects = projectPages
+                    .map(convertNotionPageToProject)
+                    .filter(project => project.published);
+                allProjects = projects;
+                console.log(`✅ Found ${projects.length} published projects out of ${projectPages.length} total`);
+            } catch (error) {
+                console.error(`⚠️ Failed to fetch projects: ${error.message}`);
+            }
+        }
+        
         // Save to JSON files
         await savePosts(allPosts);
         await saveGigs(allGigs);
+        await saveProjects(allProjects);
         
         console.log('✅ Sync completed successfully!');
         

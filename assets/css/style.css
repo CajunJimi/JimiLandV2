@@ -554,6 +554,128 @@ article {
     margin-top: 4px;
 }
 
+/* Projects Page */
+.projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.project-card {
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.1);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.project-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.project-status {
+    font-size: 12px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.project-status.live {
+    color: var(--accent-color);
+}
+
+.project-status.in-progress {
+    color: #ffa500;
+}
+
+.project-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 15px 0;
+}
+
+.project-description {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.project-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.project-link:hover {
+    opacity: 0.7;
+}
+
+.project-date {
+    color: #999;
+    font-size: 14px;
+}
+
+/* Ideas List */
+.ideas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.idea-item {
+    padding-left: 20px;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.idea-item::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.idea-item:hover {
+    transform: translateX(5px);
+}
+
+.idea-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.idea-description {
+    color: #ccc;
+    line-height: 1.6;
+}
+
 /* Song Tracker */
 .search-bar {
     margin-bottom: 20px;

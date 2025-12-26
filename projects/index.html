@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JimiLand</title>
-    <meta name="description" content="Personal blog about music, gigs, and life experiences">
+    <title>Projects - JimiLand</title>
+    <meta name="description" content="Projects and ideas from JimiLand">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -14,10 +14,10 @@
                 <a href="/">JimiLand</a>
             </div>
             <div class="nav-menu" id="nav-menu">
-                <a href="/" class="nav-link active">Home</a>
+                <a href="/" class="nav-link">Home</a>
                 <a href="/archive/" class="nav-link">Archive</a>
                 <a href="/gigs/" class="nav-link">Gigs</a>
-                <a href="/projects/" class="nav-link">Projects</a>
+                <a href="/projects/" class="nav-link active">Projects</a>
             </div>
             <div class="nav-toggle" id="nav-toggle">
                 <span class="bar"></span>
@@ -28,12 +28,25 @@
     </nav>
 
     <main>
-        <h1>Latest Posts</h1>
-        <div class="posts-grid" id="posts-container">
-            <div class="loading">Loading posts...</div>
+        <h1>Projects & Ideas</h1>
+        
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-tab="projects">Projects</div>
+            <div class="filter-tab" data-tab="ideas">Ideas</div>
         </div>
-        <div class="view-archive">
-            <a href="/archive/">View All Posts →</a>
+
+        <!-- Projects Content -->
+        <div id="projects-content">
+            <div class="projects-grid" id="projects-list">
+                <div class="loading">Loading projects...</div>
+            </div>
+        </div>
+
+        <!-- Ideas Content -->
+        <div id="ideas-content" class="hidden">
+            <div class="ideas-list" id="ideas-list">
+                <div class="loading">Loading ideas...</div>
+            </div>
         </div>
     </main>
 
