@@ -602,6 +602,11 @@ article {
     color: #ffa500;
 }
 
+.project-status.dead {
+    color: #666;
+    text-decoration: line-through;
+}
+
 .project-divider {
     height: 1px;
     background-color: var(--border-color);

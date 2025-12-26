@@ -510,9 +510,9 @@ function renderProjects(projects) {
     const container = document.getElementById('projects-list');
     if (!container) return;
     
-    // Filter for projects (not ideas)
+    // Filter for projects (not ideas or dead)
     const projectItems = projects.filter(p => 
-        p.status === 'Live' || p.status === 'In Progress' || p.status === 'In Progres'
+        p.status === 'Live' || p.status === 'In Progress' || p.status === 'In Progres' || p.status === 'Dead'
     );
     
     if (projectItems.length === 0) {
