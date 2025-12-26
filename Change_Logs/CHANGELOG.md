@@ -1,5 +1,24 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 19:09:00 - Codebase Cleanup
+
+### Description
+Removed all unused/obsolete files and folders from previous site versions to clean up the codebase.
+
+### Files Removed
+- **Folders**: `Personal/`, `ai-slop/`, `blog/`, `calendar/`, `failing-ventures/`, `portfolio/`, `stonks/`
+- **Old CSS**: `simple.css`, `about.css`, `archive.css`, `blog.css`, `calendar.css`, `gigs.css`, `main.css`, `post.css`, `sections.css`
+- **Old JS**: `archive-loader.js`, `archive.js`, `blog.js`, `calendar.js`, `gigs-loader.js`, `gigs.js`, `main.js`, `posts-loader.js`, `song-tracker.js`, `theme-toggle.js`
+- **Test files**: `debug.html`, `test-gigs.html`, `test-sheets.html`
+
+### Reason for Change
+User requested cleanup of unused files. Site now uses only `assets/css/style.css` and `assets/js/app.js` for all functionality.
+
+### Result
+Cleaner, more maintainable codebase with ~50+ obsolete files removed.
+
+---
+
 ## 2025-12-26 18:52:00 - Show Dead Projects Under Ideas
 
 ### Description
