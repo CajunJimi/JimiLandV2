@@ -1,5 +1,30 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 19:29:00 - Add Song Tracker Columns and Performer Filter
+
+### Description
+Enhanced song tracker to display additional columns (Writer, Performer) from Google Sheets and added performer filtering capability.
+
+### Files Affected
+- `assets/js/app.js` - Updated CSV parser to handle 5 columns, added performer filter logic, auto-populate filter dropdown
+- `gigs/index.html` - Added performer filter dropdown UI
+- `assets/css/style.css` - Added styling for filter layout and dropdown
+
+### Reason for Change
+User added extra columns to Google Sheet (Times Played, Writer, Performer, When/Where/Who) and requested ability to filter songs by performer, especially for Billy Strings concerts.
+
+### Technical Implementation
+- **New Columns**: Song, Times Played, Writer, Performer, When/Where/Who
+- **Parser Update**: Skip header row, parse 5 columns instead of 3
+- **Filter Dropdown**: Auto-populated with unique performers from data
+- **Combined Filtering**: Search query + performer filter work together
+- **Responsive Layout**: Filters flex-wrap on mobile
+
+### Result
+Users can now see writer and performer info for each song and easily filter by specific performers (e.g., "Grateful Dead", "Billy Strings", "Bonnie Dobson"). Perfect for tracking songs across different artists and concerts.
+
+---
+
 ## 2025-12-26 19:13:00 - Restore Google Sheets Integration for Song Tracker
 
 ### Description

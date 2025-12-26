@@ -62,8 +62,16 @@
 
         <!-- Song Tracker Content -->
         <div id="songs-content" class="hidden">
-            <div class="search-bar">
-                <input type="text" id="song-search" placeholder="Search songs...">
+            <div class="song-filters">
+                <div class="search-bar">
+                    <input type="text" id="song-search" placeholder="Search songs...">
+                </div>
+                <div class="performer-filter">
+                    <label for="performer-filter" class="visually-hidden">Filter by Performer</label>
+                    <select id="performer-filter" onchange="filterByPerformer()" aria-label="Filter by Performer">
+                        <option value="all">All Performers</option>
+                    </select>
+                </div>
             </div>
             <div class="stats-container">
                 <div class="stat-card">

@@ -309,6 +309,7 @@ async function loadSongs() {
         
         const csvText = await response.text();
         allSongs = parseSongsCsv(csvText);
+        populatePerformerFilter(allSongs);
         renderSongs(allSongs);
         updateSongStats(allSongs);
     } catch (error) {
@@ -317,24 +318,45 @@ async function loadSongs() {
     }
 }
 
+function populatePerformerFilter(songs) {
+    const filterSelect = document.getElementById('performer-filter');
+    if (!filterSelect) return;
+    
+    // Get unique performers
+    const performers = [...new Set(songs.map(song => song.performer).filter(p => p))].sort();
+    
+    // Keep "All Performers" option and add unique performers
+    filterSelect.innerHTML = '<option value="all">All Performers</option>';
+    performers.forEach(performer => {
+        const option = document.createElement('option');
+        option.value = performer;
+        option.textContent = performer;
+        filterSelect.appendChild(option);
+    });
+}
+
 function parseSongsCsv(csvText) {
     const lines = csvText.trim().split('\n');
     const songs = [];
     
-    for (let i = 0; i < lines.length; i++) {
+    for (let i = 1; i < lines.length; i++) { // Skip header row
         const line = lines[i].trim();
         if (!line) continue;
         
         // Split by tab (TSV format)
         const parts = line.split('\t');
         if (parts.length >= 2) {
-            const songName = parts[0].trim();
+            const songName = parts[0] ? parts[0].trim() : '';
             const playCount = parseInt(parts[1]) || 0;
-            const details = parts[2] ? parts[2].trim() : '';
+            const writer = parts[2] ? parts[2].trim() : '';
+            const performer = parts[3] ? parts[3].trim() : '';
+            const details = parts[4] ? parts[4].trim() : '';
             
             songs.push({
                 name: songName,
                 plays: playCount,
+                writer: writer,
+                performer: performer,
                 details: details
             });
         }
@@ -362,6 +384,8 @@ function renderSongs(songs) {
                     ${hasDetails ? '<th></th>' : ''}
                     <th>Song</th>
                     <th>Plays</th>
+                    <th>Writer</th>
+                    <th>Performer</th>
                 </tr>
             </thead>
             <tbody>
@@ -372,10 +396,12 @@ function renderSongs(songs) {
                             ${hasDetails ? `<td><span class="expand-icon" onclick="toggleSongDetails(${index})">${hasDetail ? '▶' : '•'}</span></td>` : ''}
                             <td>${song.name}</td>
                             <td>${song.plays}</td>
+                            <td>${song.writer}</td>
+                            <td>${song.performer}</td>
                         </tr>
                         ${hasDetail ? `
                             <tr class="song-details" id="song-details-${index}">
-                                <td colspan="${hasDetails ? '3' : '2'}">
+                                <td colspan="${hasDetails ? '5' : '4'}">
                                     ${song.details.split(';').map(show => `<div class="show-entry">${show.trim()}</div>`).join('')}
                                 </td>
                             </tr>
@@ -395,18 +421,32 @@ function toggleSongDetails(index) {
 }
 
 function filterSongs(query) {
-    if (!query) {
-        renderSongs(allSongs);
-        return;
+    const performerFilter = document.getElementById('performer-filter')?.value || 'all';
+    
+    let filtered = allSongs;
+    
+    // Filter by performer
+    if (performerFilter !== 'all') {
+        filtered = filtered.filter(song => song.performer === performerFilter);
     }
     
-    const filtered = allSongs.filter(song => 
-        song.name.toLowerCase().includes(query.toLowerCase()) ||
-        (song.details && song.details.toLowerCase().includes(query.toLowerCase()))
-    );
+    // Filter by search query
+    if (query) {
+        filtered = filtered.filter(song => 
+            song.name.toLowerCase().includes(query.toLowerCase()) ||
+            (song.writer && song.writer.toLowerCase().includes(query.toLowerCase())) ||
+            (song.performer && song.performer.toLowerCase().includes(query.toLowerCase())) ||
+            (song.details && song.details.toLowerCase().includes(query.toLowerCase()))
+        );
+    }
     
     renderSongs(filtered);
     updateSongStats(filtered);
+}
+
+function filterByPerformer() {
+    const searchQuery = document.getElementById('song-search')?.value || '';
+    filterSongs(searchQuery);
 }
 
 function updateSongStats(songs) {
