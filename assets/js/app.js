@@ -512,7 +512,7 @@ function renderProjects(projects) {
     
     // Filter for projects (not ideas)
     const projectItems = projects.filter(p => 
-        p.status === 'Live' || p.status === 'In Progress' || p.status === 'In Progres' || p.status === 'Dead'
+        p.status === 'Live' || p.status === 'In Progress' || p.status === 'In Progres'
     );
     
     if (projectItems.length === 0) {
@@ -546,7 +546,7 @@ function renderIdeas(projects) {
     if (!container) return;
     
     // Filter for ideas only
-    const ideaItems = projects.filter(p => p.status === 'Idea');
+    const ideaItems = projects.filter(p => p.status === 'Idea' || p.status === 'Dead');
     
     if (ideaItems.length === 0) {
         container.innerHTML = '<div class="no-results">No ideas yet. Check back soon!</div>';

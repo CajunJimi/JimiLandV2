@@ -1,5 +1,18 @@
 # JimiLand Site Changelog
 
+## 2025-12-26 18:52:00 - Show Dead Projects Under Ideas
+
+### Description
+Adjusted Projects & Ideas page filtering so projects marked as **Dead** appear under the Ideas tab.
+
+### Files Affected
+- `assets/js/app.js` - Updated filtering rules for Projects vs Ideas tabs
+
+### Reason for Change
+User wanted abandoned projects grouped with ideas rather than active projects.
+
+---
+
 ## 2025-12-26 17:11:00 - Add Projects & Ideas Section
 
 ### Description
