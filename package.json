@@ -9,10 +9,14 @@
     "build": "npm run sync"
   },
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "@notionhq/client": "^5.6.0",
+    "dotenv": "^16.6.1"
   },
-  "devDependencies": {},
-  "keywords": ["blog", "notion", "static-site"],
+  "keywords": [
+    "blog",
+    "notion",
+    "static-site"
+  ],
   "author": "JimiLand",
   "license": "MIT"
 }
