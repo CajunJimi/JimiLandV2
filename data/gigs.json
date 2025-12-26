@@ -91,6 +91,19 @@
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
   {
+    "id": "237cb99e-b16c-8045-a61b-c11626a915da",
+    "title": "Untitled Gig",
+    "artist": "Johnny Blue Skies ",
+    "date": "2025-02-26",
+    "venue": "Barrowlands ",
+    "location": "",
+    "status": "Draft",
+    "type": "Gig",
+    "slug": "untitled-gig",
+    "notion_url": "https://www.notion.so/41-237cb99eb16c8045a61bc11626a915da",
+    "last_edited": "2025-12-26T20:01:00.000Z"
+  },
+  {
     "id": "16ccb99e-b16c-8018-b344-eac5c3d59f62",
     "title": "Untitled Gig",
     "artist": "The Warlocks",
@@ -517,19 +530,6 @@
     "type": "Gig",
     "slug": "untitled-gig",
     "notion_url": "https://www.notion.so/1-16ccb99eb16c80a09c5fdfa1c7761522",
-    "last_edited": "2025-12-26T17:00:00.000Z"
-  },
-  {
-    "id": "237cb99e-b16c-8045-a61b-c11626a915da",
-    "title": "Untitled Gig",
-    "artist": "",
-    "date": "",
-    "venue": "",
-    "location": "",
-    "status": "Draft",
-    "type": "Gig",
-    "slug": "untitled-gig",
-    "notion_url": "https://www.notion.so/237cb99eb16c8045a61bc11626a915da",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
   {
