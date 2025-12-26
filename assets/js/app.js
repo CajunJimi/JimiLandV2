@@ -372,7 +372,9 @@ function renderSongs(songs) {
                         </tr>
                         ${hasDetail ? `
                             <tr class="song-details" id="song-details-${index}">
-                                <td colspan="${hasDetails ? '3' : '2'}">${song.details}</td>
+                                <td colspan="${hasDetails ? '3' : '2'}">
+                                    ${song.details.split(';').map(show => `<div class="show-entry">${show.trim()}</div>`).join('')}
+                                </td>
                             </tr>
                         ` : ''}
                     `;

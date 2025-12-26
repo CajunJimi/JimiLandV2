@@ -750,7 +750,16 @@ article {
 }
 
 .song-details.visible {
-    display: block;
+    display: table-row;
+}
+
+.show-entry {
+    padding: 8px 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.show-entry:last-child {
+    border-bottom: none;
 }
 
 .expand-icon {
@@ -760,6 +769,18 @@ article {
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     margin-right: 5px;
+}
+
+/* Reading Progress Bar */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--accent-color);
+    z-index: 9999;
+    transition: width 0.1s ease;
 }
 
 /* Utility Classes */

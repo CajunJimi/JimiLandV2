@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress" id="reading-progress"></div>
+    
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -67,5 +70,29 @@
     </main>
 
     <script src="/assets/js/app.js"></script>
+    <script>
+        // Reading progress bar
+        window.addEventListener('scroll', function() {
+            const progressBar = document.getElementById('reading-progress');
+            const article = document.querySelector('.post-content');
+            if (!progressBar || !article) return;
+            
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Calculate progress
+            const scrollStart = articleTop - windowHeight / 2;
+            const scrollEnd = articleTop + articleHeight - windowHeight / 2;
+            const scrollProgress = (scrollTop - scrollStart) / (scrollEnd - scrollStart);
+            
+            // Clamp between 0 and 1
+            const progress = Math.max(0, Math.min(1, scrollProgress));
+            
+            // Update progress bar width
+            progressBar.style.width = (progress * 100) + '%';
+        });
+    </script>
 </body>
 </html>
