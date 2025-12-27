@@ -1,5 +1,31 @@
 # JimiLand Site Changelog
 
+## 2025-12-27 20:34:00 - Update Color Palette to Warm Amber
+
+### Description
+Changed site color scheme from harsh red to softer Warm Amber palette for better readability and aesthetics.
+
+### Files Affected
+- `assets/css/style.css` - Updated CSS variables with new color palette, backed up original colors in comments
+
+### Reason for Change
+User found the bright red accent color too harsh. Warm Amber provides a cozy, inviting feel while maintaining energy and readability.
+
+### Color Changes
+- **Background**: `#000000` → `#1a1a1a` (Charcoal)
+- **Text**: `#ffffff` → `#e6e6e6` (Off-white)
+- **Accent**: `#ff0000` → `#ffa726` (Warm orange)
+- **Border**: `#333333` → `#2a2a2a` (Slightly lighter)
+- **Link Hover**: `#cc0000` → `#ff9800` (Darker orange)
+
+### Revert Instructions
+Original red color scheme is preserved in CSS comments. To revert:
+1. Open `assets/css/style.css`
+2. Comment out Warm Amber palette (lines 15-24)
+3. Uncomment original color scheme (lines 3-12)
+
+---
+
 ## 2025-12-26 22:23:00 - Fix GitHub Actions Auto-Sync Permissions
 
 ### Description

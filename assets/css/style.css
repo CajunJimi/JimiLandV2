@@ -1,10 +1,24 @@
 /* JimiLand - Minimal Style */
+
+/* ORIGINAL COLOR SCHEME (Red) - Uncomment to revert:
 :root {
     --bg-color: #000000;
     --text-color: #ffffff;
     --accent-color: #ff0000;
     --border-color: #333333;
     --link-hover: #cc0000;
+    --navbar-height: 60px;
+    --max-width: 800px;
+}
+*/
+
+/* WARM AMBER PALETTE (Option 3) */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e6e6e6;
+    --accent-color: #ffa726;
+    --border-color: #2a2a2a;
+    --link-hover: #ff9800;
     --navbar-height: 60px;
     --max-width: 800px;
 }
