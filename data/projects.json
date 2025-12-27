@@ -1,5 +1,14 @@
 [
   {
+    "id": "2d6cb99e-b16c-801f-82cf-c04146bd5d30",
+    "name": "Dyslexic AI",
+    "description": "AI to help with just correcting common framing and spelling mistakes often seen in dyslexics writings. The amount of years clever people have spent correct bad to dad and read to weed will be that, measured in years. Surely this can’t be hard to fit, won’t require huge power, promt will need tk be strict, but model won’t need to huge resource. Cool little idea that can definitely be monetised. A lot the days are wrong as important old ideas to new system, but this a one night smoking idea) ",
+    "status": "Idea",
+    "link": null,
+    "date": "2025-12-27",
+    "published": true
+  },
+  {
     "id": "2d5cb99e-b16c-8094-af7f-cc67525ae481",
     "name": "White T-Shirt",
     "description": "There is a real lack of good-quality, affordable white T-shirts available, pretty much worldwide. M&S did a good one under the name “Seamless,” which, of course, is now discontinued. The rest are cheap shit.\nYou ",
@@ -78,6 +87,24 @@
     "status": "Dead",
     "link": null,
     "date": "2024-02-28",
+    "published": true
+  },
+  {
+    "id": "2d6cb99e-b16c-8040-9e41-c65f03cafca4",
+    "name": "Lists",
+    "description": "The most basic top/tracking app on planet,  will have collab built k. Thinking family here. Love it when u all using same todo lists and can add todos to each other. Very minimal, will use AI to categorise entries. Ability to input written notes in via a scan(pic) &or AI support (minimal cost that),widget as most of those sucks. All stored/sync local or iCloud storage. This is a one day project, fairly high priority as could change how I track things. Drastically ",
+    "status": "Idea",
+    "link": null,
+    "date": null,
+    "published": true
+  },
+  {
+    "id": "2d6cb99e-b16c-8024-9683-f412c3c3ffc1",
+    "name": "High Quality Outdoor Weather System ",
+    "description": "The ones you buy are shit and expensive and never have the data you want or isn’t easy to export bla blaze. There was this twitter account in Dalgety bay which tweeted the weather in good detail every hour, was very cool. I’m still grafting my dad on this idea, but we could build them together as he is better at parts of it than me and could built it to our exact specifications,, and then in turn do a batch as Christmas presents? And then they would also need to be inter connected? Via like mesh or cellular? Whatever is cheapest? Should  add a speaker a speaker to annoy folk. Anyway, this would be fully DIY or an attempt anyway. Interms of 3d printed parts, cnc’d parts, components bought or created and assembled. I think this is double. Hopefully my dad likes it, he can start shipping these units and retire. (Very raw first pass notes right here)",
+    "status": "Idea",
+    "link": null,
+    "date": null,
     "published": true
   }
 ]
