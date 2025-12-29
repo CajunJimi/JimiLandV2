@@ -1,5 +1,43 @@
 # JimiLand Site Changelog
 
+## 2025-12-29 19:56:00 - Add Interactive Concert Map
+
+### Description
+Added interactive concert map showing all venues with smart geocoding, marker clustering, and zoom-based venue display.
+
+### Files Affected
+- `gigs/index.html` - Added Map tab, Leaflet.js libraries, map container
+- `assets/css/map.css` - New stylesheet for map styling with dark theme
+- `assets/js/map.js` - New map functionality with geocoding and clustering
+- `assets/js/app.js` - Updated tab switching to handle map initialization
+
+### Reason for Change
+User requested visual way to see concert venues on a map, with ability to zoom into cities and see individual venues.
+
+### Technical Implementation
+- **Leaflet.js**: Free, open-source mapping library with dark theme tiles
+- **Marker Clustering**: Groups nearby venues when zoomed out, splits into individual markers when zoomed in
+- **Smart Geocoding**: 
+  - Tries venue+city first (e.g., "Royal Albert Hall, London")
+  - Falls back to city-only for festivals (e.g., "Manchester")
+  - Uses OpenStreetMap Nominatim API (free, no API key)
+  - 1-second delay between requests to respect rate limits
+  - Caches coordinates to avoid repeated API calls
+- **Venue Grouping**: Multiple concerts at same venue show in single popup
+- **Dark Theme**: Custom styling matching Warm Amber color palette
+- **Stats Display**: Shows total venues, cities, and concerts
+
+### Features
+- **Zoom-based Display**: Country view shows city clusters, city view shows individual venues
+- **Interactive Popups**: Click marker to see all concerts at that venue with dates and artists
+- **Responsive**: Works on mobile with touch controls
+- **Auto-fit**: Map automatically zooms to show all concert locations
+
+### Result
+Users can now visualize their concert history geographically, explore venues by location, and see all concerts at each venue. Perfect for tracking which cities/venues they've visited most.
+
+---
+
 ## 2025-12-29 19:03:00 - Improve Song Tracker Loading Reliability
 
 ### Description

@@ -6,6 +6,11 @@
     <title>Gigs - JimiLand</title>
     <meta name="description" content="Music calendar and song tracker">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="/assets/css/map.css">
 </head>
 <body>
     <nav class="navbar">
@@ -32,6 +37,7 @@
         
         <div class="filter-tabs">
             <div class="filter-tab active" data-tab="gigs">Gigs</div>
+            <div class="filter-tab" data-tab="map">Map</div>
             <div class="filter-tab" data-tab="songs">Song Tracker</div>
         </div>
 
@@ -57,6 +63,27 @@
                 <div class="calendar-grid" id="calendar-grid">
                     <!-- Calendar will be generated here -->
                 </div>
+            </div>
+        </div>
+
+        <!-- Map Content -->
+        <div id="map-content" class="hidden">
+            <div class="map-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-venues">0</div>
+                    <div class="stat-label">Venues</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-cities">0</div>
+                    <div class="stat-label">Cities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="map-concerts">0</div>
+                    <div class="stat-label">Concerts</div>
+                </div>
+            </div>
+            <div class="map-container">
+                <div id="concert-map"></div>
             </div>
         </div>
 
@@ -89,6 +116,10 @@
         </div>
     </main>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/map.js"></script>
 </body>
 </html>

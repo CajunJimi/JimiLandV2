@@ -121,13 +121,23 @@ async function initGigsPage() {
             
             const tabType = tab.getAttribute('data-tab');
             const gigsContent = document.getElementById('gigs-content');
+            const mapContent = document.getElementById('map-content');
             const songsContent = document.getElementById('songs-content');
             
             if (tabType === 'gigs') {
                 gigsContent.classList.remove('hidden');
+                mapContent.classList.add('hidden');
                 songsContent.classList.add('hidden');
+            } else if (tabType === 'map') {
+                gigsContent.classList.add('hidden');
+                mapContent.classList.remove('hidden');
+                songsContent.classList.add('hidden');
+                if (!concertMap) {
+                    setTimeout(initMap, 100);
+                }
             } else if (tabType === 'songs') {
                 gigsContent.classList.add('hidden');
+                mapContent.classList.add('hidden');
                 songsContent.classList.remove('hidden');
                 if (allSongs.length === 0) {
                     loadSongs();
