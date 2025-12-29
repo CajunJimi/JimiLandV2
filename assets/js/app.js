@@ -298,25 +298,54 @@ async function loadSongs() {
     const container = document.getElementById('songs-table-container');
     if (!container) return;
     
-    container.innerHTML = '<div class="loading">Loading songs...</div>';
+    container.innerHTML = '<div class="loading">Loading songs from Google Sheets...<br><small style="color: #999; font-size: 14px;">This may take a few seconds</small></div>';
     
     try {
         // Google Sheets CSV export URL (gid=425773807)
-        // Using CORS proxy to bypass browser restrictions
         const sheetUrl = 'https://docs.google.com/spreadsheets/d/1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc/export?format=csv&gid=425773807';
-        const corsProxy = 'https://api.allorigins.win/raw?url=';
         
-        const response = await fetch(corsProxy + encodeURIComponent(sheetUrl));
-        if (!response.ok) throw new Error('Failed to load songs from Google Sheets');
+        // Try multiple CORS proxies for better reliability
+        const proxies = [
+            'https://corsproxy.io/?',
+            'https://api.allorigins.win/raw?url='
+        ];
         
-        const csvText = await response.text();
+        let csvText = null;
+        let lastError = null;
+        
+        // Try each proxy with timeout
+        for (const proxy of proxies) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                
+                const response = await fetch(proxy + encodeURIComponent(sheetUrl), {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                
+                if (response.ok) {
+                    csvText = await response.text();
+                    break; // Success, exit loop
+                }
+            } catch (err) {
+                lastError = err;
+                console.warn(`Proxy ${proxy} failed:`, err.message);
+                continue; // Try next proxy
+            }
+        }
+        
+        if (!csvText) {
+            throw new Error(lastError?.message || 'All proxies failed');
+        }
+        
         allSongs = parseSongsCsv(csvText);
         populatePerformerFilter(allSongs);
         renderSongs(allSongs);
         updateSongStats(allSongs);
     } catch (error) {
         console.error('Failed to load songs:', error);
-        container.innerHTML = '<div class="error">Failed to load songs. Please try again later.</div>';
+        container.innerHTML = '<div class="error">Failed to load songs. The service may be temporarily unavailable.<br><small>Try refreshing the page in a moment.</small></div>';
     }
 }
 

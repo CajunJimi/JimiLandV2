@@ -1,5 +1,28 @@
 # JimiLand Site Changelog
 
+## 2025-12-29 19:03:00 - Improve Song Tracker Loading Reliability
+
+### Description
+Improved song tracker loading with multiple CORS proxies, timeout handling, and helpful loading messages.
+
+### Files Affected
+- `assets/js/app.js` - Added proxy fallback system, 10-second timeout, better error messages
+
+### Reason for Change
+Song tracker was slow to load and sometimes failed. CORS proxy (allorigins.win) was unreliable and had no timeout handling.
+
+### Technical Implementation
+- **Multiple Proxies**: Try corsproxy.io first, fallback to allorigins.win
+- **Timeout Handling**: 10-second timeout per proxy attempt using AbortController
+- **Loading Message**: "Loading songs from Google Sheets... This may take a few seconds"
+- **Better Errors**: Clear error message with suggestion to refresh
+- **Automatic Retry**: If first proxy fails, automatically tries second
+
+### Result
+Faster, more reliable song loading with clear user feedback. Users know it's loading and won't think the page is broken.
+
+---
+
 ## 2025-12-27 20:34:00 - Update Color Palette to Warm Amber
 
 ### Description
