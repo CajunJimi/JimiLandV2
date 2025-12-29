@@ -1,5 +1,27 @@
 # JimiLand Site Changelog
 
+## 2025-12-29 20:04:00 - Fix Concert Map Location Data Sync
+
+### Description
+Fixed Notion sync to properly capture location field from gigs database (case-sensitive property name issue).
+
+### Files Affected
+- `scripts/notion-sync.js` - Changed `properties.Location` to `properties.location` (lowercase)
+- `data/gigs.json` - Now properly populated with location data
+
+### Reason for Change
+Concert map was showing 0 cities because location field wasn't syncing from Notion. Property name was case-sensitive.
+
+### Technical Fix
+- Notion property names are case-sensitive in API
+- Changed from `properties.Location` to `properties.location` to match actual Notion property name
+- Re-ran sync to populate all location data
+
+### Result
+Map now displays all concert venues with proper city locations. Geocoding working correctly.
+
+---
+
 ## 2025-12-29 19:56:00 - Add Interactive Concert Map
 
 ### Description
