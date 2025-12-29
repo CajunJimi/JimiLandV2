@@ -247,6 +247,19 @@
     "last_edited": "2025-12-29T19:57:00.000Z"
   },
   {
+    "id": "2d8cb99e-b16c-8039-9db9-ec38346cd394",
+    "title": "Untitled Gig",
+    "artist": "Various",
+    "date": "2023-08-15",
+    "venue": "Broad Street",
+    "location": "Knashville",
+    "status": "Draft",
+    "type": "Gig",
+    "slug": "untitled-gig",
+    "notion_url": "https://www.notion.so/50-2d8cb99eb16c80399db9ec38346cd394",
+    "last_edited": "2025-12-29T20:08:00.000Z"
+  },
+  {
     "id": "16ccb99e-b16c-8016-b2ae-daf9b447fe97",
     "title": "Untitled Gig",
     "artist": "Rodger Waters",
@@ -635,18 +648,5 @@
     "slug": "untitled-gig",
     "notion_url": "https://www.notion.so/1-16ccb99eb16c80a09c5fdfa1c7761522",
     "last_edited": "2025-12-29T19:56:00.000Z"
-  },
-  {
-    "id": "2d8cb99e-b16c-8039-9db9-ec38346cd394",
-    "title": "Untitled Gig",
-    "artist": "",
-    "date": "",
-    "venue": "",
-    "location": "",
-    "status": "Draft",
-    "type": "Gig",
-    "slug": "untitled-gig",
-    "notion_url": "https://www.notion.so/2d8cb99eb16c80399db9ec38346cd394",
-    "last_edited": "2025-12-29T19:44:00.000Z"
   }
 ]
