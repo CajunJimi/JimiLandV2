@@ -88,6 +88,20 @@ async function fetchPageContent(pageId) {
 }
 
 /**
+ * Convert plain text URLs to clickable links
+ */
+function linkifyText(text) {
+    // Regex to match URLs (http, https, www)
+    const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
+    
+    return text.replace(urlRegex, (url) => {
+        // Add https:// to www. links
+        const href = url.startsWith('www.') ? 'https://' + url : url;
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+}
+
+/**
  * Convert Notion blocks to HTML content
  */
 function convertBlocksToHTML(blocks) {
@@ -98,32 +112,32 @@ function convertBlocksToHTML(blocks) {
             case 'paragraph':
                 const text = block.paragraph.rich_text.map(t => t.plain_text).join('');
                 if (text.trim()) {
-                    html += `<p>${text}</p>\n`;
+                    html += `<p>${linkifyText(text)}</p>\n`;
                 }
                 break;
             case 'heading_1':
                 const h1Text = block.heading_1.rich_text.map(t => t.plain_text).join('');
-                html += `<h1>${h1Text}</h1>\n`;
+                html += `<h1>${linkifyText(h1Text)}</h1>\n`;
                 break;
             case 'heading_2':
                 const h2Text = block.heading_2.rich_text.map(t => t.plain_text).join('');
-                html += `<h2>${h2Text}</h2>\n`;
+                html += `<h2>${linkifyText(h2Text)}</h2>\n`;
                 break;
             case 'heading_3':
                 const h3Text = block.heading_3.rich_text.map(t => t.plain_text).join('');
-                html += `<h3>${h3Text}</h3>\n`;
+                html += `<h3>${linkifyText(h3Text)}</h3>\n`;
                 break;
             case 'bulleted_list_item':
                 const bulletText = block.bulleted_list_item.rich_text.map(t => t.plain_text).join('');
-                html += `<li>${bulletText}</li>\n`;
+                html += `<li>${linkifyText(bulletText)}</li>\n`;
                 break;
             case 'numbered_list_item':
                 const numberedText = block.numbered_list_item.rich_text.map(t => t.plain_text).join('');
-                html += `<li>${numberedText}</li>\n`;
+                html += `<li>${linkifyText(numberedText)}</li>\n`;
                 break;
             case 'quote':
                 const quoteText = block.quote.rich_text.map(t => t.plain_text).join('');
-                html += `<blockquote>${quoteText}</blockquote>\n`;
+                html += `<blockquote>${linkifyText(quoteText)}</blockquote>\n`;
                 break;
             case 'code':
                 const codeText = block.code.rich_text.map(t => t.plain_text).join('');
@@ -134,7 +148,7 @@ function convertBlocksToHTML(blocks) {
                 if (block[block.type]?.rich_text) {
                     const plainText = block[block.type].rich_text.map(t => t.plain_text).join('');
                     if (plainText.trim()) {
-                        html += `<p>${plainText}</p>\n`;
+                        html += `<p>${linkifyText(plainText)}</p>\n`;
                     }
                 }
                 break;

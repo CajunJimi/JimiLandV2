@@ -1,5 +1,34 @@
 # JimiLand Site Changelog
 
+## 2025-12-31 13:27:00 - Make URLs Clickable Throughout Site
+
+### Description
+Added automatic URL detection and conversion to clickable links across all blog posts and content.
+
+### Files Affected
+- `scripts/notion-sync.js` - Added `linkifyText()` function to detect and convert URLs
+- All blog post HTML files regenerated with clickable links
+
+### Reason for Change
+User requested that URLs in blog posts and site content be automatically clickable instead of plain text.
+
+### Technical Implementation
+- **URL Detection**: Regex pattern matches `http://`, `https://`, and `www.` URLs
+- **Link Generation**: Converts matched URLs to `<a>` tags with:
+  - `target="_blank"` - Opens in new tab
+  - `rel="noopener noreferrer"` - Security best practice
+  - Automatic `https://` prefix for `www.` links
+- **Applied To**: Paragraphs, headings, lists, quotes, and all text content
+- **Not Applied To**: Code blocks (preserved as-is)
+
+### Result
+All URLs in blog posts are now clickable links that open in new tabs. Works for:
+- YouTube links
+- External website references
+- Any http/https/www URLs in content
+
+---
+
 ## 2025-12-29 20:04:00 - Fix Concert Map Location Data Sync
 
 ### Description
