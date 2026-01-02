@@ -1,5 +1,23 @@
 [
   {
+    "id": "2dccb99e-b16c-808d-bce9-e14b40fee8ec",
+    "name": "UrLife(RLife)",
+    "description": "A life admin app, built with minimalism and partners in mind. Actually really pleased with this, needs alot more tweaks than the health app, but i think it might actually have a positive impact on my life. Will add more later",
+    "status": "In Progress",
+    "link": null,
+    "date": "2026-01-01",
+    "published": true
+  },
+  {
+    "id": "2dccb99e-b16c-80f3-941d-d2043116f221",
+    "name": "UrHealth",
+    "description": "Combined multiple health or fitness apps so i have less apps on my phone. Really just a gym/food/medicine tracker with some cool little features. Can import medicine, supplements by taking a picture ",
+    "status": "In Progress",
+    "link": null,
+    "date": "2025-12-30",
+    "published": true
+  },
+  {
     "id": "2d5cb99e-b16c-8094-af7f-cc67525ae481",
     "name": "White T-Shirt",
     "description": "There is a real lack of good-quality, affordable white T-shirts available, pretty much worldwide. M&S did a good one under the name “Seamless,” which, of course, is now discontinued. The rest are cheap shit.\nYou can, however, get a batch of, say, 1,000 made in China with great material to your exact specifications but you’d then need to sell roughly 950 T-shirts. There have to be at least 500 other autists who can’t find a replacement for that pre 2020 M&S item. This one’s been on my mind for a while.",
