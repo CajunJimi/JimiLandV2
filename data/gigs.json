@@ -26,6 +26,19 @@
     "last_edited": "2025-12-26T18:27:00.000Z"
   },
   {
+    "id": "2e4cb99e-b16c-80aa-aaa9-c1f417d57f20",
+    "title": "Untitled Gig",
+    "artist": "Mind Enterprises",
+    "date": "2025-10-22",
+    "venue": "St Luke’s",
+    "location": "Glasgow",
+    "status": "Draft",
+    "type": "Gig",
+    "slug": "untitled-gig",
+    "notion_url": "https://www.notion.so/53-2e4cb99eb16c80aaaaa9c1f417d57f20",
+    "last_edited": "2026-01-10T10:30:00.000Z"
+  },
+  {
     "id": "223cb99e-b16c-80b7-b7b4-d931fa61f718",
     "title": "Untitled Gig",
     "artist": "Billy Strings",
