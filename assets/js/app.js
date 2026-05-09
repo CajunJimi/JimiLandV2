@@ -1,14 +1,46 @@
 // JimiLand - Main JavaScript Application
 
-// Mobile Menu Toggle
+// Theme toggle (light <-> dark)
+// The initial theme is set by an inline script in <head> before paint.
+// This handler lets the user override and persists to localStorage.
+function toggleTheme() {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('jimiland-theme', next); } catch (e) {}
+    // Notify listeners (e.g. the Leaflet map) so they can re-tile.
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+}
+
+// Mobile Menu Toggle + Theme Toggle wiring
 document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
-    
+    const themeToggle = document.getElementById('theme-toggle');
+
     if (navToggle) {
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
         });
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    // Live-follow OS theme changes when user has not explicitly chosen one.
+    if (window.matchMedia) {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const onSystemChange = (e) => {
+            let saved = null;
+            try { saved = localStorage.getItem('jimiland-theme'); } catch (_) {}
+            if (saved) return; // user override wins
+            const next = e.matches ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        };
+        if (mql.addEventListener) mql.addEventListener('change', onSystemChange);
+        else if (mql.addListener) mql.addListener(onSystemChange); // legacy
     }
     
     // Initialize page-specific functionality

@@ -2,20 +2,49 @@
 
 let concertMap = null;
 let markerClusterGroup = null;
+let basemapLayer = null;
 const geocodeCache = {};
+
+const TILE_URLS = {
+    dark:  'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png',
+    light: 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png'
+};
+const TILE_LABELS = {
+    dark:  'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png',
+    light: 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png'
+};
+let labelLayer = null;
+
+function currentTheme() {
+    return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+}
+
+function applyBasemap(theme) {
+    if (!concertMap) return;
+    const t = theme || currentTheme();
+    if (basemapLayer) concertMap.removeLayer(basemapLayer);
+    if (labelLayer)   concertMap.removeLayer(labelLayer);
+    basemapLayer = L.tileLayer(TILE_URLS[t], {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        maxZoom: 19
+    }).addTo(concertMap);
+    labelLayer = L.tileLayer(TILE_LABELS[t], { maxZoom: 19, pane: 'shadowPane' }).addTo(concertMap);
+}
 
 // Initialize the concert map
 async function initMap() {
     if (!document.getElementById('concert-map')) return;
-    
+
     // Initialize map centered on UK (adjust based on your concert locations)
     concertMap = L.map('concert-map').setView([54.5, -4.0], 6);
-    
-    // Add dark theme tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        maxZoom: 19
-    }).addTo(concertMap);
+
+    // Add theme-matched tile layer
+    applyBasemap();
+
+    // Re-tile when the user toggles theme
+    window.addEventListener('themechange', (e) => {
+        applyBasemap(e.detail && e.detail.theme);
+    });
     
     // Initialize marker cluster group
     markerClusterGroup = L.markerClusterGroup({
