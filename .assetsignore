@@ -1,0 +1,22 @@
+# Files/dirs excluded from Cloudflare Workers Static Assets uploads.
+# Same syntax as .gitignore. Keeps the deploy bundle small and avoids
+# the 25 MiB per-file limit (node_modules/workerd is 119 MiB).
+
+node_modules
+.git
+.github
+scripts
+.env
+.windsurfrules
+package.json
+package-lock.json
+wrangler.jsonc
+.wrangler
+
+# Repo docs / logs — not part of the site
+*.md
+!posts/**/*.md
+Change_Logs
+Feature_Logs
+Troubleshooting_Logs
+archive
