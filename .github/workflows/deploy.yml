@@ -40,4 +40,8 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Wrangler 3.90 (the action's default) is too old for Workers
+          # Static Assets projects without a `main` script entry-point.
+          # Pin to v4 to match what works locally.
+          wranglerVersion: '4'
           command: deploy
