@@ -1,0 +1,43 @@
+name: Deploy to Cloudflare
+
+# Deploys jimi.land to Cloudflare Workers Static Assets on every push
+# to `main` (excluding [skip ci] commits, which GitHub Actions ignores
+# by default — those are handled by the notion-sync workflow's own
+# trailing deploy step).
+#
+# Together with notion-sync.yml's deploy step, this guarantees:
+# - Code pushes      → deploy.yml fires       → live in ~30s
+# - Notion auto-sync → notion-sync.yml fires  → live in ~30s
+# - Hourly safety net via notion-sync.yml even if both above miss
+
+on:
+  push:
+    branches:
+      - main
+    # Skip workflow-only changes (notion-sync.yml has its own runner)
+    paths-ignore:
+      - '.github/workflows/notion-sync.yml'
+      - 'README.md'
+      - '*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy

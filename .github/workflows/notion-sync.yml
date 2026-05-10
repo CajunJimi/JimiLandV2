@@ -4,10 +4,10 @@ on:
   # Run every hour
   schedule:
     - cron: '0 * * * *'
-  
+
   # Allow manual trigger from GitHub Actions tab or mobile app
   workflow_dispatch:
-  
+
   # Run on push to main (for testing workflow changes)
   push:
     branches:
@@ -21,21 +21,21 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      
+          node-version: '22'
+
       - name: Install dependencies
         run: npm install @notionhq/client dotenv
-      
+
       - name: Sync from Notion
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
@@ -43,7 +43,7 @@ jobs:
           NOTION_GIGS_DATABASE_ID: ${{ secrets.NOTION_GIGS_DATABASE_ID }}
           NOTION_PROJECTS_DATABASE_ID: ${{ secrets.NOTION_PROJECTS_DATABASE_ID }}
         run: node scripts/notion-sync.js
-      
+
       - name: Check for changes
         id: check_changes
         run: |
@@ -52,7 +52,7 @@ jobs:
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Commit and push changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
@@ -61,3 +61,17 @@ jobs:
           git add .
           git commit -m "Auto-sync from Notion [skip ci]"
           git push
+
+      # Always deploy at the end of the sync run.
+      # Two reasons:
+      # 1. If sync produced new content, ship it to the edge now (not on
+      #    next code push).
+      # 2. If sync produced nothing but code has changed since last
+      #    deploy, this is a safety net to catch missed deploys.
+      # The deploy.yml workflow handles the regular code-push case;
+      # this step handles content-only updates that skip CI.
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy
