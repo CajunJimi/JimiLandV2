@@ -16,7 +16,7 @@ wrangler.jsonc
 # Repo docs / logs — not part of the site
 *.md
 !posts/**/*.md
+# Internal log directories (NOT the public /archive/ route — that ships)
 Change_Logs
 Feature_Logs
 Troubleshooting_Logs
-archive

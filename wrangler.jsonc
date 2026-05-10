@@ -1,0 +1,12 @@
+{
+  // Cloudflare Workers Static Assets config for jimi.land.
+  // The site is plain static files — Cloudflare just serves them.
+  // .assetsignore at the repo root keeps node_modules and dev plumbing
+  // out of the upload bundle (25 MiB per-file limit).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jimiland",
+  "compatibility_date": "2026-05-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "assets": { "directory": "." }
+}
