@@ -243,21 +243,6 @@
     "lng": 2.8332511
   },
   {
-    "id": "16ccb99e-b16c-80e0-ba72-e4f3b6a2cbe1",
-    "title": "Untitled Gig",
-    "artist": "Bob Dylan",
-    "date": "2023-10-30",
-    "venue": "SSE",
-    "location": "Glasgow",
-    "status": "Draft",
-    "type": "Gig",
-    "slug": "untitled",
-    "notion_url": "https://www.notion.so/25-16ccb99eb16c80e0ba72e4f3b6a2cbe1",
-    "last_edited": "2025-12-29T19:57:00.000Z",
-    "lat": 55.8600708,
-    "lng": -4.2593241
-  },
-  {
     "id": "16ccb99e-b16c-802e-b66b-ea7417deab3e",
     "title": "Untitled Gig",
     "artist": "Busted",
@@ -342,6 +327,21 @@
     "slug": "untitled",
     "notion_url": "https://www.notion.so/48-2d8cb99eb16c804e80a2d90bb9d7070c",
     "last_edited": "2025-12-29T19:32:00.000Z"
+  },
+  {
+    "id": "16ccb99e-b16c-80e0-ba72-e4f3b6a2cbe1",
+    "title": "Untitled Gig",
+    "artist": "Bob Dylan",
+    "date": "2022-10-30",
+    "venue": "SSE",
+    "location": "Glasgow",
+    "status": "Draft",
+    "type": "Gig",
+    "slug": "untitled",
+    "notion_url": "https://www.notion.so/25-16ccb99eb16c80e0ba72e4f3b6a2cbe1",
+    "last_edited": "2026-05-13T20:35:00.000Z",
+    "lat": 55.8600708,
+    "lng": -4.2593241
   },
   {
     "id": "16ccb99e-b16c-8060-920c-e0a0cc212c98",
