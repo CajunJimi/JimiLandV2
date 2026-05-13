@@ -19,8 +19,64 @@
         dark:  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     };
 
+    // Style catalog for the ?demo=1 picker. Each entry: { id, label, dark, light }
+    // where dark/light are MapLibre style URLs. If only one is set, that style
+    // is used for both themes (some providers don't have both).
+    const STYLE_CATALOG = [
+        {
+            id: 'carto-default',
+            label: 'CARTO Positron / Dark Matter (current)',
+            light: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+            dark:  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+        },
+        {
+            id: 'carto-voyager',
+            label: 'CARTO Voyager (warm editorial)',
+            light: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+            dark:  'https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json',
+        },
+        {
+            id: 'openfreemap-liberty',
+            label: 'OpenFreeMap Liberty (colourful, detailed)',
+            light: 'https://tiles.openfreemap.org/styles/liberty',
+            dark:  'https://tiles.openfreemap.org/styles/liberty',
+        },
+        {
+            id: 'openfreemap-bright',
+            label: 'OpenFreeMap Bright (modern light)',
+            light: 'https://tiles.openfreemap.org/styles/bright',
+            dark:  'https://tiles.openfreemap.org/styles/bright',
+        },
+        {
+            id: 'openfreemap-positron',
+            label: 'OpenFreeMap Positron (minimal light)',
+            light: 'https://tiles.openfreemap.org/styles/positron',
+            dark:  'https://tiles.openfreemap.org/styles/positron',
+        },
+        {
+            id: 'openfreemap-dark',
+            label: 'OpenFreeMap Dark (punchy dark)',
+            light: 'https://tiles.openfreemap.org/styles/dark',
+            dark:  'https://tiles.openfreemap.org/styles/dark',
+        },
+    ];
+
     function currentTheme() {
         return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+    }
+
+    function isDemoMode() {
+        return new URLSearchParams(location.search).has('demo');
+    }
+
+    function activeStyleEntry() {
+        const stored = localStorage.getItem('jimiland-map-style');
+        return STYLE_CATALOG.find((s) => s.id === stored) || STYLE_CATALOG[0];
+    }
+
+    function activeStyleUrl(theme) {
+        const entry = activeStyleEntry();
+        return entry[theme] || entry.dark || entry.light;
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -345,6 +401,40 @@
     }
 
     // ─────────────────────────────────────────────────────────────
+    // Demo mode: live basemap style switcher
+    // ─────────────────────────────────────────────────────────────
+
+    function renderStylePicker() {
+        const filtersEl = document.getElementById('world-filters');
+        if (!filtersEl) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'world-style-picker';
+        wrap.innerHTML = `
+            <label class="world-style-label">Basemap:</label>
+            <select class="world-trip-select" id="world-style-select" aria-label="Basemap style">
+                ${STYLE_CATALOG.map((s) => {
+                    const active = s.id === activeStyleEntry().id ? ' selected' : '';
+                    return `<option value="${s.id}"${active}>${s.label}</option>`;
+                }).join('')}
+            </select>
+        `;
+        filtersEl.appendChild(wrap);
+
+        document.getElementById('world-style-select').addEventListener('change', (e) => {
+            localStorage.setItem('jimiland-map-style', e.target.value);
+            const url = activeStyleUrl(currentTheme());
+            if (map && url) {
+                map.setStyle(url);
+                // Re-add markers after style swap (style change wipes layers
+                // but Marker DOM elements survive — only need to re-add after
+                // an explicit clearMarkers if we did one. With our flow they
+                // stay attached, no re-render needed).
+            }
+        });
+    }
+
+    // ─────────────────────────────────────────────────────────────
     // Helpers
     // ─────────────────────────────────────────────────────────────
 
@@ -380,10 +470,10 @@
     async function init() {
         readURLState();
 
-        // Initialise map
+        // Initialise map (with picked style if demo mode has been used)
         map = new maplibregl.Map({
             container: 'world-map',
-            style: STYLE_URLS[currentTheme()],
+            style: activeStyleUrl(currentTheme()),
             center: [0, 30],
             zoom: 1.5,
             attributionControl: { compact: true },
@@ -394,8 +484,12 @@
         // Re-tile on theme change
         window.addEventListener('themechange', (e) => {
             const t = (e.detail && e.detail.theme) || currentTheme();
-            if (map && STYLE_URLS[t]) map.setStyle(STYLE_URLS[t]);
+            const url = activeStyleUrl(t);
+            if (map && url) map.setStyle(url);
         });
+
+        // ?demo=1 — render a style picker in the toolbar
+        if (isDemoMode()) renderStylePicker();
 
         // Wire up panel close
         document.getElementById('world-panel-close').addEventListener('click', closePanel);

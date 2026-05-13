@@ -138,6 +138,24 @@ body.page-world {
     flex: 0 0 auto;
 }
 
+/* Style picker (?demo=1 only) */
+.world-style-picker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: var(--space-2);
+    padding-left: var(--space-2);
+    border-left: 1px solid var(--border);
+    flex: 0 0 auto;
+}
+.world-style-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 /* Trip select dropdown — quiet, matches chip styling */
 .world-trip-select {
     flex: 0 0 auto;
