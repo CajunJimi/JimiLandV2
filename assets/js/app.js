@@ -339,55 +339,24 @@ function renderCalendar(date, gigs) {
 async function loadSongs() {
     const container = document.getElementById('songs-table-container');
     if (!container) return;
-    
-    container.innerHTML = '<div class="loading">Loading songs from Google Sheets...<br><small style="color: #999; font-size: 14px;">This may take a few seconds</small></div>';
-    
+
+    container.innerHTML = '<div class="loading">Loading songs…</div>';
+
     try {
-        // Google Sheets CSV export URL (gid=425773807)
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1EThwk5YmlW-0FHjgm8_ojcWVltHJki1nXCFBcRMdlsc/export?format=csv&gid=425773807';
-        
-        // Try multiple CORS proxies for better reliability
-        const proxies = [
-            'https://corsproxy.io/?',
-            'https://api.allorigins.win/raw?url='
-        ];
-        
-        let csvText = null;
-        let lastError = null;
-        
-        // Try each proxy with timeout
-        for (const proxy of proxies) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-                
-                const response = await fetch(proxy + encodeURIComponent(sheetUrl), {
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-                
-                if (response.ok) {
-                    csvText = await response.text();
-                    break; // Success, exit loop
-                }
-            } catch (err) {
-                lastError = err;
-                console.warn(`Proxy ${proxy} failed:`, err.message);
-                continue; // Try next proxy
-            }
-        }
-        
-        if (!csvText) {
-            throw new Error(lastError?.message || 'All proxies failed');
-        }
-        
+        // Local CSV at /data/songs.csv (committed to the repo). No CORS proxy,
+        // no third-party service, no flake. Update the file directly when you
+        // want to update the song tracker.
+        const response = await fetch('/data/songs.csv', { cache: 'no-cache' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const csvText = await response.text();
+
         allSongs = parseSongsCsv(csvText);
         populatePerformerFilter(allSongs);
         renderSongs(allSongs);
         updateSongStats(allSongs);
     } catch (error) {
         console.error('Failed to load songs:', error);
-        container.innerHTML = '<div class="error">Failed to load songs. The service may be temporarily unavailable.<br><small>Try refreshing the page in a moment.</small></div>';
+        container.innerHTML = '<div class="error">Failed to load songs. Try refreshing the page.</div>';
     }
 }
 
