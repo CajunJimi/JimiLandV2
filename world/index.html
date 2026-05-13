@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - JimiLand</title>
-    <meta name="description" content="Projects and ideas from JimiLand">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>World — JimiLand</title>
+    <meta name="description" content="Every place I've been — concerts, museums, walks, camping, trips. Pinned on a map.">
     <script>
       (function () {
         try {
@@ -15,8 +15,10 @@
       })();
     </script>
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="/assets/css/world.css">
 </head>
-<body>
+<body class="page-world">
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -26,8 +28,8 @@
                 <a href="/" class="nav-link">Home</a>
                 <a href="/archive/" class="nav-link">Archive</a>
                 <a href="/gigs/" class="nav-link">Gigs</a>
-                <a href="/projects/" class="nav-link active">Projects</a>
-                <a href="/world/" class="nav-link">World</a>
+                <a href="/projects/" class="nav-link">Projects</a>
+                <a href="/world/" class="nav-link active">World</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme" type="button">
                     <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                     <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -41,29 +43,37 @@
         </div>
     </nav>
 
-    <main>
-        <h1>Projects & Ideas</h1>
-        
-        <div class="filter-tabs">
-            <div class="filter-tab active" data-tab="projects">Projects</div>
-            <div class="filter-tab" data-tab="ideas">Ideas</div>
-        </div>
-
-        <!-- Projects Content -->
-        <div id="projects-content">
-            <div class="projects-grid" id="projects-list">
-                <div class="loading">Loading projects...</div>
+    <main class="world-main">
+        <!-- Thin filter strip above map -->
+        <div class="world-toolbar" id="world-toolbar">
+            <div class="world-counts">
+                <span class="world-title">World</span>
+                <span class="world-stat" id="world-stat">Loading…</span>
+            </div>
+            <div class="world-filters" id="world-filters">
+                <!-- Filter chips inserted by JS -->
             </div>
         </div>
 
-        <!-- Ideas Content -->
-        <div id="ideas-content" class="hidden">
-            <div class="ideas-list" id="ideas-list">
-                <div class="loading">Loading ideas...</div>
+        <!-- Full-bleed map -->
+        <div class="world-map-wrap">
+            <div id="world-map" aria-label="Interactive world map of places visited"></div>
+            <div class="world-empty hidden" id="world-empty">
+                No places match this filter.
             </div>
         </div>
+
+        <!-- Slide-in details panel -->
+        <aside class="world-panel" id="world-panel" aria-hidden="true">
+            <button class="world-panel-close" id="world-panel-close" aria-label="Close details" type="button">×</button>
+            <div class="world-panel-inner" id="world-panel-inner">
+                <!-- Filled by JS on pin click -->
+            </div>
+        </aside>
     </main>
 
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
     <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/world.js"></script>
 </body>
 </html>
