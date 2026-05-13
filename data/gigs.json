@@ -8,7 +8,7 @@
     "location": "Cirencester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/51-2d8cb99eb16c8075b9aed44b3c27e63d",
     "last_edited": "2025-12-29T20:13:00.000Z"
   },
@@ -21,9 +21,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/39-29ecb99eb16c806a8726d43c25ecefb9",
-    "last_edited": "2025-12-26T18:27:00.000Z"
+    "last_edited": "2025-12-26T18:27:00.000Z",
+    "lat": 53.478171,
+    "lng": -2.2577281
   },
   {
     "id": "2e4cb99e-b16c-80aa-aaa9-c1f417d57f20",
@@ -34,9 +36,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/53-2e4cb99eb16c80aaaaa9c1f417d57f20",
-    "last_edited": "2026-01-10T10:30:00.000Z"
+    "last_edited": "2026-01-10T10:30:00.000Z",
+    "lat": 55.8546665,
+    "lng": -4.2345948
   },
   {
     "id": "223cb99e-b16c-80b7-b7b4-d931fa61f718",
@@ -47,9 +51,11 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/38-223cb99eb16c80b7b7b4d931fa61f718",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 51.501007,
+    "lng": -0.1774058
   },
   {
     "id": "24ccb99e-b16c-8077-b23f-f88a1dc41fab",
@@ -60,7 +66,7 @@
     "location": "Hebden Bridge",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/37-24ccb99eb16c8077b23ff88a1dc41fab",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
@@ -73,7 +79,7 @@
     "location": "Cirencester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/36-24ccb99eb16c801e8c96ca3e32a0db86",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
@@ -86,7 +92,7 @@
     "location": "Cirencester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/35-237cb99eb16c804c947feaf93f4f88a2",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
@@ -99,9 +105,11 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/34-206cb99eb16c807c9630f4c1f5b7e4c9",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 51.501007,
+    "lng": -0.1774058
   },
   {
     "id": "237cb99e-b16c-80da-a2bb-f0bfd4bc7cca",
@@ -112,9 +120,11 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/33-237cb99eb16c80daa2bbf0bfd4bc7cca",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 51.4979845,
+    "lng": -0.2074164
   },
   {
     "id": "237cb99e-b16c-8045-a61b-c11626a915da",
@@ -125,9 +135,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/41-237cb99eb16c8045a61bc11626a915da",
-    "last_edited": "2025-12-26T20:01:00.000Z"
+    "last_edited": "2025-12-26T20:01:00.000Z",
+    "lat": 55.8551245,
+    "lng": -4.2352797
   },
   {
     "id": "16ccb99e-b16c-8018-b344-eac5c3d59f62",
@@ -138,9 +150,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/32-16ccb99eb16c8018b344eac5c3d59f62",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 48.1950173,
+    "lng": -106.6358663
   },
   {
     "id": "16fcb99e-b16c-803c-bd56-fe66a7b4444b",
@@ -151,7 +165,7 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/31-16fcb99eb16c803cbd56fe66a7b4444b",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
@@ -164,7 +178,7 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/30-16fcb99eb16c80efabaefc5061cc3836",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
@@ -177,9 +191,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/29-16ccb99eb16c804baaa8d6dd7f71c5fd",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 53.4794892,
+    "lng": -2.2451148
   },
   {
     "id": "16ccb99e-b16c-809d-9789-f7ec49299ba9",
@@ -190,9 +206,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/28-16ccb99eb16c809d9789f7ec49299ba9",
-    "last_edited": "2025-12-29T19:58:00.000Z"
+    "last_edited": "2025-12-29T19:58:00.000Z",
+    "lat": 55.8601411,
+    "lng": -4.2852072
   },
   {
     "id": "16ccb99e-b16c-801a-925d-e191e17ff7f3",
@@ -203,9 +221,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/27-16ccb99eb16c801a925de191e17ff7f3",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 55.8505142,
+    "lng": -4.2590887
   },
   {
     "id": "16ccb99e-b16c-8040-b88b-c8291046f083",
@@ -216,9 +236,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/26-16ccb99eb16c8040b88bc8291046f083",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 50.5256097,
+    "lng": 2.8332511
   },
   {
     "id": "16ccb99e-b16c-80e0-ba72-e4f3b6a2cbe1",
@@ -229,9 +251,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/25-16ccb99eb16c80e0ba72e4f3b6a2cbe1",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 55.8600708,
+    "lng": -4.2593241
   },
   {
     "id": "16ccb99e-b16c-802e-b66b-ea7417deab3e",
@@ -242,9 +266,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/24-16ccb99eb16c802eb66bea7417deab3e",
-    "last_edited": "2025-12-29T19:44:00.000Z"
+    "last_edited": "2025-12-29T19:44:00.000Z",
+    "lat": 55.8601411,
+    "lng": -4.2852072
   },
   {
     "id": "16ccb99e-b16c-8037-aa53-dec0ec6b9c87",
@@ -255,9 +281,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/23-16ccb99eb16c8037aa53dec0ec6b9c87",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 53.4794892,
+    "lng": -2.2451148
   },
   {
     "id": "16ccb99e-b16c-8012-b0aa-dc5873fc7b11",
@@ -268,9 +296,11 @@
     "location": "New York",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/22-16ccb99eb16c8012b0aadc5873fc7b11",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 40.7055221,
+    "lng": -74.0015738
   },
   {
     "id": "2d8cb99e-b16c-8039-9db9-ec38346cd394",
@@ -281,7 +311,7 @@
     "location": "Knashville",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/50-2d8cb99eb16c80399db9ec38346cd394",
     "last_edited": "2025-12-29T20:08:00.000Z"
   },
@@ -294,9 +324,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/21-16ccb99eb16c8016b2aedaf9b447fe97",
-    "last_edited": "2025-12-29T19:44:00.000Z"
+    "last_edited": "2025-12-29T19:44:00.000Z",
+    "lat": 55.8601411,
+    "lng": -4.2852072
   },
   {
     "id": "2d8cb99e-b16c-804e-80a2-d90bb9d7070c",
@@ -307,7 +339,7 @@
     "location": "Manchster",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/48-2d8cb99eb16c804e80a2d90bb9d7070c",
     "last_edited": "2025-12-29T19:32:00.000Z"
   },
@@ -320,9 +352,11 @@
     "location": "Edinburgh",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/20-16ccb99eb16c8060920ce0a0cc212c98",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 55.9519018,
+    "lng": -3.1904199
   },
   {
     "id": "16ccb99e-b16c-803d-9886-c99a9bd13cd2",
@@ -333,9 +367,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/19-16ccb99eb16c803d9886c99a9bd13cd2",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 41.777019,
+    "lng": -72.505986
   },
   {
     "id": "2d8cb99e-b16c-8047-b48e-cc94c2c05652",
@@ -346,9 +382,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/47-2d8cb99eb16c8047b48ecc94c2c05652",
-    "last_edited": "2025-12-29T19:32:00.000Z"
+    "last_edited": "2025-12-29T19:32:00.000Z",
+    "lat": 55.8611339,
+    "lng": -4.2580261
   },
   {
     "id": "2d8cb99e-b16c-8099-8376-eabd3987fac1",
@@ -359,9 +397,11 @@
     "location": "Edinburgh",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/49-2d8cb99eb16c80998376eabd3987fac1",
-    "last_edited": "2025-12-29T19:42:00.000Z"
+    "last_edited": "2025-12-29T19:42:00.000Z",
+    "lat": 55.9537315,
+    "lng": -3.1905918
   },
   {
     "id": "2d8cb99e-b16c-800e-b524-c451e62cd1cf",
@@ -372,9 +412,11 @@
     "location": "Miami",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/52-2d8cb99eb16c800eb524c451e62cd1cf",
-    "last_edited": "2025-12-30T18:28:00.000Z"
+    "last_edited": "2025-12-30T18:28:00.000Z",
+    "lat": 25.7735069,
+    "lng": -80.1917526
   },
   {
     "id": "16ccb99e-b16c-8090-beca-e989a9928f3e",
@@ -385,9 +427,11 @@
     "location": "Miami",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/18-16ccb99eb16c8090becae989a9928f3e",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 25.8494759,
+    "lng": -80.2579786
   },
   {
     "id": "16ccb99e-b16c-80a4-a5b8-f428ca4c60af",
@@ -398,9 +442,11 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/17-16ccb99eb16c80a4a5b8f428ca4c60af",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 51.534574,
+    "lng": -0.1056969
   },
   {
     "id": "16ccb99e-b16c-8015-9119-c5e5aa000603",
@@ -411,9 +457,11 @@
     "location": "London",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/16-16ccb99eb16c80159119c5e5aa000603",
-    "last_edited": "2025-12-29T19:57:00.000Z"
+    "last_edited": "2025-12-29T19:57:00.000Z",
+    "lat": 51.5074889,
+    "lng": -0.1622074
   },
   {
     "id": "2d5cb99e-b16c-8073-bb5b-dbc3498d0f77",
@@ -424,7 +472,7 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/40-2d5cb99eb16c8073bb5bdbc3498d0f77",
     "last_edited": "2025-12-26T18:27:00.000Z"
   },
@@ -437,9 +485,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/15-16ccb99eb16c805d9ff6f44802b38766",
-    "last_edited": "2025-12-29T19:44:00.000Z"
+    "last_edited": "2025-12-29T19:44:00.000Z",
+    "lat": 37.526022,
+    "lng": -77.4328559
   },
   {
     "id": "16ccb99e-b16c-80f2-9495-ce947f746292",
@@ -450,9 +500,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/14-16ccb99eb16c80f29495ce947f746292",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 55.8505142,
+    "lng": -4.2590887
   },
   {
     "id": "16ccb99e-b16c-80d9-96cd-c14cf2944231",
@@ -463,9 +515,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/5-16ccb99eb16c80d996cdc14cf2944231",
-    "last_edited": "2025-12-26T17:03:00.000Z"
+    "last_edited": "2025-12-26T17:03:00.000Z",
+    "lat": 53.3968117,
+    "lng": -2.2550237
   },
   {
     "id": "16ccb99e-b16c-80b3-9625-ef3232b78819",
@@ -476,9 +530,11 @@
     "location": "Manchester",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/13-16ccb99eb16c80b39625ef3232b78819",
-    "last_edited": "2025-12-29T19:21:00.000Z"
+    "last_edited": "2025-12-29T19:21:00.000Z",
+    "lat": 53.4760191,
+    "lng": -2.25622
   },
   {
     "id": "16ccb99e-b16c-80a5-ba8a-fa47468eb571",
@@ -489,9 +545,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/12-16ccb99eb16c80a5ba8afa47468eb571",
-    "last_edited": "2025-12-26T17:00:00.000Z"
+    "last_edited": "2025-12-26T17:00:00.000Z",
+    "lat": 48.1950173,
+    "lng": -106.6358663
   },
   {
     "id": "16ccb99e-b16c-80ff-be72-fa79d4248b1a",
@@ -502,9 +560,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/11-16ccb99eb16c80ffbe72fa79d4248b1a",
-    "last_edited": "2025-12-29T19:43:00.000Z"
+    "last_edited": "2025-12-29T19:43:00.000Z",
+    "lat": 55.8601411,
+    "lng": -4.2852072
   },
   {
     "id": "16ccb99e-b16c-8081-aa7f-da31cd5ab8ed",
@@ -515,9 +575,11 @@
     "location": "Edinburgh",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/10-16ccb99eb16c8081aa7fda31cd5ab8ed",
-    "last_edited": "2025-12-29T19:45:00.000Z"
+    "last_edited": "2025-12-29T19:45:00.000Z",
+    "lat": 55.9472591,
+    "lng": -3.2049304
   },
   {
     "id": "16ccb99e-b16c-8069-a842-fc994203078e",
@@ -528,9 +590,11 @@
     "location": "Edinburgh",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/4-16ccb99eb16c8069a842fc994203078e",
-    "last_edited": "2025-12-29T19:24:00.000Z"
+    "last_edited": "2025-12-29T19:24:00.000Z",
+    "lat": 55.9486867,
+    "lng": -3.2004175
   },
   {
     "id": "2d8cb99e-b16c-808e-987b-e87c6196765b",
@@ -541,9 +605,11 @@
     "location": "Kinross",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/46-2d8cb99eb16c808e987be87c6196765b",
-    "last_edited": "2025-12-29T19:32:00.000Z"
+    "last_edited": "2025-12-29T19:32:00.000Z",
+    "lat": 56.2033706,
+    "lng": -3.4214864
   },
   {
     "id": "227cb99e-b16c-8015-8e5b-fe89b45f3b06",
@@ -554,9 +620,11 @@
     "location": "Dundee",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/43-227cb99eb16c80158e5bfe89b45f3b06",
-    "last_edited": "2025-12-30T18:31:00.000Z"
+    "last_edited": "2025-12-30T18:31:00.000Z",
+    "lat": 56.4606886,
+    "lng": -2.9770379
   },
   {
     "id": "16ccb99e-b16c-806e-9bfa-e209e4ec135e",
@@ -567,7 +635,7 @@
     "location": "Dunfermlin",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/9-16ccb99eb16c806e9bfae209e4ec135e",
     "last_edited": "2025-12-29T19:57:00.000Z"
   },
@@ -580,9 +648,11 @@
     "location": "Edinburgh",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/42-237cb99eb16c80d0968fe831ff613d97",
-    "last_edited": "2025-12-29T19:17:00.000Z"
+    "last_edited": "2025-12-29T19:17:00.000Z",
+    "lat": 55.9482513,
+    "lng": -3.2060765
   },
   {
     "id": "2d8cb99e-b16c-8053-b8f0-f9785ddc88f9",
@@ -593,9 +663,11 @@
     "location": "Kinross",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/45-2d8cb99eb16c8053b8f0f9785ddc88f9",
-    "last_edited": "2025-12-29T19:32:00.000Z"
+    "last_edited": "2025-12-29T19:32:00.000Z",
+    "lat": 56.2033706,
+    "lng": -3.4214864
   },
   {
     "id": "16ccb99e-b16c-80e8-83a4-ef05c822e8ea",
@@ -606,9 +678,11 @@
     "location": "Dundee",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/2-16ccb99eb16c80e883a4ef05c822e8ea",
-    "last_edited": "2025-12-29T19:56:00.000Z"
+    "last_edited": "2025-12-29T19:56:00.000Z",
+    "lat": 56.4606886,
+    "lng": -2.9770379
   },
   {
     "id": "16ccb99e-b16c-802a-a2a6-f58ef61ae1a4",
@@ -619,9 +693,11 @@
     "location": "Edinburgh",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/3-16ccb99eb16c802aa2a6f58ef61ae1a4",
-    "last_edited": "2025-12-26T17:05:00.000Z"
+    "last_edited": "2025-12-26T17:05:00.000Z",
+    "lat": 55.9267052,
+    "lng": -3.2482761
   },
   {
     "id": "16ccb99e-b16c-80b2-9096-dacd0ba2da63",
@@ -632,7 +708,7 @@
     "location": "Dunfermlin",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/8-16ccb99eb16c80b29096dacd0ba2da63",
     "last_edited": "2025-12-29T19:57:00.000Z"
   },
@@ -645,9 +721,11 @@
     "location": "Glasgow",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/7-16ccb99eb16c80529d05d28715f3efe2",
-    "last_edited": "2025-12-29T19:44:00.000Z"
+    "last_edited": "2025-12-29T19:44:00.000Z",
+    "lat": 55.8600708,
+    "lng": -4.2593241
   },
   {
     "id": "2d8cb99e-b16c-8020-8c3a-d48e3c097427",
@@ -658,9 +736,11 @@
     "location": "Kinross",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/44-2d8cb99eb16c80208c3ad48e3c097427",
-    "last_edited": "2025-12-29T19:32:00.000Z"
+    "last_edited": "2025-12-29T19:32:00.000Z",
+    "lat": 56.2033706,
+    "lng": -3.4214864
   },
   {
     "id": "16ccb99e-b16c-809b-af0e-df33a15ab22f",
@@ -671,7 +751,7 @@
     "location": "Dunfermline",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/6-16ccb99eb16c809baf0edf33a15ab22f",
     "last_edited": "2025-12-26T17:00:00.000Z"
   },
@@ -684,8 +764,10 @@
     "location": "Dundee",
     "status": "Draft",
     "type": "Gig",
-    "slug": "untitled-gig",
+    "slug": "untitled",
     "notion_url": "https://www.notion.so/1-16ccb99eb16c80a09c5fdfa1c7761522",
-    "last_edited": "2025-12-29T19:56:00.000Z"
+    "last_edited": "2025-12-29T19:56:00.000Z",
+    "lat": 56.4599834,
+    "lng": -2.9685566
   }
 ]

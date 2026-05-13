@@ -1,0 +1,139 @@
+{
+  "aviva studios, manchester": {
+    "lat": 53.478171,
+    "lng": -2.2577281
+  },
+  "st luke’s, glasgow": {
+    "lat": 55.8546665,
+    "lng": -4.2345948
+  },
+  "royal albert hall, london": {
+    "lat": 51.501007,
+    "lng": -0.1774058
+  },
+  "crown & sceptre, london": {
+    "lat": 51.4979845,
+    "lng": -0.2074164
+  },
+  "barrowlands , glasgow": {
+    "lat": 55.8551245,
+    "lng": -4.2352797
+  },
+  "glasgow, glasgow": {
+    "lat": 48.1950173,
+    "lng": -106.6358663
+  },
+  "manchester, manchester": {
+    "lat": 53.4794892,
+    "lng": -2.2451148
+  },
+  "hydro, glasgow": {
+    "lat": 55.8601411,
+    "lng": -4.2852072
+  },
+  "o2 academy , glasgow": {
+    "lat": 55.8505142,
+    "lng": -4.2590887
+  },
+  "bad, glasgow": {
+    "lat": 50.5256097,
+    "lng": 2.8332511
+  },
+  "sse, glasgow": {
+    "lat": 55.8600708,
+    "lng": -4.2593241
+  },
+  "pier 17, new york": {
+    "lat": 40.7055221,
+    "lng": -74.0015738
+  },
+  "edinburgh, edinburgh": {
+    "lat": 55.9519018,
+    "lng": -3.1904199
+  },
+  "02 academy , manchester": {
+    "lat": 41.777019,
+    "lng": -72.505986
+  },
+  "stereo, glasgow": {
+    "lat": 55.8611339,
+    "lng": -4.2580261
+  },
+  "voodoo rooms, edinburgh": {
+    "lat": 55.9537315,
+    "lng": -3.1905918
+  },
+  "churchills , miami": {
+    "lat": 25.7735069,
+    "lng": -80.1917526
+  },
+  "miami, miami": {
+    "lat": 25.8494759,
+    "lng": -80.2579786
+  },
+  "o2 academy , london": {
+    "lat": 51.534574,
+    "lng": -0.1056969
+  },
+  "hyde park , london": {
+    "lat": 51.5074889,
+    "lng": -0.1622074
+  },
+  "hydro, manchester": {
+    "lat": 37.526022,
+    "lng": -77.4328559
+  },
+  "o2 academy - glasgow, glasgow": {
+    "lat": 55.8505142,
+    "lng": -4.2590887
+  },
+  "manchester area, manchester": {
+    "lat": 53.3968117,
+    "lng": -2.2550237
+  },
+  "castlefield bowl, manchester": {
+    "lat": 53.4760191,
+    "lng": -2.25622
+  },
+  "usher hall, edinburgh": {
+    "lat": 55.9472591,
+    "lng": -3.2049304
+  },
+  "edinburgh castle, edinburgh": {
+    "lat": 55.9486867,
+    "lng": -3.2004175
+  },
+  "kinross, kinross": {
+    "lat": 56.2033706,
+    "lng": -3.4214864
+  },
+  "fat sams, dundee": {
+    "lat": 56.4606886,
+    "lng": -2.9770379
+  },
+  "hmv picture house, edinburgh": {
+    "lat": 55.9482513,
+    "lng": -3.2060765
+  },
+  "edinburgh corn exchange, edinburgh": {
+    "lat": 55.9267052,
+    "lng": -3.2482761
+  },
+  "caird hall, dundee": {
+    "lat": 56.4599834,
+    "lng": -2.9685566
+  },
+  "playing on the farm, cirencester": null,
+  "hebden bridge traders club, hebden bridge": null,
+  "alexandria palace, london": null,
+  "broad street, knashville": null,
+  "manchester academy , manchster": null,
+  "trsmt, glasgow": null,
+  "glen pavillion, dunfermlin": null,
+  "dunfermline, dunfermlin": null,
+  "pjs, dunfermline": null,
+  "caesars forum, 3911 koval ln, las vegas, nv 89109, usa": {
+    "lat": 36.1189571,
+    "lng": -115.1661889
+  }
+}

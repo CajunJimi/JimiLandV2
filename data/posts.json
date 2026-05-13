@@ -1,18 +1,5 @@
 [
   {
-    "id": "2d5cb99e-b16c-8089-ad87-da87026389b5",
-    "title": "Redbull Letter",
-    "date": "2025-08-31",
-    "published": true,
-    "status": "Draft",
-    "tags": [],
-    "excerpt": "My attempt at a quick copy write to get free redbull, unfinished of course. ",
-    "slug": "redbull-letter",
-    "content_url": "https://www.notion.so/RedBull-Letter-2d5cb99eb16c808f8ad3e619a09cc9a6?source=copy_link",
-    "last_edited": "2025-12-26T20:36:00.000Z",
-    "url": "/posts/redbull-letter/"
-  },
-  {
     "id": "16ccb99e-b16c-8010-937d-efd3fa6fe99d",
     "title": "Billy and the kids ",
     "date": "2024-12-30",
@@ -32,10 +19,10 @@
     "published": true,
     "status": "Draft",
     "tags": [],
-    "excerpt": "Hunter writing to his friend about life",
+    "excerpt": "",
     "slug": "hst-letter",
     "content_url": "https://www.notion.so/HST-139cb99eb16c8005b8aaca02156e879f?pvs=4",
-    "last_edited": "2024-12-30T09:34:00.000Z",
+    "last_edited": "2026-05-13T19:47:00.000Z",
     "url": "/posts/hst-letter/"
   },
   {

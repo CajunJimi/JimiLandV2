@@ -11,8 +11,8 @@
   {
     "id": "2dccb99e-b16c-80f3-941d-d2043116f221",
     "name": "UrHealth",
-    "description": "Combined multiple health or fitness apps so i have less apps on my phone. Really just a gym/food/medicine tracker with some cool little features. Can import medicine, supplements by taking a picture ",
-    "status": "In Progress",
+    "description": "Combined multiple health or fitness apps so i have less apps on my phone. Really just a gym/food/medicine tracker with some cool little features. Can import medicine, supplements by taking a picture. On the app store, took me longer to get approved by apple than code, haven't marketed at all, barely told anyone about it. one german is paying. ",
+    "status": "Live",
     "link": null,
     "date": "2025-12-30",
     "published": true
@@ -84,7 +84,7 @@
     "id": "2d5cb99e-b16c-80b3-8900-fbdbcb4472b2",
     "name": "MSSPJobs",
     "description": "Same as SOCobs, but wider market with just MSSP jobs. Reckon there is still a good market there, however it is a boring idea. ",
-    "status": "Idea",
+    "status": "Dead",
     "link": null,
     "date": "2024-03-06",
     "published": true

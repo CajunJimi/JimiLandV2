@@ -42,6 +42,7 @@ jobs:
           NOTION_POSTS_DATABASE_ID: ${{ secrets.NOTION_POSTS_DATABASE_ID }}
           NOTION_GIGS_DATABASE_ID: ${{ secrets.NOTION_GIGS_DATABASE_ID }}
           NOTION_PROJECTS_DATABASE_ID: ${{ secrets.NOTION_PROJECTS_DATABASE_ID }}
+          NOTION_PLACES_DATABASE_ID: ${{ secrets.NOTION_PLACES_DATABASE_ID }}
         run: node scripts/notion-sync.js
 
       - name: Check for changes

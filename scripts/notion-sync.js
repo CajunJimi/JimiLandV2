@@ -1,187 +1,520 @@
 #!/usr/bin/env node
 
 /**
- * Notion to Static Site Sync Script
- * Fetches content from Notion database and generates static JSON files
+ * Notion → Static Site Sync
+ *
+ * Pulls content from a configurable list of Notion databases, optionally
+ * geocodes location strings (cached to disk), writes one JSON file per
+ * database into /data, and renders individual post HTML pages for Posts.
+ *
+ * Adding a new database = appending one entry to the DATABASES array.
  */
 
 require('dotenv').config();
 const fs = require('fs').promises;
 const path = require('path');
 
-// Notion API configuration
+// ─────────────────────────────────────────────────────────────
+// Configuration
+// ─────────────────────────────────────────────────────────────
+
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
-const NOTION_POSTS_DATABASE_ID = process.env.NOTION_POSTS_DATABASE_ID;
-const NOTION_GIGS_DATABASE_ID = process.env.NOTION_GIGS_DATABASE_ID;
-const NOTION_PROJECTS_DATABASE_ID = process.env.NOTION_PROJECTS_DATABASE_ID;
+const REPO_ROOT = path.join(__dirname, '..');
+const DATA_DIR = path.join(REPO_ROOT, 'data');
+const POSTS_DIR = path.join(REPO_ROOT, 'posts');
+const GEOCODE_CACHE_PATH = path.join(DATA_DIR, '.geocode-cache.json');
+
+const NOMINATIM_USER_AGENT = 'JimiLand Sync (https://jimi.land)';
+const NOMINATIM_RATE_LIMIT_MS = 1100; // Nominatim: max 1 req/sec.
 
 if (!NOTION_API_KEY) {
     console.error('❌ Missing required environment variable: NOTION_API_KEY');
     process.exit(1);
 }
 
-if (!NOTION_POSTS_DATABASE_ID && !NOTION_GIGS_DATABASE_ID && !NOTION_PROJECTS_DATABASE_ID) {
-    console.error('❌ At least one database ID must be provided:');
-    console.error('   NOTION_POSTS_DATABASE_ID, NOTION_GIGS_DATABASE_ID, or NOTION_PROJECTS_DATABASE_ID');
-    process.exit(1);
-}
+// One entry per Notion database. Adding a 5th database = one block here.
+const DATABASES = [
+    {
+        name: 'posts',
+        envVar: 'NOTION_POSTS_DATABASE_ID',
+        sortProperty: 'Date',
+        transform: convertNotionPageToPost,
+        // Only ship rows where Published checkbox is ticked.
+        publishedFilter: (p) => p.published === true,
+        outputFile: path.join(DATA_DIR, 'posts.json'),
+        // Renders individual /posts/<slug>/index.html pages.
+        postProcess: postProcessPosts,
+    },
+    {
+        name: 'gigs',
+        envVar: 'NOTION_GIGS_DATABASE_ID',
+        sortProperty: 'Date',
+        transform: convertNotionPageToGig,
+        publishedFilter: null, // every row in the gigs DB ships
+        outputFile: path.join(DATA_DIR, 'gigs.json'),
+        // Geocode "venue, location" so the world map can pin them.
+        postProcess: async (gigs) => {
+            await geocodeAll(gigs, (g) => {
+                if (g.venue && g.location) return `${g.venue}, ${g.location}`;
+                return g.location || g.venue || null;
+            });
+        },
+    },
+    {
+        name: 'projects',
+        envVar: 'NOTION_PROJECTS_DATABASE_ID',
+        sortProperty: 'Date',
+        transform: convertNotionPageToProject,
+        publishedFilter: (p) => p.published === true,
+        outputFile: path.join(DATA_DIR, 'projects.json'),
+        postProcess: null,
+    },
+    {
+        name: 'places',
+        envVar: 'NOTION_PLACES_DATABASE_ID',
+        sortProperty: 'Date',
+        transform: convertNotionPageToPlace,
+        publishedFilter: (p) => p.published === true,
+        outputFile: path.join(DATA_DIR, 'places.json'),
+        // Geocode the Location string; resolve Linked Posts relations to URLs.
+        postProcess: async (places, allData) => {
+            await geocodeAll(places, (p) => p.location);
+            resolveLinkedPosts(places, allData.posts || []);
+        },
+    },
+];
 
-/**
- * Fetch pages from Notion database
- */
+// ─────────────────────────────────────────────────────────────
+// Notion API
+// ─────────────────────────────────────────────────────────────
+
 async function fetchNotionPages(databaseId, sortProperty = 'Date') {
-    try {
+    const results = [];
+    let cursor = undefined;
+
+    while (true) {
+        const body = {
+            sorts: sortProperty ? [{ property: sortProperty, direction: 'descending' }] : [],
+        };
+        if (cursor) body.start_cursor = cursor;
+
         const response = await fetch(`https://api.notion.com/v1/databases/${databaseId}/query`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${NOTION_API_KEY}`,
                 'Content-Type': 'application/json',
-                'Notion-Version': '2022-06-28'
+                'Notion-Version': '2022-06-28',
             },
-            body: JSON.stringify({
-                sorts: [
-                    {
-                        property: sortProperty,
-                        direction: 'descending'
-                    }
-                ]
-            })
+            body: JSON.stringify(body),
         });
 
         if (!response.ok) {
-            throw new Error(`Notion API error: ${response.status} ${response.statusText}`);
+            // Common case: missing sort property on a DB that doesn't have it.
+            // Retry once without a sort, so we don't fail the whole sync.
+            if (sortProperty && response.status === 400) {
+                return fetchNotionPages(databaseId, null);
+            }
+            const errText = await response.text();
+            throw new Error(`Notion API ${response.status}: ${errText}`);
         }
 
         const data = await response.json();
-        return data.results;
-    } catch (error) {
-        console.error(`❌ Error fetching from Notion database ${databaseId}:`, error.message);
-        throw error;
+        results.push(...data.results);
+        if (!data.has_more) break;
+        cursor = data.next_cursor;
     }
+
+    return results;
 }
 
-/**
- * Fetch full content of a Notion page
- */
 async function fetchPageContent(pageId) {
     try {
-        console.log(`    Fetching content for page: ${pageId}`);
         const response = await fetch(`https://api.notion.com/v1/blocks/${pageId}/children`, {
             headers: {
                 'Authorization': `Bearer ${NOTION_API_KEY}`,
-                'Notion-Version': '2022-06-28'
-            }
+                'Notion-Version': '2022-06-28',
+            },
         });
-
-        if (!response.ok) {
-            console.error(`    HTTP error fetching page content: ${response.status}`);
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-        // console.log(`    Raw API response:`, JSON.stringify(data, null, 2));
         return data.results;
     } catch (error) {
-        console.error(`❌ Error fetching page content ${pageId}:`, error.message);
+        console.error(`  ⚠️ Failed to fetch page content ${pageId}: ${error.message}`);
         return [];
     }
 }
 
-/**
- * Convert plain text URLs to clickable links
- */
+// ─────────────────────────────────────────────────────────────
+// Notion blocks → HTML
+// ─────────────────────────────────────────────────────────────
+
 function linkifyText(text) {
-    // Regex to match URLs (http, https, www)
     const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
-    
     return text.replace(urlRegex, (url) => {
-        // Add https:// to www. links
         const href = url.startsWith('www.') ? 'https://' + url : url;
         return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     });
 }
 
-/**
- * Convert Notion blocks to HTML content
- */
+function richTextToString(richText) {
+    if (!Array.isArray(richText)) return '';
+    return richText.map((t) => t.plain_text || '').join('');
+}
+
 function convertBlocksToHTML(blocks) {
     let html = '';
-    
     for (const block of blocks) {
         switch (block.type) {
-            case 'paragraph':
-                const text = block.paragraph.rich_text.map(t => t.plain_text).join('');
-                if (text.trim()) {
-                    html += `<p>${linkifyText(text)}</p>\n`;
-                }
+            case 'paragraph': {
+                const t = richTextToString(block.paragraph.rich_text);
+                if (t.trim()) html += `<p>${linkifyText(t)}</p>\n`;
                 break;
+            }
             case 'heading_1':
-                const h1Text = block.heading_1.rich_text.map(t => t.plain_text).join('');
-                html += `<h1>${linkifyText(h1Text)}</h1>\n`;
+                html += `<h1>${linkifyText(richTextToString(block.heading_1.rich_text))}</h1>\n`;
                 break;
             case 'heading_2':
-                const h2Text = block.heading_2.rich_text.map(t => t.plain_text).join('');
-                html += `<h2>${linkifyText(h2Text)}</h2>\n`;
+                html += `<h2>${linkifyText(richTextToString(block.heading_2.rich_text))}</h2>\n`;
                 break;
             case 'heading_3':
-                const h3Text = block.heading_3.rich_text.map(t => t.plain_text).join('');
-                html += `<h3>${linkifyText(h3Text)}</h3>\n`;
+                html += `<h3>${linkifyText(richTextToString(block.heading_3.rich_text))}</h3>\n`;
                 break;
             case 'bulleted_list_item':
-                const bulletText = block.bulleted_list_item.rich_text.map(t => t.plain_text).join('');
-                html += `<li>${linkifyText(bulletText)}</li>\n`;
+                html += `<li>${linkifyText(richTextToString(block.bulleted_list_item.rich_text))}</li>\n`;
                 break;
             case 'numbered_list_item':
-                const numberedText = block.numbered_list_item.rich_text.map(t => t.plain_text).join('');
-                html += `<li>${linkifyText(numberedText)}</li>\n`;
+                html += `<li>${linkifyText(richTextToString(block.numbered_list_item.rich_text))}</li>\n`;
                 break;
             case 'quote':
-                const quoteText = block.quote.rich_text.map(t => t.plain_text).join('');
-                html += `<blockquote>${linkifyText(quoteText)}</blockquote>\n`;
+                html += `<blockquote>${linkifyText(richTextToString(block.quote.rich_text))}</blockquote>\n`;
                 break;
             case 'code':
-                const codeText = block.code.rich_text.map(t => t.plain_text).join('');
-                html += `<pre><code>${codeText}</code></pre>\n`;
+                html += `<pre><code>${richTextToString(block.code.rich_text)}</code></pre>\n`;
                 break;
-            default:
-                // Handle other block types as plain text
-                if (block[block.type]?.rich_text) {
-                    const plainText = block[block.type].rich_text.map(t => t.plain_text).join('');
-                    if (plainText.trim()) {
-                        html += `<p>${linkifyText(plainText)}</p>\n`;
-                    }
+            default: {
+                const inner = block[block.type]?.rich_text;
+                if (inner) {
+                    const t = richTextToString(inner);
+                    if (t.trim()) html += `<p>${linkifyText(t)}</p>\n`;
                 }
                 break;
+            }
         }
     }
-    
     return html;
 }
 
-/**
- * Convert Notion page to simplified post object
- */
+// ─────────────────────────────────────────────────────────────
+// Per-database transformers
+// ─────────────────────────────────────────────────────────────
+
+function generateSlug(title) {
+    return (title || 'untitled')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+function getProp(properties, name) {
+    return properties[name];
+}
+
+function getTextProp(properties, name) {
+    return properties[name]?.rich_text?.[0]?.plain_text || '';
+}
+
+function getTitleProp(properties, name) {
+    return properties[name]?.title?.[0]?.plain_text || '';
+}
+
+function getSelectProp(properties, name) {
+    return properties[name]?.select?.name || null;
+}
+
+function getCheckboxProp(properties, name) {
+    return properties[name]?.checkbox || false;
+}
+
+function getDatePropRaw(properties, name) {
+    return properties[name]?.date || null;
+}
+
+function getRelationProp(properties, name) {
+    return properties[name]?.relation?.map((r) => r.id) || [];
+}
+
+function getFilesProp(properties, name) {
+    const files = properties[name]?.files || [];
+    return files
+        .map((f) => f.file?.url || f.external?.url)
+        .filter(Boolean);
+}
+
 function convertNotionPageToPost(page) {
-    const properties = page.properties;
-    
+    const p = page.properties;
+    const title = getTitleProp(p, 'Title');
     return {
         id: page.id,
-        title: properties.Title?.title?.[0]?.plain_text || 'Untitled',
-        date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
-        published: properties.Published?.checkbox || false,
-        status: properties.Status?.select?.name || 'Draft',
-        tags: properties.Tags?.multi_select?.map(tag => tag.name) || [],
-        excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || properties.Description?.rich_text?.[0]?.plain_text || '',
-        slug: generateSlug(properties.Title?.title?.[0]?.plain_text || 'untitled'),
+        title: title || 'Untitled',
+        date: p.Date?.date?.start || new Date().toISOString().split('T')[0],
+        published: getCheckboxProp(p, 'Published'),
+        status: getSelectProp(p, 'Status') || 'Draft',
+        tags: p.Tags?.multi_select?.map((t) => t.name) || [],
+        excerpt: getTextProp(p, 'Excerpt') || getTextProp(p, 'Description') || '',
+        slug: generateSlug(title),
         notion_url: page.url,
-        content_url: properties.Content?.rich_text?.[0]?.plain_text || null,
-        last_edited: page.last_edited_time
+        content_url: getTextProp(p, 'Content') || null,
+        last_edited: page.last_edited_time,
     };
 }
 
+function convertNotionPageToGig(page) {
+    const p = page.properties;
+    const title = getTitleProp(p, 'Title') || getTitleProp(p, 'Name');
+    return {
+        id: page.id,
+        title: title || 'Untitled Gig',
+        artist: getTextProp(p, 'Artist'),
+        date: p.Date?.date?.start || '',
+        venue: getTextProp(p, 'Venue'),
+        // Notion's existing schema has a lowercase 'location' for gigs.
+        location: getTextProp(p, 'location') || getTextProp(p, 'Location'),
+        status: getSelectProp(p, 'Status') || 'Draft',
+        type: getSelectProp(p, 'Type') || 'Gig',
+        slug: generateSlug(title),
+        notion_url: page.url,
+        last_edited: page.last_edited_time,
+    };
+}
+
+function convertNotionPageToProject(page) {
+    const p = page.properties;
+    return {
+        id: page.id,
+        name: getTitleProp(p, 'Name') || 'Untitled',
+        description: getTextProp(p, 'Description'),
+        status: getSelectProp(p, 'Status') || 'Idea',
+        link: p.Link?.url || null,
+        date: p.Date?.date?.start || null,
+        published: getCheckboxProp(p, 'Published'),
+    };
+}
+
+function convertNotionPageToPlace(page) {
+    const p = page.properties;
+    const date = getDatePropRaw(p, 'Date');
+    return {
+        id: page.id,
+        title: getTitleProp(p, 'Title') || 'Untitled Place',
+        location: getTextProp(p, 'Location'),
+        // Lat/Lng filled by the geocoding step in postProcess.
+        lat: null,
+        lng: null,
+        category: getSelectProp(p, 'Category') || 'Other',
+        trip: getSelectProp(p, 'Trip') || null,
+        date_start: date?.start || null,
+        date_end: date?.end || null,
+        published: getCheckboxProp(p, 'Published'),
+        // Raw relation IDs; resolved to URLs in postProcess (for Posts).
+        // Gigs stay as IDs since gigs don't have stable URLs.
+        linked_post_ids: getRelationProp(p, 'Linked Posts'),
+        linked_post_urls: [], // filled in postProcess
+        linked_gig_ids: getRelationProp(p, 'Linked Gigs'),
+        // Notion-hosted photo URLs. Expire ~1 hour; refreshed each sync.
+        // R2 upload is a deferred Phase 1 follow-up.
+        photos: getFilesProp(p, 'Photos'),
+        notion_url: page.url,
+        last_edited: page.last_edited_time,
+    };
+}
+
+// ─────────────────────────────────────────────────────────────
+// Geocoding (Nominatim + file cache)
+// ─────────────────────────────────────────────────────────────
+
+let geocodeCache = {};
+let geocodeCacheDirty = false;
+let lastNominatimCallAt = 0;
+
+async function loadGeocodeCache() {
+    try {
+        const raw = await fs.readFile(GEOCODE_CACHE_PATH, 'utf-8');
+        geocodeCache = JSON.parse(raw);
+        console.log(`📍 Loaded ${Object.keys(geocodeCache).length} cached geocodes`);
+    } catch (e) {
+        if (e.code !== 'ENOENT') console.warn(`⚠️ Couldn't load geocode cache: ${e.message}`);
+        geocodeCache = {};
+    }
+}
+
+async function saveGeocodeCache() {
+    if (!geocodeCacheDirty) return;
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    await fs.writeFile(GEOCODE_CACHE_PATH, JSON.stringify(geocodeCache, null, 2));
+    console.log(`💾 Saved geocode cache (${Object.keys(geocodeCache).length} entries)`);
+}
+
+function normalizeLocation(s) {
+    return (s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
 /**
- * Create HTML page for a blog post
+ * Build progressively-simpler query variants from a location string.
+ * Nominatim chokes on overly-specific queries like full US addresses
+ * ("Caesars Forum, 3911 Koval Ln, Las Vegas, NV 89109, USA") but
+ * happily matches shorter forms ("Caesars Forum, Las Vegas").
  */
+function geocodeCandidates(locationStr) {
+    const parts = locationStr.split(',').map((s) => s.trim()).filter(Boolean);
+    const candidates = [locationStr];
+    if (parts.length >= 4) {
+        // Drop the second segment (usually a street address line).
+        candidates.push([parts[0], ...parts.slice(2)].join(', '));
+    }
+    if (parts.length >= 3) {
+        candidates.push([parts[0], ...parts.slice(-2)].join(', '));
+    }
+    if (parts.length >= 2) {
+        candidates.push(`${parts[0]}, ${parts[parts.length - 1]}`);
+    }
+    // De-duplicate while preserving order.
+    return [...new Set(candidates)];
+}
+
+async function nominatimQuery(q) {
+    const elapsed = Date.now() - lastNominatimCallAt;
+    if (elapsed < NOMINATIM_RATE_LIMIT_MS) {
+        await new Promise((r) => setTimeout(r, NOMINATIM_RATE_LIMIT_MS - elapsed));
+    }
+    lastNominatimCallAt = Date.now();
+
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`;
+    const response = await fetch(url, {
+        headers: { 'User-Agent': NOMINATIM_USER_AGENT },
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (data && data.length > 0) {
+        return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+    }
+    return null;
+}
+
+async function geocode(locationStr) {
+    if (!locationStr) return null;
+    const key = normalizeLocation(locationStr);
+    if (!key) return null;
+
+    // Cache hit (including negative results — null in cache means "tried, no match").
+    if (Object.prototype.hasOwnProperty.call(geocodeCache, key)) {
+        return geocodeCache[key];
+    }
+
+    try {
+        const candidates = geocodeCandidates(locationStr);
+        for (const candidate of candidates) {
+            const coords = await nominatimQuery(candidate);
+            if (coords) {
+                geocodeCache[key] = coords;
+                geocodeCacheDirty = true;
+                const via = candidate === locationStr ? '' : ` (via "${candidate}")`;
+                console.log(`  📍 Geocoded "${locationStr}" → ${coords.lat}, ${coords.lng}${via}`);
+                return coords;
+            }
+        }
+        geocodeCache[key] = null;
+        geocodeCacheDirty = true;
+        console.warn(`  ⚠️ No geocode match for "${locationStr}"`);
+        return null;
+    } catch (e) {
+        console.warn(`  ⚠️ Geocode error for "${locationStr}": ${e.message}`);
+        return null;
+    }
+}
+
+/**
+ * Geocode every item in `items` using `locationFn(item)` to extract the
+ * location string. Writes `lat`/`lng` back onto each item.
+ */
+async function geocodeAll(items, locationFn) {
+    for (const item of items) {
+        const loc = locationFn(item);
+        if (!loc) continue;
+        const coords = await geocode(loc);
+        if (coords) {
+            item.lat = coords.lat;
+            item.lng = coords.lng;
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Cross-database relation resolution
+// ─────────────────────────────────────────────────────────────
+
+function resolveLinkedPosts(places, posts) {
+    const postById = new Map(posts.map((p) => [p.id, p]));
+    for (const place of places) {
+        const urls = [];
+        for (const pid of place.linked_post_ids || []) {
+            const post = postById.get(pid);
+            if (post?.url) urls.push(post.url);
+        }
+        place.linked_post_urls = urls;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Post HTML rendering
+// ─────────────────────────────────────────────────────────────
+
+async function postProcessPosts(posts) {
+    await fs.mkdir(POSTS_DIR, { recursive: true });
+
+    for (const post of posts) {
+        try {
+            console.log(`  Creating page for: ${post.title}`);
+
+            // Extract page ID either from the Content URL (if user set one) or fall
+            // back to the database entry's own page ID.
+            let pageIdToFetch = post.id;
+            if (post.content_url && post.content_url.includes('notion.so')) {
+                const match = post.content_url.match(/([a-f0-9]{32})/);
+                if (match) pageIdToFetch = match[1];
+            }
+
+            const blocks = await fetchPageContent(pageIdToFetch);
+            let content = convertBlocksToHTML(blocks);
+
+            if (content.trim().length === 0) {
+                content = post.excerpt
+                    ? `<p>${post.excerpt}</p>`
+                    : generateSampleContent(post.title, post.date);
+            }
+
+            const html = createPostHTML(post, content);
+            const postDir = path.join(POSTS_DIR, post.slug);
+            await fs.mkdir(postDir, { recursive: true });
+            await fs.writeFile(path.join(postDir, 'index.html'), html);
+
+            // Site-relative URL replaces the raw Notion URL for output.
+            post.url = `/posts/${post.slug}/`;
+            delete post.notion_url;
+        } catch (e) {
+            console.error(`  ⚠️ Failed to render ${post.title}: ${e.message}`);
+            post.url = '#';
+        }
+    }
+}
+
+function generateSampleContent(title, date) {
+    const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric',
+    });
+    return `<p>Welcome to my post about <strong>${title}</strong>, published on ${formattedDate}.</p>
+<p>This is where the main content of your blog post will appear.</p>`;
+}
+
 function createPostHTML(post, content) {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -204,7 +537,7 @@ function createPostHTML(post, content) {
 <body>
     <!-- Reading Progress Bar -->
     <div class="reading-progress" id="reading-progress"></div>
-    
+
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -245,26 +578,18 @@ function createPostHTML(post, content) {
 
     <script src="/assets/js/app.js"></script>
     <script>
-        // Reading progress bar
         window.addEventListener('scroll', function() {
             const progressBar = document.getElementById('reading-progress');
             const article = document.querySelector('.post-content');
             if (!progressBar || !article) return;
-            
             const articleTop = article.offsetTop;
             const articleHeight = article.offsetHeight;
             const windowHeight = window.innerHeight;
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // Calculate progress
             const scrollStart = articleTop - windowHeight / 2;
             const scrollEnd = articleTop + articleHeight - windowHeight / 2;
             const scrollProgress = (scrollTop - scrollStart) / (scrollEnd - scrollStart);
-            
-            // Clamp between 0 and 1
             const progress = Math.max(0, Math.min(1, scrollProgress));
-            
-            // Update progress bar width
             progressBar.style.width = (progress * 100) + '%';
         });
     </script>
@@ -272,235 +597,70 @@ function createPostHTML(post, content) {
 </html>`;
 }
 
-/**
- * Convert Notion page to simplified project object
- */
-function convertNotionPageToProject(page) {
-    const properties = page.properties;
-    
-    return {
-        id: page.id,
-        name: properties.Name?.title?.[0]?.plain_text || 'Untitled',
-        description: properties.Description?.rich_text?.[0]?.plain_text || '',
-        status: properties.Status?.select?.name || 'Idea',
-        link: properties.Link?.url || null,
-        date: properties.Date?.date?.start || null,
-        published: properties.Published?.checkbox || false
-    };
+// ─────────────────────────────────────────────────────────────
+// Output
+// ─────────────────────────────────────────────────────────────
+
+async function saveJSON(items, outputFile) {
+    await fs.mkdir(path.dirname(outputFile), { recursive: true });
+    await fs.writeFile(outputFile, JSON.stringify(items, null, 2));
+    console.log(`✅ Saved ${items.length} item(s) to ${path.relative(REPO_ROOT, outputFile)}`);
 }
 
-/**
- * Convert Notion page to simplified gig object
- */
-function convertNotionPageToGig(page) {
-    const properties = page.properties;
-    
-    return {
-        id: page.id,
-        title: properties.Title?.title?.[0]?.plain_text || properties.Name?.title?.[0]?.plain_text || 'Untitled Gig',
-        artist: properties.Artist?.rich_text?.[0]?.plain_text || '',
-        date: properties.Date?.date?.start || '',
-        venue: properties.Venue?.rich_text?.[0]?.plain_text || '',
-        location: properties.location?.rich_text?.[0]?.plain_text || '',
-        status: properties.Status?.select?.name || 'Draft',
-        type: properties.Type?.select?.name || 'Gig',
-        slug: generateSlug(properties.Title?.title?.[0]?.plain_text || properties.Name?.title?.[0]?.plain_text || 'untitled-gig'),
-        notion_url: page.url,
-        last_edited: page.last_edited_time
-    };
-}
+// ─────────────────────────────────────────────────────────────
+// Main
+// ─────────────────────────────────────────────────────────────
 
-/**
- * Generate slug from title
- */
-function generateSlug(title) {
-    return title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-}
-
-/**
- * Generate sample content for posts without content
- */
-function generateSampleContent(title, date) {
-    const formattedDate = new Date(date).toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
-    
-    return `<p>Welcome to my post about <strong>${title}</strong>, published on ${formattedDate}.</p>
-<p>This is where the main content of your blog post will appear. You can write about your experiences, thoughts, and insights here.</p>
-<h2>What's Next?</h2>
-<p>To add your own content, simply edit this post in your Notion database and run the sync script again.</p>`;
-}
-
-/**
- * Save posts to JSON file
- */
-async function savePosts(posts) {
-    const outputDir = path.join(__dirname, '../data');
-    const outputFile = path.join(outputDir, 'posts.json');
-    
-    // Ensure data directory exists
-    await fs.mkdir(outputDir, { recursive: true });
-    
-    // Save posts data
-    await fs.writeFile(outputFile, JSON.stringify(posts, null, 2));
-    
-    console.log(`✅ Saved ${posts.length} posts to ${outputFile}`);
-}
-
-/**
- * Save gigs to JSON file
- */
-async function saveGigs(gigs) {
-    const gigsJsonPath = path.join(__dirname, '..', 'data', 'gigs.json');
-    await fs.writeFile(gigsJsonPath, JSON.stringify(gigs, null, 2));
-    console.log(`✅ Saved ${gigs.length} gigs to ${gigsJsonPath}`);
-}
-
-/**
- * Save projects to JSON file
- */
-async function saveProjects(projects) {
-    const projectsJsonPath = path.join(__dirname, '..', 'data', 'projects.json');
-    await fs.writeFile(projectsJsonPath, JSON.stringify(projects, null, 2));
-    console.log(`✅ Saved ${projects.length} projects to ${projectsJsonPath}`);
-}
-
-/**
- * Main sync function
- */
 async function syncNotionContent() {
-    try {
-        console.log('🔄 Syncing content from Notion...');
-        
-        let allPosts = [];
-        let allGigs = [];
-        let allProjects = [];
-        
-        // Sync Posts if database ID is provided
-        if (NOTION_POSTS_DATABASE_ID) {
-            try {
-                console.log('📝 Fetching posts...');
-                const postPages = await fetchNotionPages(NOTION_POSTS_DATABASE_ID);
-                const posts = postPages
-                    .map(convertNotionPageToPost)
-                    .filter(post => post.published === true); // Filter by checkbox
-                
-                // Fetch content for each post and create HTML pages
-                console.log('📄 Creating HTML pages for posts...');
-                const postsDir = path.join(process.cwd(), 'posts');
-                await fs.mkdir(postsDir, { recursive: true });
-                
-                for (const post of posts) {
-                    try {
-                        console.log(`  Creating page for: ${post.title}`);
-                        console.log(`    Database entry ID: ${post.id}`);
-                        console.log(`    Content URL: ${post.content_url}`);
-                        
-                        // Extract page ID from content URL
-                        let pageIdToFetch = null;
-                        if (post.content_url && post.content_url.includes('notion.so')) {
-                            // Extract page ID from content URL like https://www.notion.so/test-1-208cb99eb16c80e18baae4bc8b9ef88c
-                            const urlMatch = post.content_url.match(/([a-f0-9]{32})/);
-                            if (urlMatch) {
-                                pageIdToFetch = urlMatch[1];
-                                console.log(`    Extracted content page ID: ${pageIdToFetch}`);
-                            } else {
-                                console.log(`    Could not extract page ID from content URL`);
-                            }
-                        } else {
-                            console.log(`    No content URL found, trying database entry ID`);
-                            pageIdToFetch = post.id;
-                        }
-                        
-                        const blocks = await fetchPageContent(pageIdToFetch);
-                        console.log(`    Found ${blocks.length} blocks`);
-                        let content = convertBlocksToHTML(blocks);
-                        
-                        // If no content found, use sample content based on title
-                        if (content.trim().length === 0) {
-                            if (post.excerpt) {
-                                content = `<p>${post.excerpt}</p>`;
-                            } else {
-                                // Generate sample content based on post title
-                                content = generateSampleContent(post.title, post.date);
-                            }
-                            content += `<p><em>This is sample content. To add real content, open this post in Notion and write your blog post content.</em></p>`;
-                        }
-                        
-                        console.log(`    Generated content length: ${content.length}`);
-                        const html = createPostHTML(post, content);
-                        
-                        const postDir = path.join(postsDir, post.slug);
-                        await fs.mkdir(postDir, { recursive: true });
-                        await fs.writeFile(path.join(postDir, 'index.html'), html);
-                        
-                        // Update post object with local URL
-                        post.url = `/posts/${post.slug}/`;
-                        delete post.notion_url; // Remove Notion URL
-                    } catch (error) {
-                        console.error(`  ⚠️ Failed to create page for ${post.title}: ${error.message}`);
-                        post.url = '#'; // Fallback
-                    }
-                }
-                
-                allPosts = posts;
-                console.log(`✅ Found ${posts.length} published posts out of ${postPages.length} total`);
-            } catch (error) {
-                console.error(`⚠️ Failed to fetch posts: ${error.message}`);
-            }
+    console.log('🔄 Syncing content from Notion...');
+    await loadGeocodeCache();
+
+    // Accumulate per-database results so later post-processors can cross-reference.
+    const allData = {};
+
+    for (const db of DATABASES) {
+        const databaseId = process.env[db.envVar];
+        if (!databaseId) {
+            console.log(`⏭️  Skipping ${db.name} (${db.envVar} not set)`);
+            allData[db.name] = [];
+            continue;
         }
-        
-        // Sync Gigs if database ID is provided
-        if (NOTION_GIGS_DATABASE_ID) {
-            try {
-                console.log('🎵 Fetching gigs...');
-                const gigPages = await fetchNotionPages(NOTION_GIGS_DATABASE_ID);
-                const gigs = gigPages
-                    .map(convertNotionPageToGig);
-                    // Show all gigs - if it's in the table, it's on the site
-                allGigs = gigs;
-                console.log(`✅ Found ${gigs.length} gigs`);
-            } catch (error) {
-                console.error(`⚠️ Failed to fetch gigs: ${error.message}`);
+
+        try {
+            console.log(`\n📥 Fetching ${db.name}...`);
+            const pages = await fetchNotionPages(databaseId, db.sortProperty);
+            let items = pages.map(db.transform);
+
+            const beforeFilter = items.length;
+            if (db.publishedFilter) {
+                items = items.filter(db.publishedFilter);
+                console.log(`   ${items.length}/${beforeFilter} published`);
+            } else {
+                console.log(`   ${items.length} total`);
             }
-        }
-        
-        // Sync Projects if database ID is provided
-        if (NOTION_PROJECTS_DATABASE_ID) {
-            try {
-                console.log('💡 Fetching projects...');
-                const projectPages = await fetchNotionPages(NOTION_PROJECTS_DATABASE_ID, 'Date');
-                const projects = projectPages
-                    .map(convertNotionPageToProject)
-                    .filter(project => project.published);
-                allProjects = projects;
-                console.log(`✅ Found ${projects.length} published projects out of ${projectPages.length} total`);
-            } catch (error) {
-                console.error(`⚠️ Failed to fetch projects: ${error.message}`);
+
+            if (db.postProcess) {
+                await db.postProcess(items, allData);
             }
+
+            await saveJSON(items, db.outputFile);
+            allData[db.name] = items;
+        } catch (e) {
+            console.error(`⚠️ Failed ${db.name}: ${e.message}`);
+            allData[db.name] = [];
         }
-        
-        // Save to JSON files
-        await savePosts(allPosts);
-        await saveGigs(allGigs);
-        await saveProjects(allProjects);
-        
-        console.log('✅ Sync completed successfully!');
-        
-    } catch (error) {
-        console.error('❌ Sync failed:', error.message);
-        process.exit(1);
     }
+
+    await saveGeocodeCache();
+    console.log('\n✅ Sync completed successfully!');
 }
 
 // Run the sync
 if (require.main === module) {
-    syncNotionContent();
+    syncNotionContent().catch((err) => {
+        console.error('❌ Sync failed:', err);
+        process.exit(1);
+    });
 }
 
 module.exports = { syncNotionContent };
