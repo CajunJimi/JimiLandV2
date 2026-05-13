@@ -218,6 +218,23 @@
         markers.length = 0;
     }
 
+    function isPanelOpen() {
+        const p = document.getElementById('world-panel');
+        return p && p.getAttribute('aria-hidden') === 'false';
+    }
+
+    // Map padding: leaves room on the right for the panel when open.
+    function mapPadding() {
+        const panelOpen = isPanelOpen();
+        const wide = window.innerWidth > 768;
+        return {
+            top: 80,
+            right: panelOpen && wide ? 420 : 80,
+            bottom: 80,
+            left: 80,
+        };
+    }
+
     function renderMarkers(features) {
         clearMarkers();
         const visible = features.filter(matchesFilter);
@@ -239,6 +256,16 @@
                 document.querySelectorAll('.world-marker.active').forEach(e => e.classList.remove('active'));
                 el.classList.add('active');
                 openPanel(f);
+                // Fly to the pin, with the right offset so it sits in the
+                // visible (non-panel-covered) area on desktop.
+                const wide = window.innerWidth > 768;
+                map.flyTo({
+                    center: [f.lng, f.lat],
+                    zoom: Math.max(map.getZoom(), 8),
+                    offset: wide ? [-190, 0] : [0, -120],
+                    duration: 700,
+                    essential: true,
+                });
             };
             el.addEventListener('click', open);
             el.addEventListener('keypress', (e) => { if (e.key === 'Enter') open(); });
@@ -246,12 +273,17 @@
             markers.push({ feature: f, marker, el });
         }
 
-        // Fit map to visible markers (if any)
+        // Fit map to visible markers (if any). Lower maxZoom keeps single-
+        // point or tightly-clustered filters from zooming to street level.
         if (visible.length > 0) {
             const bounds = new maplibregl.LngLatBounds();
             for (const f of visible) bounds.extend([f.lng, f.lat]);
             try {
-                map.fitBounds(bounds, { padding: 80, maxZoom: 12, duration: 600 });
+                map.fitBounds(bounds, {
+                    padding: mapPadding(),
+                    maxZoom: 6,
+                    duration: 600,
+                });
             } catch (_) { /* single-point bounds throws — ignore */ }
         }
     }

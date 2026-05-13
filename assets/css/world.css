@@ -21,7 +21,15 @@ body.page-world {
     overflow: hidden; /* prevent page scroll behind map */
 }
 
+/* Override style.css's default centered-column `main` rules.
+   Without this the map gets squeezed into max-width: 800px and the
+   padding-top pushes it down 100px below the nav. */
 .world-main {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    min-height: auto;
+
     position: fixed;
     top: var(--navbar-height);
     left: 0; right: 0; bottom: 0;
