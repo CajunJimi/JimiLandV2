@@ -11,53 +11,57 @@
     if (!document.getElementById('world-map')) return;
 
     // ─────────────────────────────────────────────────────────────
-    // Basemap (themed CARTO vector styles)
+    // Mapbox setup (public token — safe to embed; URL-restricted in
+    // the Mapbox dashboard to *.jimi.land + localhost)
     // ─────────────────────────────────────────────────────────────
 
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2FqdW5qaW1pIiwiYSI6ImNtcDRqd2ZtYzBoeG0ycXM5MmRrdm1wN2EifQ.aESbTz_aG4Z07lCKPURnpw';
+
+    // Default styles per theme — Mapbox official light-v11 / dark-v11.
+    // Modern, beautifully typeset, gracefully degrades to Mercator when
+    // zoomed in past globe-comfortable levels.
     const STYLE_URLS = {
-        light: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-        dark:  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+        light: 'mapbox://styles/mapbox/light-v11',
+        dark:  'mapbox://styles/mapbox/dark-v11',
     };
 
-    // Style catalog for the ?demo=1 picker. Each entry: { id, label, dark, light }
-    // where dark/light are MapLibre style URLs. If only one is set, that style
-    // is used for both themes (some providers don't have both).
+    // Style catalog for the ?demo=1 picker — Mapbox style variety.
     const STYLE_CATALOG = [
         {
-            id: 'carto-default',
-            label: 'CARTO Positron / Dark Matter (current)',
-            light: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-            dark:  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+            id: 'mapbox-default',
+            label: 'Mapbox Light / Dark (current)',
+            light: 'mapbox://styles/mapbox/light-v11',
+            dark:  'mapbox://styles/mapbox/dark-v11',
         },
         {
-            id: 'carto-voyager',
-            label: 'CARTO Voyager (warm editorial)',
-            light: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-            dark:  'https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json',
+            id: 'mapbox-standard',
+            label: 'Mapbox Standard (3D buildings + atmosphere)',
+            light: 'mapbox://styles/mapbox/standard',
+            dark:  'mapbox://styles/mapbox/standard',
         },
         {
-            id: 'openfreemap-liberty',
-            label: 'OpenFreeMap Liberty (colourful, detailed)',
-            light: 'https://tiles.openfreemap.org/styles/liberty',
-            dark:  'https://tiles.openfreemap.org/styles/liberty',
+            id: 'mapbox-nav-night',
+            label: 'Mapbox Navigation Night (warm dark)',
+            light: 'mapbox://styles/mapbox/navigation-night-v1',
+            dark:  'mapbox://styles/mapbox/navigation-night-v1',
         },
         {
-            id: 'openfreemap-bright',
-            label: 'OpenFreeMap Bright (modern light)',
-            light: 'https://tiles.openfreemap.org/styles/bright',
-            dark:  'https://tiles.openfreemap.org/styles/bright',
+            id: 'mapbox-streets',
+            label: 'Mapbox Streets (colourful default)',
+            light: 'mapbox://styles/mapbox/streets-v12',
+            dark:  'mapbox://styles/mapbox/streets-v12',
         },
         {
-            id: 'openfreemap-positron',
-            label: 'OpenFreeMap Positron (minimal light)',
-            light: 'https://tiles.openfreemap.org/styles/positron',
-            dark:  'https://tiles.openfreemap.org/styles/positron',
+            id: 'mapbox-outdoors',
+            label: 'Mapbox Outdoors (terrain + relief)',
+            light: 'mapbox://styles/mapbox/outdoors-v12',
+            dark:  'mapbox://styles/mapbox/outdoors-v12',
         },
         {
-            id: 'openfreemap-dark',
-            label: 'OpenFreeMap Dark (punchy dark)',
-            light: 'https://tiles.openfreemap.org/styles/dark',
-            dark:  'https://tiles.openfreemap.org/styles/dark',
+            id: 'mapbox-satellite',
+            label: 'Mapbox Satellite Streets',
+            light: 'mapbox://styles/mapbox/satellite-streets-v12',
+            dark:  'mapbox://styles/mapbox/satellite-streets-v12',
         },
     ];
 
@@ -304,7 +308,7 @@
             el.setAttribute('aria-label', f.title);
             el.tabIndex = 0;
 
-            const marker = new maplibregl.Marker({ element: el })
+            const marker = new mapboxgl.Marker({ element: el })
                 .setLngLat([f.lng, f.lat])
                 .addTo(map);
 
@@ -332,7 +336,7 @@
         // Fit map to visible markers (if any). Lower maxZoom keeps single-
         // point or tightly-clustered filters from zooming to street level.
         if (visible.length > 0) {
-            const bounds = new maplibregl.LngLatBounds();
+            const bounds = new mapboxgl.LngLatBounds();
             for (const f of visible) bounds.extend([f.lng, f.lat]);
             try {
                 map.fitBounds(bounds, {
@@ -470,22 +474,39 @@
     async function init() {
         readURLState();
 
-        // Initialise map (with picked style if demo mode has been used)
-        map = new maplibregl.Map({
+        // Initialise map: 3D globe projection + Mapbox vector tiles
+        map = new mapboxgl.Map({
             container: 'world-map',
             style: activeStyleUrl(currentTheme()),
+            projection: 'globe',
             center: [0, 30],
-            zoom: 1.5,
+            zoom: 1.4,
             attributionControl: { compact: true },
             cooperativeGestures: false,
         });
-        map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+        map.addControl(new mapboxgl.NavigationControl({ showCompass: false, visualizePitch: false }), 'top-right');
 
-        // Re-tile on theme change
+        // Atmospheric fog around the globe edge. Tuned warm for both modes
+        // so it doesn't fight the burnt-amber accent.
+        function applyFog() {
+            try {
+                map.setFog({
+                    range: [0.5, 10],
+                    'horizon-blend': 0.1,
+                    color: currentTheme() === 'light' ? '#e8dccb' : '#1c1a17',
+                    'high-color': currentTheme() === 'light' ? '#d4c4a8' : '#2a2832',
+                    'space-color': currentTheme() === 'light' ? '#f4f2ee' : '#0a0910',
+                    'star-intensity': currentTheme() === 'light' ? 0.0 : 0.35,
+                });
+            } catch (_) { /* style not fully loaded yet; will retry on style.load */ }
+        }
+        map.on('style.load', applyFog);
+
+        // Re-style + re-fog on theme change
         window.addEventListener('themechange', (e) => {
             const t = (e.detail && e.detail.theme) || currentTheme();
             const url = activeStyleUrl(t);
-            if (map && url) map.setStyle(url);
+            if (map && url) map.setStyle(url); // style.load will re-fog
         });
 
         // ?demo=1 — render a style picker in the toolbar
