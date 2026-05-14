@@ -13,6 +13,7 @@
 require('dotenv').config();
 const fs = require('fs').promises;
 const path = require('path');
+const aws4 = require('aws4');
 
 // ─────────────────────────────────────────────────────────────
 // Configuration
@@ -26,6 +27,15 @@ const GEOCODE_CACHE_PATH = path.join(DATA_DIR, '.geocode-cache.json');
 
 const NOMINATIM_USER_AGENT = 'JimiLand Sync (https://jimi.land)';
 const NOMINATIM_RATE_LIMIT_MS = 1100; // Nominatim: max 1 req/sec.
+
+// R2 (Cloudflare object storage) — optional. If creds are missing, the
+// sync still works but photos stay on Notion's expiring CDN URLs.
+const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
+const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
+const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
+const R2_BUCKET = 'jimiland-media';
+const R2_PUBLIC_BASE = 'https://media.jimi.land';
+const r2Enabled = !!(R2_ACCOUNT_ID && R2_ACCESS_KEY_ID && R2_SECRET_ACCESS_KEY);
 
 if (!NOTION_API_KEY) {
     console.error('❌ Missing required environment variable: NOTION_API_KEY');
@@ -76,9 +86,11 @@ const DATABASES = [
         transform: convertNotionPageToPlace,
         publishedFilter: (p) => p.published === true,
         outputFile: path.join(DATA_DIR, 'places.json'),
-        // Geocode the Location string; resolve Linked Posts relations to URLs.
+        // Geocode the Location string, mirror photos from Notion → R2,
+        // and resolve Linked Posts relations to URLs.
         postProcess: async (places, allData) => {
             await geocodeAll(places, (p) => p.location);
+            await uploadPhotosToR2(places);
             resolveLinkedPosts(places, allData.posts || []);
         },
     },
@@ -445,6 +457,151 @@ async function geocodeAll(items, locationFn) {
             item.lat = coords.lat;
             item.lng = coords.lng;
         }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// R2 photo upload (S3-compatible API, signed via aws4)
+// ─────────────────────────────────────────────────────────────
+
+const CONTENT_TYPE_BY_EXT = {
+    jpg: 'image/jpeg', jpeg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+    webp: 'image/webp',
+    avif: 'image/avif',
+    heic: 'image/heic', heif: 'image/heif',
+    svg: 'image/svg+xml',
+};
+
+/**
+ * Parse a Notion-hosted file URL into a stable file ID + extension.
+ * Notion's signed S3 URLs look like:
+ *   https://prod-files-secure.s3.us-west-2.amazonaws.com/
+ *     <workspace-uuid>/<file-uuid>/<filename>.<ext>?X-Amz-Algorithm=...
+ * The <file-uuid> is stable; the query string rotates each fetch.
+ * Returns null for URLs that don't match this shape (external links etc).
+ */
+function parseNotionFileUrl(url) {
+    try {
+        const u = new URL(url);
+        // Only handle Notion's CDN domains; external URLs pass through.
+        const host = u.hostname;
+        if (!/(notion|amazonaws)/.test(host)) return null;
+        const parts = u.pathname.split('/').filter(Boolean);
+        if (parts.length < 2) return null;
+        const fileUuid = parts[parts.length - 2];
+        const filename = parts[parts.length - 1];
+        const ext = (path.extname(filename).slice(1) || 'bin').toLowerCase();
+        if (!/^[a-f0-9-]{8,}$/i.test(fileUuid)) return null; // sanity check
+        return { fileUuid, filename, ext };
+    } catch (_) {
+        return null;
+    }
+}
+
+function signedR2Request({ method, key, body, contentType }) {
+    const host = `${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`;
+    const opts = {
+        host,
+        path: `/${R2_BUCKET}/${encodeURI(key)}`,
+        method,
+        service: 's3',
+        region: 'auto', // R2 uses "auto" — geographic location is set per bucket
+        headers: {},
+    };
+    if (body) {
+        opts.body = body;
+        if (contentType) opts.headers['Content-Type'] = contentType;
+    }
+    aws4.sign(opts, {
+        accessKeyId: R2_ACCESS_KEY_ID,
+        secretAccessKey: R2_SECRET_ACCESS_KEY,
+    });
+    return opts;
+}
+
+async function r2Exists(key) {
+    const req = signedR2Request({ method: 'HEAD', key });
+    const r = await fetch(`https://${req.host}${req.path}`, {
+        method: 'HEAD',
+        headers: req.headers,
+    });
+    if (r.status === 200) return true;
+    if (r.status === 404) return false;
+    // Any other status — treat as "don't know", retry by uploading.
+    return false;
+}
+
+async function r2Put(key, body, contentType) {
+    const req = signedR2Request({ method: 'PUT', key, body, contentType });
+    const r = await fetch(`https://${req.host}${req.path}`, {
+        method: 'PUT',
+        headers: req.headers,
+        body: req.body,
+    });
+    if (!r.ok) {
+        const errText = await r.text().catch(() => '');
+        throw new Error(`R2 PUT ${key} → HTTP ${r.status}: ${errText.slice(0, 200)}`);
+    }
+}
+
+/**
+ * Ensure a Notion-hosted photo URL has a permanent home in R2.
+ * Returns the public R2 URL (or the original URL on any failure /
+ * if R2 isn't configured / if the input is an external URL).
+ */
+async function ensurePhotoInR2(notionUrl) {
+    if (!r2Enabled) return notionUrl;
+    const parsed = parseNotionFileUrl(notionUrl);
+    if (!parsed) return notionUrl; // external URL, leave as-is
+
+    const key = `images/${parsed.fileUuid}.${parsed.ext}`;
+    const publicUrl = `${R2_PUBLIC_BASE}/${key}`;
+
+    try {
+        if (await r2Exists(key)) {
+            return publicUrl; // already mirrored — no-op
+        }
+
+        // Download from Notion (URL is signed and short-lived; works for ~1h)
+        const response = await fetch(notionUrl);
+        if (!response.ok) {
+            console.warn(`  ⚠️ Couldn't fetch Notion file (HTTP ${response.status}): ${notionUrl.slice(0, 80)}...`);
+            return notionUrl;
+        }
+        const buf = Buffer.from(await response.arrayBuffer());
+        const contentType = response.headers.get('content-type')
+            || CONTENT_TYPE_BY_EXT[parsed.ext]
+            || 'application/octet-stream';
+
+        await r2Put(key, buf, contentType);
+        console.log(`  📸 R2 ← ${parsed.filename} (${Math.round(buf.length / 1024)} KB) → ${publicUrl}`);
+        return publicUrl;
+    } catch (e) {
+        console.warn(`  ⚠️ R2 upload failed for ${parsed.filename}: ${e.message}`);
+        return notionUrl;
+    }
+}
+
+/**
+ * For each item with a `photos` array of Notion URLs, replace each
+ * URL with its R2 public URL (uploading on first sight, caching otherwise).
+ */
+async function uploadPhotosToR2(items) {
+    if (!r2Enabled) {
+        if (items.some((i) => i.photos && i.photos.length > 0)) {
+            console.log('⏭️  R2 credentials not set — photos will use Notion CDN URLs (expire ~1h)');
+        }
+        return;
+    }
+    for (const item of items) {
+        if (!Array.isArray(item.photos) || item.photos.length === 0) continue;
+        const newUrls = [];
+        for (const url of item.photos) {
+            newUrls.push(await ensurePhotoInR2(url));
+        }
+        item.photos = newUrls;
     }
 }
 

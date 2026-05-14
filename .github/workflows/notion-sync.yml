@@ -34,7 +34,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install @notionhq/client dotenv
+        run: npm install @notionhq/client dotenv aws4
 
       - name: Sync from Notion
         env:
@@ -43,6 +43,9 @@ jobs:
           NOTION_GIGS_DATABASE_ID: ${{ secrets.NOTION_GIGS_DATABASE_ID }}
           NOTION_PROJECTS_DATABASE_ID: ${{ secrets.NOTION_PROJECTS_DATABASE_ID }}
           NOTION_PLACES_DATABASE_ID: ${{ secrets.NOTION_PLACES_DATABASE_ID }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: node scripts/notion-sync.js
 
       - name: Check for changes
