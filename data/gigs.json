@@ -316,19 +316,6 @@
     "lng": -4.2852072
   },
   {
-    "id": "2d8cb99e-b16c-804e-80a2-d90bb9d7070c",
-    "title": "Untitled Gig",
-    "artist": "Kadavar",
-    "date": "2023-05-04",
-    "venue": "Manchester Academy ",
-    "location": "Manchster",
-    "status": "Draft",
-    "type": "Gig",
-    "slug": "untitled",
-    "notion_url": "https://www.notion.so/48-2d8cb99eb16c804e80a2d90bb9d7070c",
-    "last_edited": "2025-12-29T19:32:00.000Z"
-  },
-  {
     "id": "16ccb99e-b16c-80e0-ba72-e4f3b6a2cbe1",
     "title": "Untitled Gig",
     "artist": "Bob Dylan",
