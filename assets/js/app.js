@@ -80,12 +80,21 @@ function renderHomePosts(posts) {
     }
     
     container.innerHTML = posts.map(post => `
-        <div class="post-card" onclick="window.location.href='${post.url}'">
+        <div class="post-card" data-href="${escapeHtml(post.url)}">
             <time class="post-date">${formatDate(post.date)}</time>
-            <h3 class="post-title">${post.title}</h3>
-            ${post.excerpt ? `<p class="post-excerpt">${post.excerpt}</p>` : ''}
+            <h3 class="post-title">${escapeHtml(post.title)}</h3>
+            ${post.excerpt ? `<p class="post-excerpt">${escapeHtml(post.excerpt)}</p>` : ''}
         </div>
     `).join('');
+
+    // Whole-card click navigation. Replaces an inline onclick handler so the
+    // page is compatible with a strict Content-Security-Policy.
+    container.querySelectorAll('.post-card[data-href]').forEach((card) => {
+        card.addEventListener('click', () => {
+            const href = card.getAttribute('data-href');
+            if (href) window.location.href = href;
+        });
+    });
 }
 
 // =====================
@@ -128,8 +137,8 @@ function renderArchive(posts) {
         ${postsByYear[year].map(post => `
             <div class="archive-item">
                 <time class="post-date">${formatDate(post.date)}</time>
-                <h3 class="post-title"><a href="${post.url}">${post.title}</a></h3>
-                ${post.excerpt ? `<p class="post-excerpt">${post.excerpt}</p>` : ''}
+                <h3 class="post-title"><a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a></h3>
+                ${post.excerpt ? `<p class="post-excerpt">${escapeHtml(post.excerpt)}</p>` : ''}
             </div>
         `).join('')}
     `).join('');
@@ -252,8 +261,8 @@ function renderGigs(gigs) {
     
     container.innerHTML = sortedGigs.map(gig => `
         <div class="gig-item">
-            <div class="gig-artist">${gig.artist || gig.title}</div>
-            <div class="gig-venue">${gig.venue}${gig.location ? ', ' + gig.location : ''}</div>
+            <div class="gig-artist">${escapeHtml(gig.artist || gig.title)}</div>
+            <div class="gig-venue">${escapeHtml(gig.venue)}${gig.location ? ', ' + escapeHtml(gig.location) : ''}</div>
             <div class="gig-date">${formatDate(gig.date)}</div>
         </div>
     `).join('');
@@ -323,7 +332,7 @@ function renderCalendar(date, gigs) {
         
         if (hasGig) {
             dayGigs.slice(0, 2).forEach(gig => {
-                html += `<div class="calendar-gig-title">${gig.artist || gig.title}</div>`;
+                html += `<div class="calendar-gig-title">${escapeHtml(gig.artist || gig.title)}</div>`;
             });
             if (dayGigs.length > 2) {
                 html += `<div class="calendar-gig-title">+${dayGigs.length - 2} more</div>`;
@@ -458,15 +467,15 @@ function renderSongs(songs) {
                     return `
                         <tr>
                             ${hasDetails ? `<td><span class="expand-icon" onclick="toggleSongDetails(${index})">${hasDetail ? '▶' : '•'}</span></td>` : ''}
-                            <td>${song.name}</td>
+                            <td>${escapeHtml(song.name)}</td>
                             <td>${song.plays}</td>
-                            <td>${song.writer}</td>
-                            <td>${song.performer}</td>
+                            <td>${escapeHtml(song.writer)}</td>
+                            <td>${escapeHtml(song.performer)}</td>
                         </tr>
                         ${hasDetail ? `
                             <tr class="song-details" id="song-details-${index}">
                                 <td colspan="${hasDetails ? '5' : '4'}">
-                                    ${song.details.split(';').map(show => `<div class="show-entry">${show.trim()}</div>`).join('')}
+                                    ${song.details.split(';').map(show => `<div class="show-entry">${escapeHtml(show.trim())}</div>`).join('')}
                                 </td>
                             </tr>
                         ` : ''}
@@ -552,6 +561,15 @@ async function loadGigs() {
 // =====================
 // UTILITIES
 // =====================
+// Escape HTML-significant chars before inserting text into innerHTML. The
+// rendered data is author-controlled (Notion / songs.csv), so this is defence
+// in depth — but it also fixes display of legit text containing & < > " '.
+function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+}
+
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -633,14 +651,14 @@ function renderProjects(projects) {
             <div class="project-card">
                 <div class="project-header">
                     <div>
-                        <h2 class="project-title">${project.name}</h2>
+                        <h2 class="project-title">${escapeHtml(project.name)}</h2>
                     </div>
-                    <span class="project-status ${statusClass}">${project.status}</span>
+                    <span class="project-status ${escapeHtml(statusClass)}">${escapeHtml(project.status)}</span>
                 </div>
                 <div class="project-divider"></div>
-                <p class="project-description">${project.description}</p>
+                <p class="project-description">${escapeHtml(project.description)}</p>
                 <div class="project-footer">
-                    ${project.link ? `<a href="${project.link}" class="project-link" target="_blank" rel="noopener">View Project →</a>` : '<span></span>'}
+                    ${project.link ? `<a href="${escapeHtml(project.link)}" class="project-link" target="_blank" rel="noopener">View Project →</a>` : '<span></span>'}
                     ${project.date ? `<span class="project-date">${new Date(project.date).getFullYear()}</span>` : ''}
                 </div>
             </div>
@@ -662,8 +680,8 @@ function renderIdeas(projects) {
     
     container.innerHTML = ideaItems.map(idea => `
         <div class="idea-item">
-            <h3 class="idea-title">${idea.name}</h3>
-            <p class="idea-description">${idea.description}</p>
+            <h3 class="idea-title">${escapeHtml(idea.name)}</h3>
+            <p class="idea-description">${escapeHtml(idea.description)}</p>
         </div>
     `).join('');
 }

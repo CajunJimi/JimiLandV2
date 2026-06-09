@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────────────────
+# HTTP security headers for jimi.land
+# Read by Cloudflare Workers Static Assets as configuration — this file is
+# consumed, NOT served to visitors. Comments must start at column 0.
+# Docs: https://developers.cloudflare.com/workers/static-assets/headers/
+#
+# Two CSP headers are set below:
+#   * Content-Security-Policy            → ENFORCED. Only contains directives
+#     that cannot break resource loading (no script/img/connect limits), so
+#     it is safe to ship as-is.
+#   * Content-Security-Policy-Report-Only → STAGED. The full resource
+#     allowlist. It blocks nothing; the browser only logs violations to the
+#     console. To turn it on: open Home, the Gigs map, and the World map with
+#     DevTools open, confirm there are no "Refused to..." CSP errors, then
+#     rename this header to "Content-Security-Policy" (and delete the short
+#     enforced one above it, since the full policy supersedes it).
+# ─────────────────────────────────────────────────────────────────────────
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://api.mapbox.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://api.mapbox.com https://unpkg.com; img-src 'self' data: blob: https://media.jimi.land https://api.mapbox.com https://*.tiles.mapbox.com https://*.basemaps.cartocdn.com; font-src 'self' data:; connect-src 'self' https://api.mapbox.com https://events.mapbox.com https://*.tiles.mapbox.com https://nominatim.openstreetmap.org https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests

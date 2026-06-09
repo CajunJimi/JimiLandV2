@@ -160,9 +160,19 @@ async function fetchPageContent(pageId) {
 // Notion blocks → HTML
 // ─────────────────────────────────────────────────────────────
 
+// Escape HTML-significant characters so author text can't inject markup
+// (and so legit text like "x < y" or "Q&A" renders correctly).
+function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+}
+
+// Escape FIRST, then turn bare URLs into links. Escaping before linkifying
+// guarantees the <a> tags below are the only HTML in the returned string.
 function linkifyText(text) {
     const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
-    return text.replace(urlRegex, (url) => {
+    return escapeHtml(text).replace(urlRegex, (url) => {
         const href = url.startsWith('www.') ? 'https://' + url : url;
         return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     });
@@ -201,7 +211,7 @@ function convertBlocksToHTML(blocks) {
                 html += `<blockquote>${linkifyText(richTextToString(block.quote.rich_text))}</blockquote>\n`;
                 break;
             case 'code':
-                html += `<pre><code>${richTextToString(block.code.rich_text)}</code></pre>\n`;
+                html += `<pre><code>${escapeHtml(richTextToString(block.code.rich_text))}</code></pre>\n`;
                 break;
             default: {
                 const inner = block[block.type]?.rich_text;
@@ -645,7 +655,7 @@ async function postProcessPosts(posts) {
 
             if (content.trim().length === 0) {
                 content = post.excerpt
-                    ? `<p>${post.excerpt}</p>`
+                    ? `<p>${escapeHtml(post.excerpt)}</p>`
                     : generateSampleContent(post.title, post.date);
             }
 
@@ -668,7 +678,7 @@ function generateSampleContent(title, date) {
     const formattedDate = new Date(date).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric',
     });
-    return `<p>Welcome to my post about <strong>${title}</strong>, published on ${formattedDate}.</p>
+    return `<p>Welcome to my post about <strong>${escapeHtml(title)}</strong>, published on ${formattedDate}.</p>
 <p>This is where the main content of your blog post will appear.</p>`;
 }
 
@@ -678,8 +688,8 @@ function createPostHTML(post, content) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${post.title} - JimiLand</title>
-    <meta name="description" content="${post.excerpt}">
+    <title>${escapeHtml(post.title)} - JimiLand</title>
+    <meta name="description" content="${escapeHtml(post.excerpt)}">
     <script>
       (function () {
         try {
@@ -722,7 +732,7 @@ function createPostHTML(post, content) {
     <main>
         <article>
             <header class="post-header">
-                <h1>${post.title}</h1>
+                <h1>${escapeHtml(post.title)}</h1>
                 <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
             </header>
             <div class="post-content">
