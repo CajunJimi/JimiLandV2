@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#b86b2a"/>
-  <text x="32" y="46" text-anchor="middle"
+  <style>
+    text { fill: #b86b2a; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #d4915a; }
+    }
+  </style>
+  <text x="32" y="34" text-anchor="middle" dominant-baseline="central"
         font-family="ui-serif, 'Iowan Old Style', 'Charter', 'Source Serif 4', Georgia, serif"
-        font-size="42" font-weight="600" fill="#f4f2ee">J</text>
+        font-size="48" font-weight="700"
+        letter-spacing="-2">JL</text>
 </svg>
