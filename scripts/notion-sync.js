@@ -682,7 +682,16 @@ function generateSampleContent(title, date) {
 <p>This is where the main content of your blog post will appear.</p>`;
 }
 
+// Average adult reading speed ~225 wpm. Minimum 1 min so a one-liner
+// doesn't display as "0 min read".
+function calculateReadingTime(html) {
+    const text = String(html).replace(/<[^>]*>/g, ' ');
+    const words = text.split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.round(words / 225));
+}
+
 function createPostHTML(post, content) {
+    const readingMinutes = calculateReadingTime(content);
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -733,7 +742,10 @@ function createPostHTML(post, content) {
         <article>
             <header class="post-header">
                 <h1>${escapeHtml(post.title)}</h1>
-                <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                <div class="post-meta">
+                    <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                    <span class="reading-time">${readingMinutes} min read</span>
+                </div>
             </header>
             <div class="post-content">
                 ${content}
