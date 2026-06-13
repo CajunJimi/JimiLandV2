@@ -708,6 +708,9 @@ function createPostHTML(post, content) {
         } catch (e) { document.documentElement.dataset.theme = 'dark'; }
       })();
     </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f2ee">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15141a">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
