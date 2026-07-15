@@ -9,7 +9,7 @@
     "build": "npm run sync"
   },
   "dependencies": {
-    "@notionhq/client": "^5.23.1",
+    "@notionhq/client": "^5.23.2",
     "aws4": "^1.13.2",
     "dotenv": "^16.6.1"
   },
