@@ -12,6 +12,8 @@ package.json
 package-lock.json
 wrangler.jsonc
 .wrangler
+worker
+.claude
 
 # Repo docs / logs — not part of the site
 *.md

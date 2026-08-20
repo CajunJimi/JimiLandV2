@@ -1,12 +1,22 @@
 {
-  // Cloudflare Workers Static Assets config for jimi.land.
-  // The site is plain static files — Cloudflare just serves them.
-  // .assetsignore at the repo root keeps node_modules and dev plumbing
-  // out of the upload bundle (25 MiB per-file limit).
+  // Cloudflare Workers config for jimi.land.
+  // Static assets plus a small edge worker (worker/index.js) that proxies
+  // Pulse analytics beacons and logs served HTML documents server-side —
+  // required to see AI crawlers, which never execute JS.
+  // run_worker_first: assets are only served through the worker; without it
+  // Cloudflare answers asset GETs directly and the worker never sees bots.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "jimiland",
+  "main": "worker/index.js",
   "compatibility_date": "2026-05-09",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
-  "assets": { "directory": "." }
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "services": [{ "binding": "PULSE", "service": "pulse" }]
+  // Secret (set once via `wrangler secret put EDGE_SECRET`): shared key that
+  // lets Pulse trust the forwarded UA/IP headers from this worker.
 }
