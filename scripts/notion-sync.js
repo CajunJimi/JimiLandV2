@@ -712,6 +712,7 @@ function createPostHTML(post, content) {
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f2ee">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15141a">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <script defer src="https://pulse.jimi.land/p.js" data-site="jimiland" data-api="/_pulse/e"></script>
 </head>
 <body>
     <!-- Reading Progress Bar -->
