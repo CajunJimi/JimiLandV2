@@ -1,78 +1,72 @@
 # JimiLand - Simple Usage Guide
 
-## Quick Start
+Write in Notion. That's it. A GitHub Action pulls from Notion **every hour**,
+commits any changes and deploys to Cloudflare. No terminal needed.
 
-Your site is now **100% dynamic** - all content loads automatically from Notion.
+## 🔗 Links
 
-### 📝 Adding a New Blog Post
+| What | Where |
+|---|---|
+| Live site | https://jimi.land |
+| Posts database | https://www.notion.so/139cb99eb16c806086d1d15c10d88f2b |
+| Gigs database | https://www.notion.so/16ccb99eb16c80ea893fca0d9630f768 |
+| Projects database | https://www.notion.so/2d5cb99eb16c807f9105f8327a8e7dcc |
+| Places database (World map) | https://www.notion.so/35ccb99eb16c806e8e02d94d196d19a4 |
+| Sync & deploy runs | https://github.com/CajunJimi/JimiLandV2/actions |
+| Analytics | https://pulse.jimi.land |
+| Hosting | Cloudflare dashboard → Workers → `jimiland` |
 
-1. **Open Notion** - Go to your Posts database
-2. **Create new post** with these fields:
-   - **Title**: Your post title
-   - **Date**: Publication date
-   - **Published**: ✓ Check this box
-   - **Excerpt**: Short description (optional)
-   - **Content**: Link to your full Notion page with the post content
+## 📝 Publishing a Blog Post
 
-3. **Sync to site**:
-   ```bash
-   node scripts/notion-sync.js
-   ```
+1. Open the **Posts** database and add a new page.
+2. Fill in:
+   - **Title** - becomes the URL slug (`/posts/<slug>/`)
+   - **Date** - publication date (defaults to today if blank)
+   - **Excerpt** - one-line summary shown on the home page (optional)
+   - **Tags** - optional
+3. Write the post **in the page itself**.
+   (The old **Content** field still works if you'd rather point at another
+   Notion page, but you don't need it.)
+4. Tick **Published**. Unticked posts never reach the site.
+5. Wait up to an hour - or publish now: Actions → **Sync from Notion** →
+   **Run workflow** (works from the GitHub mobile app too).
 
-4. **Deploy**:
-   ```bash
-   git add .
-   git commit -m "Added new post"
-   git push origin main
-   ```
+Editing or unticking a published post works the same way.
 
-5. **Live in 1-3 minutes** at https://jimi.land
+## 🎵 Adding a Gig
 
-### 🎵 Adding Gigs
+Add a row to the **Gigs** database: **Title**, **Artist**, **Date**,
+**Venue**, **location** (either `location` or `Location` works).
+Every row ships - there's no Published box for gigs. The venue + location
+get geocoded onto the World map.
 
-1. **Open Notion** - Go to your Gigs database
-2. **Add gig details**:
-   - **Title**: Event name
-   - **Artist**: Band/artist name
-   - **Date**: Gig date
-   - **Venue**: Venue name
-   - **Location**: City/location
+## 🛠 Projects & 🌍 Places
 
-3. **Sync**: Run `node scripts/notion-sync.js`
-4. **Deploy**: Push to GitHub
+- **Projects**: Name, Description, Status, Link, Date - tick **Published**.
+- **Places**: Title, Location, Category, Trip, Date, Photos, Linked Posts /
+  Linked Gigs - tick **Published**.
 
-### 🎸 Updating Song Tracker
+## 🎸 Song Tracker
 
-1. **Edit** `/data/songs.csv`
-2. **Format**: `Song Name [TAB] Play Count [TAB] Details`
-3. **Commit and push** to GitHub
+Not in Notion - edit `data/songs.csv` and push to `main`. It's a normal
+comma-separated file with a header row:
+
+```
+Song,Times Played,Writer,Performer,When / Where / Who
+```
 
 ## 🌐 Site Structure
 
-- **Home** (`/`) - Latest 5 posts
-- **Archive** (`/archive/`) - All posts by year
-- **Gigs** (`/gigs/`) - Gigs list + Song Tracker tabs
+- **Home** (`/`) - latest posts
+- **Archive** (`/archive/`) - all posts by year
+- **Gigs** (`/gigs/`) - gig log + song tracker
+- **Projects** (`/projects/`)
+- **World** (`/world/`) - map of places and gigs
 
-## 🔧 Local Development
+## 🔧 If Something Looks Wrong
 
-```bash
-# Start local server
-python3 -m http.server 8000
-
-# View at http://localhost:8000
-```
-
-## 📋 Files You'll Edit
-
-- **Never touch HTML files** - They're now templates
-- **Edit in Notion** - Your posts database
-- **Edit songs.csv** - For song tracker updates
-- **Run sync script** - To pull changes
-
-## ✅ That's It!
-
-No more manual HTML editing. Just:
-1. Write in Notion
-2. Run sync script
-3. Push to GitHub
-4. Done!
+- Check the latest **Sync from Notion** run on the Actions page.
+- Run the sync locally: `node scripts/notion-sync.js` (needs `.env`).
+- Preview locally: `python3 -m http.server 8000` → http://localhost:8000
+- Don't hand-edit generated files in `posts/` or `data/*.json` - the next
+  sync overwrites them.
